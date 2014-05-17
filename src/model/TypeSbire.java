@@ -11,5 +11,8 @@ package model;
  * @author Rems
  */
 public class TypeSbire {
-    
+    private int idTypeSbire;
+    private String libelleTypeSbire;
+    private int cout;
+    private int tempsApparition;
 }

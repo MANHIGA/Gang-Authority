@@ -6,10 +6,15 @@
 
 package model;
 
+import java.sql.Date;
+
 /**
  *
  * @author Rems
  */
-public class Batiment {
-    
+public class Combattre {
+    private Joueur attaquant;
+    private Joueur defenseur;
+    private int nbSbiresEnvoyesPvp;
+    private Date datePvp;
 }

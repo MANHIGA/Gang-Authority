@@ -10,6 +10,9 @@ package model;
  *
  * @author Rems
  */
-public class Sbire {
-    
+public class Construire {
+    private Joueur joueur;
+    private TypeBatiment typeBatiment;
+    private int niveau;
+    private int populationMax;
 }

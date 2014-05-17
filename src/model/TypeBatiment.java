@@ -6,10 +6,14 @@
 
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author Rems
  */
 public class TypeBatiment {
-    
+    private int idTypeBatiment;
+    private String libelleTypeBatiment;
+    private Date tempsCreationBatiment;
 }

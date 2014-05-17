@@ -11,5 +11,13 @@ package model;
  * @author Rems
  */
 public class Joueur {
-    
+    private int idCompte;
+    private String pseudo;
+    private String email;
+    private String mdp;
+    private int pointsAutorite;
+    private int nbMorts;
+    private int nbTues;
+    private int argent;
+    private String nomGang;
 }
