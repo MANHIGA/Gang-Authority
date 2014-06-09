@@ -12,6 +12,8 @@ package model;
  * @author Rems
  */
 public class Joueur {
+	
+	
     private int idCompte;
     private String pseudo;
     private String email;

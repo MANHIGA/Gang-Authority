@@ -5,17 +5,42 @@
  */
 
 package model;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import java.sql.Date;
 
-/**
- *
- * @author Rems
- */
+@Entity
+@Table(name="Combattre")
 public class Combattre {
+	
+	@Column(name="attaquant")
+	@ManyToOne
+	@JoinColumn(name="idCompte")
     private Joueur attaquant;
+	
+	@Column(name="defenseur")
+	@ManyToOne
+	@JoinColumn(name="idCompte")
     private Joueur defenseur;
+	
+	@Column(name="nbSbiresEnvoyesPvp")
     private int nbSbiresEnvoyesPvp;
+	
+	@Column(name="datePvp")
     private Date datePvp;
+	
+	public int getNbSbiresEnvoyesPvp(){
+		return nbSbiresEnvoyesPvp;
+	}
+	
+	public void setNbSbiresEnvoyesPvp(int nb){
+		nbSbiresEnvoyesPvp = nb;
+	}
+	
 }
