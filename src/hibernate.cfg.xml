@@ -15,5 +15,12 @@
 		<property name="hibernate.current_session_context_class">thread</property>
 
 		<mapping class="model.TypeBatiment" />
+		<mapping class="model.Combattre" />
+		<mapping class="model.Construire" />
+		<mapping class="model.Entrainer" />
+		<mapping class="model.Joueur" />
+		<mapping class="model.Mission" />
+		<mapping class="model.Realiser" />
+		<mapping class="model.TypeSbire" />
 	</session-factory>
 </hibernate-configuration>
