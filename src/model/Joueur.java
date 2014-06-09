@@ -6,23 +6,49 @@
 
 package model;
 
+import java.util.List;
 
-/**
- *
- * @author Rems
- */
+import javax.persistence.*;
+
+import org.hibernate.*;
+import org.hibernate.Query;
+
+@Entity
+@Table(name="joueur")
 public class Joueur {
 	
+	@Id
+	@GeneratedValue
+	@Column(name="idCompte")
     private int idCompte;
+	
+	@Column(name="pseudo")
     private String pseudo;
+	
+	@Column(name="email")
     private String email;
+	
+	@Column(name="mdp")
     private String mdp;
+	
+	@Column(name="pointsAutorite")
     private int pointsAutorite;
+	
+	@Column(name="nbMorts")
     private int nbMorts;
+	
+	@Column(name="nbTues")
     private int nbTues;
+	
+	@Column(name="argent")
     private int argent;
+	
+	@Column(name="nomGang")
     private String nomGang;
     
+	private List <Construire> mesBatiments;
+	private List <Entrainer> mesSbires;
+	
 	public int getIdCompte() {
 		return idCompte;
 	}
@@ -95,8 +121,15 @@ public class Joueur {
 		this.nomGang = nomGang;
 	}
 	
-	public void afficheInfosJoueur(){
+	public static boolean identifierJoueur(String pseudo, String mdp){
 		
+		SessionFactory sessionFactory = AppFactory.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		
+		Query query = session.createQuery("from joueur where pseudo = " + pseudo + " and mdp = " + mdp);
+		List<Joueur> l = query.list();
+		
+		return l.isEmpty();
 	}
     
 }
