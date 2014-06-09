@@ -6,14 +6,12 @@
 
 package model;
 
-import java.util.Date;
-
-import javax.persistence.*;
-
-/**
- *
- * @author Rems
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name="TypeBatiment")
@@ -31,12 +29,43 @@ public class TypeBatiment {
     @Column(name="tempsCreationBatiment")
     private int tempsCreationBatiment;
     
-    public void setLibelleTypeBatiment(String libelle){
-    	libelleTypeBatiment = libelle;
-    }
+    @OneToOne
+    @Column(name="TypeBatiment_idTypeSbire")
+    private TypeSbire typeSbire;
+
+	public int getIdTypeBatiment() {
+		return idTypeBatiment;
+	}
+
+	public void setIdTypeBatiment(int idTypeBatiment) {
+		this.idTypeBatiment = idTypeBatiment;
+	}
+
+	public String getLibelleTypeBatiment() {
+		return libelleTypeBatiment;
+	}
+
+	public void setLibelleTypeBatiment(String libelleTypeBatiment) {
+		this.libelleTypeBatiment = libelleTypeBatiment;
+	}
+
+	public int getTempsCreationBatiment() {
+		return tempsCreationBatiment;
+	}
+
+	public void setTempsCreationBatiment(int tempsCreationBatiment) {
+		this.tempsCreationBatiment = tempsCreationBatiment;
+	}
+
+	public TypeSbire getTypeSbire() {
+		return typeSbire;
+	}
+
+	public void setTypeSbire(TypeSbire typeSbire) {
+		this.typeSbire = typeSbire;
+	}
     
-    public void setTempsCreationBatiment(int temps){
-    	tempsCreationBatiment = temps;
-    }
+    
+    
     
 }
