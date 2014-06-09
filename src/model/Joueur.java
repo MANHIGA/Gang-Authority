@@ -13,7 +13,6 @@ package model;
  */
 public class Joueur {
 	
-	
     private int idCompte;
     private String pseudo;
     private String email;
