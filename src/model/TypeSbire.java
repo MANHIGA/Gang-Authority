@@ -6,13 +6,72 @@
 
 package model;
 
-/**
- *
- * @author Rems
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="TypeSbire")
 public class TypeSbire {
+	
+	@Id
+	@GeneratedValue
+	@Column(name="idTypeSbire")
     private int idTypeSbire;
+	
+	@Column(name="libelleTypeSbire")
     private String libelleTypeSbire;
+	
+	@Column(name="cout")
     private int cout;
+	
+	@Column(name="tempsApparition")
     private int tempsApparition;
+	
+	@OneToOne
+	@Column(name="TypeSbire_idTypeBatiment")
+	private TypeBatiment typeBatiment;
+
+	public int getIdTypeSbire() {
+		return idTypeSbire;
+	}
+
+	public void setIdTypeSbire(int idTypeSbire) {
+		this.idTypeSbire = idTypeSbire;
+	}
+
+	public String getLibelleTypeSbire() {
+		return libelleTypeSbire;
+	}
+
+	public void setLibelleTypeSbire(String libelleTypeSbire) {
+		this.libelleTypeSbire = libelleTypeSbire;
+	}
+
+	public int getCout() {
+		return cout;
+	}
+
+	public void setCout(int cout) {
+		this.cout = cout;
+	}
+
+	public int getTempsApparition() {
+		return tempsApparition;
+	}
+
+	public void setTempsApparition(int tempsApparition) {
+		this.tempsApparition = tempsApparition;
+	}
+
+	public TypeBatiment getTypeBatiment() {
+		return typeBatiment;
+	}
+
+	public void setTypeBatiment(TypeBatiment typeBatiment) {
+		this.typeBatiment = typeBatiment;
+	}
 }
