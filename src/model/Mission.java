@@ -14,27 +14,27 @@ public class Mission {
 	@Id
 	@GeneratedValue
 	@Column(name="idMission")
-	private int idMission;
+	private Integer idMission;
 	
 	@Column(name="dureeMission")
-	private int dureeMission;
+	private Integer dureeMission;
 	
 	@Column(name="recompenseArgent")
-	private int recompenseArgent;
+	private Integer recompenseArgent;
 	
 	@Column(name="difficulte")
 	private String difficulte; //String ou int, à déterminer
 	
 	@Column(name="recompensePointsAutorites")
-	private int recompensePointsAutorites;
+	private Integer recompensePointsAutorites;
 	
 	@Column(name="tempsApparitionBase")
-	private int tempsApparitionBase;
+	private Integer tempsApparitionBase;
 	
 	@Column(name="nbMiniSbiresRequis")
-	private int nbMiniSbiresRequis;
+	private Integer nbMiniSbiresRequis;
 
-	public int getIdMission() {
+	public Integer getIdMission() {
 		return idMission;
 	}
 
@@ -42,7 +42,7 @@ public class Mission {
 		this.idMission = idMission;
 	}
 
-	public int getDureeMission() {
+	public Integer getDureeMission() {
 		return dureeMission;
 	}
 
@@ -50,7 +50,7 @@ public class Mission {
 		this.dureeMission = dureeMission;
 	}
 
-	public int getRecompenseArgent() {
+	public Integer getRecompenseArgent() {
 		return recompenseArgent;
 	}
 
@@ -66,7 +66,7 @@ public class Mission {
 		this.difficulte = difficulte;
 	}
 
-	public int getRecompensePointsAutorites() {
+	public Integer getRecompensePointsAutorites() {
 		return recompensePointsAutorites;
 	}
 
@@ -74,7 +74,7 @@ public class Mission {
 		this.recompensePointsAutorites = recompensePointsAutorites;
 	}
 
-	public int getTempsApparitionBase() {
+	public Integer getTempsApparitionBase() {
 		return tempsApparitionBase;
 	}
 
@@ -82,7 +82,7 @@ public class Mission {
 		this.tempsApparitionBase = tempsApparitionBase;
 	}
 
-	public int getNbMiniSbiresRequis() {
+	public Integer getNbMiniSbiresRequis() {
 		return nbMiniSbiresRequis;
 	}
 

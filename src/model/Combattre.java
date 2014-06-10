@@ -29,7 +29,7 @@ public class Combattre {
     private Joueur defenseur;
 	
 	@Column(name="nbSbiresEnvoyesPvp")
-    private int nbSbiresEnvoyesPvp;
+    private Integer nbSbiresEnvoyesPvp;
 	
 	@Column(name="datePvp")
     private Date datePvp;
@@ -50,7 +50,7 @@ public class Combattre {
 		this.defenseur = defenseur;
 	}
 
-	public int getNbSbiresEnvoyesPvp() {
+	public Integer getNbSbiresEnvoyesPvp() {
 		return nbSbiresEnvoyesPvp;
 	}
 

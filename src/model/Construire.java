@@ -25,10 +25,10 @@ public class Construire {
     private TypeBatiment typeBatiment;
 	
 	@Column(name="niveau")
-    private int niveau;
+    private Integer niveau;
 	
 	@Column(name="populationMax")
-    private int populationMax;
+    private Integer populationMax;
 
 	public Joueur getJoueur() {
 		return joueur;
@@ -46,7 +46,7 @@ public class Construire {
 		this.typeBatiment = typeBatiment;
 	}
 
-	public int getNiveau() {
+	public Integer getNiveau() {
 		return niveau;
 	}
 
@@ -54,11 +54,24 @@ public class Construire {
 		this.niveau = niveau;
 	}
 
-	public int getPopulationMax() {
+	public Integer getPopulationMax() {
 		return populationMax;
 	}
 
 	public void setPopulationMax(int populationMax) {
 		this.populationMax = populationMax;
+	}
+	
+	public boolean equals(Construire c){
+		
+		if(this == c){
+			return true;
+		}
+		if(c == null){
+			return false;
+		}
+		
+		
+		return false;
 	}
 }

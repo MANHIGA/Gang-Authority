@@ -26,7 +26,7 @@ public class Realiser {
 	private Date dateRealisation;
 	
 	@Column(name="nbSbiresEnvoyesRealisation")
-	private int nbSbiresEnvoyesRealisation;
+	private Integer nbSbiresEnvoyesRealisation;
 
 	public Joueur getJoueur() {
 		return joueur;
@@ -52,7 +52,7 @@ public class Realiser {
 		this.dateRealisation = dateRealisation;
 	}
 
-	public int getNbSbiresEnvoyesRealisation() {
+	public Integer getNbSbiresEnvoyesRealisation() {
 		return nbSbiresEnvoyesRealisation;
 	}
 

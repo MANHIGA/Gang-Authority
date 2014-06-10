@@ -39,32 +39,16 @@ public class TypeSbire {
 		return idTypeSbire;
 	}
 
-	public void setIdTypeSbire(int idTypeSbire) {
-		this.idTypeSbire = idTypeSbire;
-	}
-
 	public String getLibelleTypeSbire() {
 		return libelleTypeSbire;
-	}
-
-	public void setLibelleTypeSbire(String libelleTypeSbire) {
-		this.libelleTypeSbire = libelleTypeSbire;
 	}
 
 	public int getCout() {
 		return cout;
 	}
 
-	public void setCout(int cout) {
-		this.cout = cout;
-	}
-
 	public int getTempsApparition() {
 		return tempsApparition;
-	}
-
-	public void setTempsApparition(int tempsApparition) {
-		this.tempsApparition = tempsApparition;
 	}
 
 	public TypeBatiment getTypeBatiment() {

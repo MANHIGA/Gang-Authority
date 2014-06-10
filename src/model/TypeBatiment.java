@@ -20,48 +20,32 @@ public class TypeBatiment {
 	@Id
 	@GeneratedValue
 	@Column(name="idTypeBatiment")
-    private int idTypeBatiment;
+    private Integer idTypeBatiment;
 	
     
     @Column(name="libelleTypeBatiment")
     private String libelleTypeBatiment;
     
     @Column(name="tempsCreationBatiment")
-    private int tempsCreationBatiment;
+    private Integer tempsCreationBatiment;
     
     @OneToOne
     private TypeSbire typeSbire;
 
-	public int getIdTypeBatiment() {
+	public Integer getIdTypeBatiment() {
 		return idTypeBatiment;
-	}
-
-	public void setIdTypeBatiment(int idTypeBatiment) {
-		this.idTypeBatiment = idTypeBatiment;
 	}
 
 	public String getLibelleTypeBatiment() {
 		return libelleTypeBatiment;
 	}
 
-	public void setLibelleTypeBatiment(String libelleTypeBatiment) {
-		this.libelleTypeBatiment = libelleTypeBatiment;
-	}
-
-	public int getTempsCreationBatiment() {
+	public Integer getTempsCreationBatiment() {
 		return tempsCreationBatiment;
-	}
-
-	public void setTempsCreationBatiment(int tempsCreationBatiment) {
-		this.tempsCreationBatiment = tempsCreationBatiment;
 	}
 
 	public TypeSbire getTypeSbire() {
 		return typeSbire;
-	}
-
-	public void setTypeSbire(TypeSbire typeSbire) {
-		this.typeSbire = typeSbire;
 	}
     
     
