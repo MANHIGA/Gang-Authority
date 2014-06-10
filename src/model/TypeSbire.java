@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,53 +21,67 @@ public class TypeSbire {
 	@Id
 	@GeneratedValue
 	@Column(name="idTypeSbire")
-    private int idTypeSbire;
+    private Integer idTypeSbire;
 	
 	@Column(name="libelleTypeSbire")
     private String libelleTypeSbire;
 	
 	@Column(name="cout")
-    private int cout;
+    private Integer cout;
 	
 	@Column(name="tempsApparition")
-    private int tempsApparition;
+    private Integer tempsApparition;
 	
 	@OneToOne
-	@Column(name="TypeSbire_idTypeBatiment")
+	@JoinColumn(name="TypeSbire_idTypeBatiment")
 	private TypeBatiment typeBatiment;
 
-	public int getIdTypeSbire() {
+	public Integer getIdTypeSbire() {
 		return idTypeSbire;
 	}
 
-	public void setIdTypeSbire(int idTypeSbire) {
+<<<<<<< HEAD
+	public void setIdTypeSbire(Integer idTypeSbire) {
 		this.idTypeSbire = idTypeSbire;
 	}
 
+=======
+>>>>>>> FETCH_HEAD
 	public String getLibelleTypeSbire() {
 		return libelleTypeSbire;
 	}
 
+<<<<<<< HEAD
 	public void setLibelleTypeSbire(String libelleTypeSbire) {
 		this.libelleTypeSbire = libelleTypeSbire;
 	}
 
-	public int getCout() {
+	public Integer getCout() {
 		return cout;
 	}
 
-	public void setCout(int cout) {
+	public void setCout(Integer cout) {
 		this.cout = cout;
+	}
+
+	public Integer getTempsApparition() {
+		return tempsApparition;
+	}
+
+	public void setTempsApparition(Integer tempsApparition) {
+		this.tempsApparition = tempsApparition;
+	}
+
+=======
+	public int getCout() {
+		return cout;
 	}
 
 	public int getTempsApparition() {
 		return tempsApparition;
 	}
 
-	public void setTempsApparition(int tempsApparition) {
-		this.tempsApparition = tempsApparition;
-	}
-
+>>>>>>> FETCH_HEAD
 	public TypeBatiment getTypeBatiment() {
 		return typeBatiment;
 	}
@@ -74,4 +89,5 @@ public class TypeSbire {
 	public void setTypeBatiment(TypeBatiment typeBatiment) {
 		this.typeBatiment = typeBatiment;
 	}
+
 }

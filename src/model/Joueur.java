@@ -25,7 +25,7 @@ public class Joueur {
 	@Id
 	@GeneratedValue
 	@Column(name="idCompte")
-    private int idCompte;
+    private Integer idCompte;
 	
 	@Column(name="pseudo")
     private String pseudo;
@@ -37,16 +37,16 @@ public class Joueur {
     private String mdp;
 	
 	@Column(name="pointAutorite")
-    private int pointAutorite;
+    private Integer pointAutorite;
 	
 	@Column(name="nbMorts")
-    private int nbMorts;
+    private Integer nbMorts;
 	
 	@Column(name="nbTues")
-    private int nbTues;
+    private Integer nbTues;
 	
 	@Column(name="argent")
-    private int argent;
+    private Integer argent;
 	
 	@Column(name="nomGang")
     private String nomGang;
@@ -54,78 +54,80 @@ public class Joueur {
 	//private List <Construire> mesBatiments;
 	//private List <Entrainer> mesSbires;
 	
-	public int getIdCompte() {
+
+	
+	public Integer getIdCompte() {
 		return idCompte;
 	}
-	
-	public void setIdCompte(int idCompte) {
+
+	public void setIdCompte(Integer idCompte) {
 		this.idCompte = idCompte;
 	}
-	
+
 	public String getPseudo() {
 		return pseudo;
 	}
-	
+
 	public void setPseudo(String pseudo) {
 		this.pseudo = pseudo;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public String getMdp() {
 		return mdp;
 	}
-	
+
 	public void setMdp(String mdp) {
 		this.mdp = mdp;
 	}
-	
-	public int getPointAutorite() {
+
+	public Integer getPointAutorite() {
 		return pointAutorite;
 	}
-	
-	public void setPointAutorite(int pointsAutorite) {
-		this.pointAutorite = pointsAutorite;
+
+	public void setPointAutorite(Integer pointAutorite) {
+		this.pointAutorite = pointAutorite;
 	}
-	
-	public int getNbMorts() {
+
+	public Integer getNbMorts() {
 		return nbMorts;
 	}
-	
-	public void setNbMorts(int nbMorts) {
+
+	public void setNbMorts(Integer nbMorts) {
 		this.nbMorts = nbMorts;
 	}
-	
-	public int getNbTues() {
+
+	public Integer getNbTues() {
 		return nbTues;
 	}
-	
-	public void setNbTues(int nbTues) {
+
+	public void setNbTues(Integer nbTues) {
 		this.nbTues = nbTues;
 	}
-	
-	public int getArgent() {
+
+	public Integer getArgent() {
 		return argent;
 	}
-	
-	public void setArgent(int argent) {
+
+	public void setArgent(Integer argent) {
 		this.argent = argent;
 	}
-	
+
 	public String getNomGang() {
 		return nomGang;
 	}
-	
+
 	public void setNomGang(String nomGang) {
 		this.nomGang = nomGang;
 	}
-	
+
 	public static boolean etreJoueur(String pseudo, String mdp){
 		
 		SessionFactory sessionFactory = AppFactory.getSessionFactory();

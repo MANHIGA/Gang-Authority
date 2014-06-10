@@ -3,32 +3,38 @@
  */
 package model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name="Entrainer")
-public class Entrainer {
-	
+public class Entrainer implements Serializable{
+
+	@Id
 	@OneToOne
-	@Column(name="entrainer_idCompte")
+	@JoinColumn(name="entrainer_idCompte")
 	private Joueur joueur;
 	
+	@Id
 	@OneToOne
-	@Column(name="entrainer_typeSbire")
+	@JoinColumn(name="entrainer_typeSbire")
 	private TypeSbire typeSbire;
 	
 	@Column(name="nbSbire")
-	private int nbSbire;
+	private Integer nbSbire;
 	
 	@Column(name="pointAttaque")
-	private int pointAttaque;
+	private Integer pointAttaque;
 	
 	@Column(name="pointDefense")
-	private int pointDefense;
+	private Integer pointDefense;
 
 	public Joueur getJoueur() {
 		return joueur;
@@ -46,27 +52,42 @@ public class Entrainer {
 		this.typeSbire = typeSbire;
 	}
 
-	public int getNbSbire() {
+	public Integer getNbSbire() {
 		return nbSbire;
 	}
 
-	public void setNbSbire(int nbSbire) {
+	public void setNbSbire(Integer nbSbire) {
 		this.nbSbire = nbSbire;
 	}
 
-	public int getPointAttaque() {
+	public Integer getPointAttaque() {
 		return pointAttaque;
 	}
 
-	public void setPointAttaque(int pointAttaque) {
+	public void setPointAttaque(Integer pointAttaque) {
 		this.pointAttaque = pointAttaque;
 	}
 
-	public int getPointDefense() {
+	public Integer getPointDefense() {
 		return pointDefense;
 	}
 
-	public void setPointDefense(int pointDefense) {
+	public void setPointDefense(Integer pointDefense) {
 		this.pointDefense = pointDefense;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		Entrainer e = (Entrainer) o;
+		if((joueur.getIdCompte() == e.getJoueur().getIdCompte()) && (typeSbire.getIdTypeSbire() == e.getTypeSbire().getIdTypeSbire())){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	@Override
+	public int hashCode(){
+		return joueur.getIdCompte().hashCode() + typeSbire.getIdTypeSbire().hashCode();
 	}
 }

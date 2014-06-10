@@ -9,27 +9,29 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="Combattre")
 public class Combattre {
 	
-	@Column(name="attaquant")
-	@OneToMany
+	@Id
+	@OneToOne
 	@JoinColumn(name="idCompte")
     private Joueur attaquant;
 	
-	@Column(name="defenseur")
-	@ManyToOne
+	@Id
+	@OneToOne
 	@JoinColumn(name="idCompte")
     private Joueur defenseur;
 	
 	@Column(name="nbSbiresEnvoyesPvp")
-    private int nbSbiresEnvoyesPvp;
+    private Integer nbSbiresEnvoyesPvp;
 	
 	@Column(name="datePvp")
     private Date datePvp;
@@ -50,7 +52,7 @@ public class Combattre {
 		this.defenseur = defenseur;
 	}
 
-	public int getNbSbiresEnvoyesPvp() {
+	public Integer getNbSbiresEnvoyesPvp() {
 		return nbSbiresEnvoyesPvp;
 	}
 
