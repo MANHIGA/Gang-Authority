@@ -78,9 +78,13 @@ public class Entrainer implements Serializable{
 	
 	@Override
 	public boolean equals(Object o){
-		Entrainer e = (Entrainer) o;
-		if((joueur.getIdCompte() == e.getJoueur().getIdCompte()) && (typeSbire.getIdTypeSbire() == e.getTypeSbire().getIdTypeSbire())){
-			return true;
+		if((o instanceof Entrainer)){
+			Entrainer e = (Entrainer) o;
+			if((joueur == e.getJoueur()) && (typeSbire == e.getTypeSbire())){
+				return true;
+			}else{
+				return false;
+			}
 		}else{
 			return false;
 		}
@@ -88,6 +92,6 @@ public class Entrainer implements Serializable{
 	
 	@Override
 	public int hashCode(){
-		return joueur.getIdCompte().hashCode() + typeSbire.getIdTypeSbire().hashCode();
+		return joueur.hashCode() + typeSbire.hashCode();
 	}
 }

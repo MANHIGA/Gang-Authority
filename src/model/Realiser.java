@@ -3,6 +3,7 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Realiser")
-public class Realiser {
+public class Realiser implements Serializable{
 	
 	@Id
 	@OneToOne
@@ -62,5 +63,24 @@ public class Realiser {
 
 	public void setNbSbiresEnvoyesRealisation(int nbSbiresEnvoyesRealisation) {
 		this.nbSbiresEnvoyesRealisation = nbSbiresEnvoyesRealisation;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		if(o instanceof Realiser){
+			Realiser r = (Realiser) o;
+			if((joueur == r.getJoueur()) && (mission == r.getMission())){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+	
+	@Override
+	public int hashCode(){
+		return joueur.hashCode() + mission.hashCode();
 	}
 }
