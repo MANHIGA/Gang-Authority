@@ -30,7 +30,6 @@ public class TypeBatiment {
     private int tempsCreationBatiment;
     
     @OneToOne
-    @Column(name="TypeBatiment_idTypeSbire")
     private TypeSbire typeSbire;
 
 	public int getIdTypeBatiment() {

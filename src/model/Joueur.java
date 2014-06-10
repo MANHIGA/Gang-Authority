@@ -6,16 +6,20 @@
 
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import org.hibernate.*;
 import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 @Entity
-@Table(name="joueur")
+@Table(name="Joueur")
 public class Joueur {
 	
 	@Id
@@ -32,8 +36,8 @@ public class Joueur {
 	@Column(name="mdp")
     private String mdp;
 	
-	@Column(name="pointsAutorite")
-    private int pointsAutorite;
+	@Column(name="pointAutorite")
+    private int pointAutorite;
 	
 	@Column(name="nbMorts")
     private int nbMorts;
@@ -47,8 +51,8 @@ public class Joueur {
 	@Column(name="nomGang")
     private String nomGang;
     
-	private List <Construire> mesBatiments;
-	private List <Entrainer> mesSbires;
+	//private List <Construire> mesBatiments;
+	//private List <Entrainer> mesSbires;
 	
 	public int getIdCompte() {
 		return idCompte;
@@ -82,12 +86,12 @@ public class Joueur {
 		this.mdp = mdp;
 	}
 	
-	public int getPointsAutorite() {
-		return pointsAutorite;
+	public int getPointAutorite() {
+		return pointAutorite;
 	}
 	
-	public void setPointsAutorite(int pointsAutorite) {
-		this.pointsAutorite = pointsAutorite;
+	public void setPointAutorite(int pointsAutorite) {
+		this.pointAutorite = pointsAutorite;
 	}
 	
 	public int getNbMorts() {
@@ -122,15 +126,14 @@ public class Joueur {
 		this.nomGang = nomGang;
 	}
 	
-	public static boolean identifierJoueur(String pseudo, String mdp){
+	public static boolean etreJoueur(String pseudo, String mdp){
 		
 		SessionFactory sessionFactory = AppFactory.getSessionFactory();
 		Session session = sessionFactory.openSession();
+	
+		Query query = session.createQuery("from Joueur where pseudo = '" + pseudo + "' and mdp = '" + mdp + "'");
 		
-		Query query = session.createQuery("from joueur where pseudo = " + pseudo + " and mdp = " + mdp);
-		List<Joueur> l = query.list();
-		
-		return l.isEmpty();
+		return !query.list().isEmpty();
 	}
     
 }
