@@ -64,16 +64,26 @@ public class Construire {
 		this.populationMax = populationMax;
 	}
 	
-	public boolean equals(Construire c){
+	public boolean equals(Object o){
 		
-		if(this == c){
-			return true;
-		}
-		if(c == null){
+		if(o == null){
+			return false;
+		}	
+		
+		if(this.getClass() != o.getClass()){
 			return false;
 		}
 		
+		Construire c = (Construire) o ;
 		
+		if(this.getJoueur().getIdCompte() == c.getJoueur().getIdCompte() && this.getTypeBatiment().getIdTypeBatiment() == c.getTypeBatiment().getIdTypeBatiment()){
+			return true;
+		}
+		
+		if(this == c){
+			return true;
+		}		
+			
 		return false;
 	}
 }
