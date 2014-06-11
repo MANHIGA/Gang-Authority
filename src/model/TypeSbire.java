@@ -36,6 +36,15 @@ public class TypeSbire {
 	@JoinColumn(name="TypeSbire_idTypeBatiment")
 	private TypeBatiment typeBatiment;
 
+	public TypeSbire(String libelleTypeSbire, Integer cout,
+			Integer tempsApparition, TypeBatiment typeBatiment) {
+		super();
+		this.libelleTypeSbire = libelleTypeSbire;
+		this.cout = cout;
+		this.tempsApparition = tempsApparition;
+		this.typeBatiment = typeBatiment;
+	}
+
 	public Integer getIdTypeSbire() {
 		return idTypeSbire;
 	}

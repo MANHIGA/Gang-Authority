@@ -33,6 +33,15 @@ public class Realiser implements Serializable{
 	@Column(name="nbSbiresEnvoyesRealisation")
 	private Integer nbSbiresEnvoyesRealisation;
 
+	public Realiser(Joueur joueur, Mission mission, Date dateRealisation,
+			Integer nbSbiresEnvoyesRealisation) {
+		super();
+		this.joueur = joueur;
+		this.mission = mission;
+		this.dateRealisation = dateRealisation;
+		this.nbSbiresEnvoyesRealisation = nbSbiresEnvoyesRealisation;
+	}
+
 	public Joueur getJoueur() {
 		return joueur;
 	}

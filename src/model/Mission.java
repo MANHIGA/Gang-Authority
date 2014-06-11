@@ -34,6 +34,18 @@ public class Mission {
 	@Column(name="nbMiniSbiresRequis")
 	private Integer nbMiniSbiresRequis;
 
+	public Mission(Integer dureeMission, Integer recompenseArgent,
+			String difficulte, Integer recompensePointsAutorites,
+			Integer tempsApparitionBase, Integer nbMiniSbiresRequis) {
+		super();
+		this.dureeMission = dureeMission;
+		this.recompenseArgent = recompenseArgent;
+		this.difficulte = difficulte;
+		this.recompensePointsAutorites = recompensePointsAutorites;
+		this.tempsApparitionBase = tempsApparitionBase;
+		this.nbMiniSbiresRequis = nbMiniSbiresRequis;
+	}
+
 	public Integer getIdMission() {
 		return idMission;
 	}

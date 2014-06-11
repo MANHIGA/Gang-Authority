@@ -56,6 +56,20 @@ public class Joueur {
 	
 
 	
+	public Joueur(String pseudo, String email, String mdp,
+			Integer pointAutorite, Integer nbMorts, Integer nbTues,
+			Integer argent, String nomGang) {
+		super();
+		this.pseudo = pseudo;
+		this.email = email;
+		this.mdp = mdp;
+		this.pointAutorite = pointAutorite;
+		this.nbMorts = nbMorts;
+		this.nbTues = nbTues;
+		this.argent = argent;
+		this.nomGang = nomGang;
+	}
+
 	public Integer getIdCompte() {
 		return idCompte;
 	}

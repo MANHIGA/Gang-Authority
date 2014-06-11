@@ -37,6 +37,15 @@ public class Combattre implements Serializable {
 	@Column(name = "datePvp")
 	private Date datePvp;
 
+	public Combattre(Joueur attaquant, Joueur defenseur,
+			Integer nbSbiresEnvoyesPvp, Date datePvp) {
+		super();
+		this.attaquant = attaquant;
+		this.defenseur = defenseur;
+		this.nbSbiresEnvoyesPvp = nbSbiresEnvoyesPvp;
+		this.datePvp = datePvp;
+	}
+
 	public Joueur getAttaquant() {
 		return attaquant;
 	}

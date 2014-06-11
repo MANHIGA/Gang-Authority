@@ -33,6 +33,15 @@ public class Construire implements Serializable{
 	@Column(name="populationMax")
     private Integer populationMax;
 
+	public Construire(Joueur joueur, TypeBatiment typeBatiment, Integer niveau,
+			Integer populationMax) {
+		super();
+		this.joueur = joueur;
+		this.typeBatiment = typeBatiment;
+		this.niveau = niveau;
+		this.populationMax = populationMax;
+	}
+
 	public Joueur getJoueur() {
 		return joueur;
 	}

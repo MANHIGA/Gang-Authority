@@ -36,6 +36,16 @@ public class Entrainer implements Serializable{
 	@Column(name="pointDefense")
 	private Integer pointDefense;
 
+	public Entrainer(Joueur joueur, TypeSbire typeSbire, Integer nbSbire,
+			Integer pointAttaque, Integer pointDefense) {
+		super();
+		this.joueur = joueur;
+		this.typeSbire = typeSbire;
+		this.nbSbire = nbSbire;
+		this.pointAttaque = pointAttaque;
+		this.pointDefense = pointDefense;
+	}
+
 	public Joueur getJoueur() {
 		return joueur;
 	}
