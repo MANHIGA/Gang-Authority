@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -30,6 +31,7 @@ public class TypeBatiment {
     private Integer tempsCreationBatiment;
     
     @OneToOne
+    @JoinColumn(name="TypeBatiment_idTypeSbire")
     private TypeSbire typeSbire;
 
 	public TypeBatiment(String libelleTypeBatiment,Integer tempsCreationBatiment, TypeSbire typeSbire) {

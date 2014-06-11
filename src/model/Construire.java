@@ -11,6 +11,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -21,10 +22,12 @@ public class Construire implements Serializable{
 	
 	@Id
 	@OneToOne
+	@JoinColumn(name="Construire_idCompte")
     private Joueur joueur;
 	
 	@Id
 	@OneToOne
+	@JoinColumn(name="Construire_idTypeBatiment")
     private TypeBatiment typeBatiment;
 	
 	@Column(name="niveau")

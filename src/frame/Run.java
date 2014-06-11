@@ -23,10 +23,9 @@ public class Run {
 				TypeBatiment b = new TypeBatiment("Casino",300,null);
 				session.save(b);
 				
-				System.out.println(Joueur.etreJoueur("noob", "yamete"));
+				//System.out.println(Joueur.etreJoueur("noob", "yamete"));
 				
-				person.creerBatiment(b);
-				
+				person.creerBatiment(b,session);
 				
 				tx.commit();
 

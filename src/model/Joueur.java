@@ -152,16 +152,17 @@ public class Joueur {
 		return !query.list().isEmpty();
 	}
 	
-	public void creerBatiment(TypeBatiment b){
-		
-		SessionFactory sessionFactory = AppFactory.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+	public void creerBatiment(TypeBatiment b, Session s){
 		
 		Construire c = new Construire(this,b,1,10);
+		s.save(c);
+	}
+	
+	public void ameliorerBatiment(TypeBatiment b, Session s){
 		
-		session.save(c);
-		tx.commit();
+		Query query = s.createQuery("from Construire where Construire_idCompte = " + idCompte + " and Construire_idTypeBatiment = " + b.getIdTypeBatiment());
+		
+		
 	}
     
 }
