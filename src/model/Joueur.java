@@ -160,9 +160,14 @@ public class Joueur {
 	
 	public void ameliorerBatiment(TypeBatiment b, Session s){
 		
-		Query query = s.createQuery("from Construire where Construire_idCompte = " + idCompte + " and Construire_idTypeBatiment = " + b.getIdTypeBatiment());
+		Query query = s.createQuery("from Construire where Construire_idCompte = " + idCompte + " and Construire_idTypeBatiment = " + b);
 		
-		
+		if(!(query.list().isEmpty())){
+			Construire c = (Construire)query.list().get(0);
+			c.setNiveau(c.getNiveau() + 1);
+			c.setPopulationMax(c.getPopulationMax() + 10);
+			s.update(c);
+		}
 	}
     
 }

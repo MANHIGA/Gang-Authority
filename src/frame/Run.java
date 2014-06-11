@@ -26,6 +26,7 @@ public class Run {
 				//System.out.println(Joueur.etreJoueur("noob", "yamete"));
 				
 				person.creerBatiment(b,session);
+				person.ameliorerBatiment(b,session);
 				
 				tx.commit();
 
