@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 @Entity
 @Table(name="Joueur")
@@ -54,8 +55,6 @@ public class Joueur {
 	//private List <Construire> mesBatiments;
 	//private List <Entrainer> mesSbires;
 	
-
-	
 	public Joueur(String pseudo, String email, String mdp,
 			Integer pointAutorite, Integer nbMorts, Integer nbTues,
 			Integer argent, String nomGang) {
@@ -68,6 +67,7 @@ public class Joueur {
 		this.nbTues = nbTues;
 		this.argent = argent;
 		this.nomGang = nomGang;
+	
 	}
 
 	public Integer getIdCompte() {
@@ -150,6 +150,18 @@ public class Joueur {
 		Query query = session.createQuery("from Joueur where pseudo = '" + pseudo + "' and mdp = '" + mdp + "'");
 		
 		return !query.list().isEmpty();
+	}
+	
+	public void creerBatiment(TypeBatiment b){
+		
+		SessionFactory sessionFactory = AppFactory.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		Construire c = new Construire(this,b,1,10);
+		
+		session.save(c);
+		tx.commit();
 	}
     
 }

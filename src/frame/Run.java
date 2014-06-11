@@ -17,10 +17,17 @@ public class Run {
 				System.out.println("Inserting Record");
 				Transaction tx = session.beginTransaction();
 
-				//Joueur person = new Joueur();
+				Joueur person = new Joueur("noob","noob@noob.com","yamete",0,0,0,500,"SUC");
+				session.save(person);
+				
+				TypeBatiment b = new TypeBatiment("Casino",300,null);
+				session.save(b);
+				
 				System.out.println(Joueur.etreJoueur("noob", "yamete"));
-
-				//session.save(person);
+				
+				person.creerBatiment(b);
+				
+				
 				tx.commit();
 
 				System.out.println("Done");

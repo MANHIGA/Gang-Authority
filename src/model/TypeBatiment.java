@@ -32,8 +32,7 @@ public class TypeBatiment {
     @OneToOne
     private TypeSbire typeSbire;
 
-	public TypeBatiment(String libelleTypeBatiment,
-			Integer tempsCreationBatiment, TypeSbire typeSbire) {
+	public TypeBatiment(String libelleTypeBatiment,Integer tempsCreationBatiment, TypeSbire typeSbire) {
 		super();
 		this.libelleTypeBatiment = libelleTypeBatiment;
 		this.tempsCreationBatiment = tempsCreationBatiment;
