@@ -70,7 +70,7 @@ public class Construire {
 			return false;
 		}	
 		
-		if(this.getClass() != o.getClass()){
+		if(!(o instanceof Construire)){
 			return false;
 		}
 		
@@ -85,5 +85,9 @@ public class Construire {
 		}		
 			
 		return false;
+	}
+	
+	public int hashCode(){
+		return joueur.hashCode() + typeBatiment.hashCode();
 	}
 }
