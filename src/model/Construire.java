@@ -6,6 +6,8 @@
 
 package model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,7 +18,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Construire")
-public class Construire {
+public class Construire implements Serializable{
 	
 	@Id
 	@OneToOne
@@ -64,6 +66,7 @@ public class Construire {
 		this.populationMax = populationMax;
 	}
 	
+	@Override
 	public boolean equals(Object o){
 		
 		if(o == null){
@@ -87,6 +90,7 @@ public class Construire {
 		return false;
 	}
 	
+	@Override
 	public int hashCode(){
 		return joueur.hashCode() + typeBatiment.hashCode();
 	}
