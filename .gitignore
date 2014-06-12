@@ -2,3 +2,7 @@
 .classpath
 
 *.class
+
+*.prefs
+
+*.class

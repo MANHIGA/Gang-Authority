@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.Assert.*;
+import model.Joueur;
 
 import org.junit.After;
 import org.junit.Before;
@@ -10,20 +11,11 @@ public class JoueurTest {
 
 	@Before
 	public void setUp() throws Exception {
+
 	}
 
 	@After
 	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void testJoueur() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
-	public void testJoueurStringStringStringIntegerIntegerIntegerIntegerString() {
-		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
@@ -38,87 +30,111 @@ public class JoueurTest {
 
 	@Test
 	public void testGetPseudo() {
-		fail("Not yet implemented"); // TODO
+		Joueur j = new Joueur("Eren", "Eren@Kyojin.com", "titan", 1234, 0, 123, 12345, "Survey Corps");
+		assertEquals(j.getPseudo(), "Eren");
 	}
 
 	@Test
 	public void testSetPseudo() {
-		fail("Not yet implemented"); // TODO
+		Joueur j = new Joueur("Eren", "Eren@Kyojin.com", "titan", 1234, 0, 123, 12345, "Survey Corps");
+		j.setPseudo("Mikasa");
+		assertEquals(j.getPseudo(), "Mikasa");
 	}
 
 	@Test
 	public void testGetEmail() {
-		fail("Not yet implemented"); // TODO
+		Joueur j = new Joueur("Eren", "Eren@Kyojin.com", "titan", 1234, 0, 123, 12345, "Survey Corps");
+		assertEquals(j.getEmail(), "Eren@Kyojin.com");
 	}
 
 	@Test
 	public void testSetEmail() {
-		fail("Not yet implemented"); // TODO
+		Joueur j = new Joueur("Eren", "Eren@Kyojin.com", "titan", 1234, 0, 123, 12345, "Survey Corps");
+		j.setEmail("Reiner@Kyojin.com");
+		assertEquals(j.getEmail(), "Reiner@Kyojin.com");
 	}
 
 	@Test
 	public void testGetMdp() {
-		fail("Not yet implemented"); // TODO
+		Joueur j = new Joueur("Eren", "Eren@Kyojin.com", "titan", 1234, 0, 123, 12345, "Survey Corps");
+		assertEquals(j.getMdp(), "titan");
 	}
 
 	@Test
 	public void testSetMdp() {
-		fail("Not yet implemented"); // TODO
+		Joueur j = new Joueur("Eren", "Eren@Kyojin.com", "titan", 1234, 0, 123, 12345, "Survey Corps");
+		j.setMdp("yamete");
+		assertEquals(j.getMdp(), "yamete");
 	}
 
 	@Test
 	public void testGetPointAutorite() {
-		fail("Not yet implemented"); // TODO
+		Joueur j = new Joueur("Eren", "Eren@Kyojin.com", "titan", 1234, 0, 123, 12345, "Survey Corps");
+		assertEquals(j.getPointAutorite(), new Integer(1234));
 	}
 
 	@Test
 	public void testSetPointAutorite() {
-		fail("Not yet implemented"); // TODO
+		Joueur j = new Joueur("Eren", "Eren@Kyojin.com", "titan", 1234, 0, 123, 12345, "Survey Corps");
+		j.setPointAutorite(12345);
+		assertEquals(j.getPointAutorite(), new Integer(12345));
 	}
 
 	@Test
 	public void testGetNbMorts() {
-		fail("Not yet implemented"); // TODO
+		Joueur j = new Joueur("Eren", "Eren@Kyojin.com", "titan", 1234, 0, 123, 12345, "Survey Corps");
+		assertEquals(j.getNbMorts(), new Integer(0));
 	}
 
 	@Test
 	public void testSetNbMorts() {
-		fail("Not yet implemented"); // TODO
+		Joueur j = new Joueur("Eren", "Eren@Kyojin.com", "titan", 1234, 0, 123, 12345, "Survey Corps");
+		j.setNbMorts(42);
+		assertEquals(j.getNbMorts(), new Integer(42));
 	}
 
 	@Test
 	public void testGetNbTues() {
-		fail("Not yet implemented"); // TODO
+		Joueur j = new Joueur("Eren", "Eren@Kyojin.com", "titan", 1234, 0, 123, 12345, "Survey Corps");
+		assertEquals(j.getNbTues(), new Integer(123));
 	}
 
 	@Test
 	public void testSetNbTues() {
-		fail("Not yet implemented"); // TODO
+		Joueur j = new Joueur("Eren", "Eren@Kyojin.com", "titan", 1234, 0, 123, 12345, "Survey Corps");
+		j.setNbTues(3);
+		assertEquals(j.getNbTues(), new Integer(3));
 	}
 
 	@Test
 	public void testGetArgent() {
-		fail("Not yet implemented"); // TODO
+		Joueur j = new Joueur("Eren", "Eren@Kyojin.com", "titan", 1234, 0, 123, 12345, "Survey Corps");
+		assertEquals(j.getArgent(), new Integer(12345));
 	}
 
 	@Test
 	public void testSetArgent() {
-		fail("Not yet implemented"); // TODO
+		Joueur j = new Joueur("Eren", "Eren@Kyojin.com", "titan", 1234, 0, 123, 12345, "Survey Corps");
+		j.setArgent(4312);
+		assertEquals(j.getArgent(), new Integer(4312));
 	}
 
 	@Test
 	public void testGetNomGang() {
-		fail("Not yet implemented"); // TODO
+		Joueur j = new Joueur("Eren", "Eren@Kyojin.com", "titan", 1234, 0, 123, 12345, "Survey Corps");
+		assertEquals(j.getNomGang(), "Survey Corps");
 	}
 
 	@Test
 	public void testSetNomGang() {
-		fail("Not yet implemented"); // TODO
+		Joueur j = new Joueur("Eren", "Eren@Kyojin.com", "titan", 1234, 0, 123, 12345, "Survey Corps");
+		j.setNomGang("Konoha");
+		assertEquals(j.getNomGang(), "Konoha");
 	}
 
 	@Test
 	public void testEtreJoueur() {
-		fail("Not yet implemented"); // TODO
+		assertTrue(Joueur.etreJoueur("Shioon", "gaju"));
 	}
 
 	@Test

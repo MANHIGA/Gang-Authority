@@ -22,17 +22,7 @@ public class CombattreTest {
 	}
 
 	@Test
-	public void testHashCode() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
 	public void testCombattre() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
-	public void testCombattreJoueurJoueurIntegerDate() {
 		fail("Not yet implemented"); // TODO
 	}
 
