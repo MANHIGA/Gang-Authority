@@ -36,6 +36,8 @@ public class Combattre implements Serializable {
 	@Id
 	@Column(name = "datePvp")
 	private Date datePvp;
+	
+	public Combattre(){}
 
 	public Combattre(Joueur attaquant, Joueur defenseur,
 			Integer nbSbiresEnvoyesPvp, Date datePvp) {

@@ -35,6 +35,8 @@ public class Entrainer implements Serializable{
 	
 	@Column(name="pointDefense")
 	private Integer pointDefense;
+	
+	public Entrainer(){}
 
 	public Entrainer(Joueur joueur, TypeSbire typeSbire, Integer nbSbire,
 			Integer pointAttaque, Integer pointDefense) {
