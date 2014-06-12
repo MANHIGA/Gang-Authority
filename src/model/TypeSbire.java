@@ -35,6 +35,8 @@ public class TypeSbire {
 	@OneToOne
 	@JoinColumn(name="TypeSbire_idTypeBatiment")
 	private TypeBatiment typeBatiment;
+	
+	public TypeSbire(){}
 
 	public TypeSbire(String libelleTypeSbire, Integer cout,
 			Integer tempsApparition, TypeBatiment typeBatiment) {

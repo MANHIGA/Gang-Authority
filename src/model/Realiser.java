@@ -32,6 +32,8 @@ public class Realiser implements Serializable{
 	
 	@Column(name="nbSbiresEnvoyesRealisation")
 	private Integer nbSbiresEnvoyesRealisation;
+	
+	public Realiser(){}
 
 	public Realiser(Joueur joueur, Mission mission, Date dateRealisation,
 			Integer nbSbiresEnvoyesRealisation) {

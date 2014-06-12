@@ -33,6 +33,8 @@ public class TypeBatiment {
     @OneToOne
     @JoinColumn(name="TypeBatiment_idTypeSbire")
     private TypeSbire typeSbire;
+    
+    public TypeBatiment(){}
 
 	public TypeBatiment(String libelleTypeBatiment,Integer tempsCreationBatiment, TypeSbire typeSbire) {
 		super();

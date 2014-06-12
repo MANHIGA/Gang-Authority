@@ -55,6 +55,8 @@ public class Joueur {
 	//private List <Construire> mesBatiments;
 	//private List <Entrainer> mesSbires;
 	
+	public Joueur(){}
+	
 	public Joueur(String pseudo, String email, String mdp,
 			Integer pointAutorite, Integer nbMorts, Integer nbTues,
 			Integer argent, String nomGang) {
