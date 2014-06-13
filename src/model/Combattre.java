@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.Session;
+
 @Entity
 @Table(name = "Combattre")
 public class Combattre implements Serializable {
@@ -30,8 +32,9 @@ public class Combattre implements Serializable {
 	@Id
 	@Column(name = "datePvp")
 	private Date datePvp;
-	
-	public Combattre(){}
+
+	public Combattre() {
+	}
 
 	public Combattre(Joueur attaquant, Joueur defenseur,
 			Integer nbSbiresEnvoyesPvp, Date datePvp) {
@@ -83,16 +86,31 @@ public class Combattre implements Serializable {
 							.getIdCompte())) {
 				return true;
 
-			}else{
+			} else {
 				return false;
 			}
 		} else {
 			return false;
 		}
 	}
-	
+
 	@Override
-	public int hashCode(){
+	public int hashCode() {
 		return attaquant.hashCode() + defenseur.hashCode() + datePvp.hashCode();
+	}
+
+	public void majPointsAttaques() {
+
+		Session s = AppFactory.getSessionFactory().openSession();
+		
+		//int pointsAttaque = nbSbiresEnvoyesPvp * attaquant.getSbires().get;
+		
+		s.close();
+	}
+
+	public void majPointsDefense() {
+		Session s = AppFactory.getSessionFactory().openSession();
+
+		s.close();
 	}
 }
