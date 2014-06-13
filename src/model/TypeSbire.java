@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 @Entity
 @Table(name="TypeSbire")
@@ -80,5 +86,22 @@ public class TypeSbire {
 	public void setTypeBatiment(TypeBatiment typeBatiment) {
 		this.typeBatiment = typeBatiment;
 	}
-
+	
+	public static List<TypeSbire> getTypesSbires(){
+		
+		Session s = AppFactory.getSessionFactory().openSession();
+		
+		Query q = s.createQuery("from TypeSbire");
+		
+		
+		if(!q.list().isEmpty()){
+			List<TypeSbire> ts = (List<TypeSbire>)q.list();
+			s.close();
+			return ts;
+		}else{
+			s.close();
+			return null;
+		}
+		
+	}
 }

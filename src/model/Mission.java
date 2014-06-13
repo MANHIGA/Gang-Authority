@@ -1,10 +1,15 @@
 package model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 
 @Entity
@@ -25,11 +30,11 @@ public class Mission {
 	@Column(name="difficulte")
 	private String difficulte; //String ou int, à déterminer
 	
-	@Column(name="recompensePointsAutorites")
+	@Column(name="recompensePointAutorite")
 	private Integer recompensePointsAutorites;
 	
-	@Column(name="tempsApparitionBase")
-	private Integer tempsApparitionBase;
+	@Column(name="tempsReapparitionBase")
+	private Integer tempsReapparitionBase;
 	
 	@Column(name="nbMiniSbiresRequis")
 	private Integer nbMiniSbiresRequis;
@@ -44,7 +49,7 @@ public class Mission {
 		this.recompenseArgent = recompenseArgent;
 		this.difficulte = difficulte;
 		this.recompensePointsAutorites = recompensePointsAutorites;
-		this.tempsApparitionBase = tempsApparitionBase;
+		this.tempsReapparitionBase = tempsApparitionBase;
 		this.nbMiniSbiresRequis = nbMiniSbiresRequis;
 	}
 
@@ -88,12 +93,12 @@ public class Mission {
 		this.recompensePointsAutorites = recompensePointsAutorites;
 	}
 
-	public Integer getTempsApparitionBase() {
-		return tempsApparitionBase;
+	public Integer getTempsReapparitionBase() {
+		return tempsReapparitionBase;
 	}
 
-	public void setTempsApparitionBase(int tempsApparitionBase) {
-		this.tempsApparitionBase = tempsApparitionBase;
+	public void setTempsReapparitionBase(int tempsApparitionBase) {
+		this.tempsReapparitionBase = tempsApparitionBase;
 	}
 
 	public Integer getNbMiniSbiresRequis() {
@@ -102,5 +107,20 @@ public class Mission {
 
 	public void setNbMiniSbiresRequis(int nbMiniSbiresRequis) {
 		this.nbMiniSbiresRequis = nbMiniSbiresRequis;
+	}
+	
+	public static List<Mission> getMissions(){
+		Session s = AppFactory.getSessionFactory().openSession();
+		
+		Query q = s.createQuery("from Mission");
+		
+		if(!(q.list().isEmpty())){
+			List<Mission> m = (List<Mission>) q.list();
+			s.close();
+			return m;
+		}else{
+			s.close();
+			return null;
+		}
 	}
 }

@@ -1,6 +1,11 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import java.util.List;
+
+import model.TypeSbire;
 
 import org.junit.After;
 import org.junit.Before;
@@ -74,6 +79,14 @@ public class TypeSbireTest {
 	@Test
 	public void testSetTypeBatiment() {
 		fail("Not yet implemented"); // TODO
+	}
+	
+	@Test
+	public void testGetTypesSbires(){
+		List<TypeSbire> ts = TypeSbire.getTypesSbires();
+		assertEquals(ts.size(), 2);
+		assertEquals(ts.get(0).getLibelleTypeSbire(), "Trafiquant");
+		assertEquals(ts.get(1).getLibelleTypeSbire(), "Homme de main");
 	}
 
 }
