@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.Assert.*;
+import model.TypeBatiment;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,33 +18,25 @@ public class TypeBatimentTest {
 	}
 
 	@Test
-	public void testTypeBatiment() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
-	public void testTypeBatimentStringIntegerTypeSbire() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
 	public void testGetIdTypeBatiment() {
-		fail("Not yet implemented"); // TODO
+		fail("Not mplemented yet");
 	}
 
 	@Test
 	public void testGetLibelleTypeBatiment() {
-		fail("Not yet implemented"); // TODO
+		TypeBatiment tb = new TypeBatiment("Casino", 123);
+		assertEquals(tb.getLibelleTypeBatiment(), "Casino");
 	}
 
 	@Test
 	public void testGetTempsCreationBatiment() {
-		fail("Not yet implemented"); // TODO
+		TypeBatiment tb = new TypeBatiment("Casino", 123);
+		assertEquals(tb.getTempsCreationBatiment(), new Integer(123));
 	}
 
 	@Test
 	public void testGetTypeSbire() {
 		fail("Not yet implemented"); // TODO
 	}
-
+	
 }

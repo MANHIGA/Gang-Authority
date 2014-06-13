@@ -29,6 +29,12 @@ public class TypeBatiment {
     private TypeSbire typeSbire;
     
     public TypeBatiment(){}
+    
+    public TypeBatiment(String libelleTypeBatiment, Integer tempsCreationBatiment){
+    	super();
+    	this.libelleTypeBatiment = libelleTypeBatiment;
+    	this.tempsCreationBatiment = tempsCreationBatiment;
+    }
 
 	public TypeBatiment(String libelleTypeBatiment,Integer tempsCreationBatiment, TypeSbire typeSbire) {
 		super();
