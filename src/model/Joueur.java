@@ -1,9 +1,12 @@
 package model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.Query;
@@ -43,7 +46,9 @@ public class Joueur {
 	@Column(name="nomGang")
     private String nomGang;
     
-	//private List <Construire> mesBatiments;
+	@OneToMany
+	private List <Construire> mesBatiments;
+	
 	//private List <Entrainer> mesSbires;
 	
 	public Joueur(){}
@@ -134,33 +139,69 @@ public class Joueur {
 	public void setNomGang(String nomGang) {
 		this.nomGang = nomGang;
 	}
-
-	public static boolean etreJoueur(String pseudo, String mdp){
+	
+	public List<Construire> getMesBatiments(){
+		
+		if(mesBatiments.isEmpty()){
+			
+			SessionFactory sessionFactory = AppFactory.getSessionFactory();
+			Session session = sessionFactory.openSession();
+			
+			Query q = session.createQuery("from Construire where Construire_idCompte = " + this.idCompte);
+			
+			if(!(q.list().isEmpty())){
+				mesBatiments = (List<Construire>) q.list();
+			}
+			session.close();
+		}
+		
+		return mesBatiments;
+	}
+	
+	public static Joueur getJoueurByPseudoMdp(String pseudo, String mdp){
 		
 		SessionFactory sessionFactory = AppFactory.getSessionFactory();
 		Session session = sessionFactory.openSession();
 	
 		Query query = session.createQuery("from Joueur where pseudo = '" + pseudo + "' and mdp = '" + mdp + "'");
 		
-		return !query.list().isEmpty();
+		if(query.list().isEmpty()){
+			session.close();
+			return null;
+		}else {
+			Joueur j = (Joueur)query.list().get(0);
+			session.close();
+			return j;
+		}
+			
 	}
 	
-	public void creerBatiment(TypeBatiment b, Session s){
+	public void creerBatiment(TypeBatiment b){
+		
+		Session session = AppFactory.getSessionFactory().openSession();
 		
 		Construire c = new Construire(this,b,1,10);
-		s.save(c);
+		session.save(c);
+		
+		mesBatiments.add(c);
+		
+		session.close();
 	}
 	
-	public void ameliorerBatiment(TypeBatiment b, Session s){
+	public void ameliorerBatiment(TypeBatiment b){
 		
-		Query query = s.createQuery("from Construire where Construire_idCompte = " + idCompte + " and Construire_idTypeBatiment = " + b.getIdTypeBatiment());
+		Session session = AppFactory.getSessionFactory().openSession();
+		
+		Query query = session.createQuery("from Construire where Construire_idCompte = " + idCompte + " and Construire_idTypeBatiment = " + b.getIdTypeBatiment());
 		
 		if(!(query.list().isEmpty())){
 			Construire c = (Construire)query.list().get(0);
 			System.out.println(c.getNiveau());
 			c.setNiveau(c.getNiveau() + 1);
 			c.setPopulationMax(c.getPopulationMax() + 10);
-			s.update(c);
+			session.update(c);
+			
+			session.close();
 		}
 	}
     

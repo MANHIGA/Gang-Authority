@@ -1,6 +1,9 @@
 package test;
 
 import static org.junit.Assert.*;
+
+import java.util.List;
+
 import model.TypeBatiment;
 
 import org.junit.After;
@@ -37,6 +40,13 @@ public class TypeBatimentTest {
 	@Test
 	public void testGetTypeSbire() {
 		fail("Not yet implemented"); // TODO
+	}
+	
+	@Test
+	public void testGetTypesBatiments(){
+		
+		List <TypeBatiment> mesTypesBatiments = TypeBatiment.getTypesBatiments();
+		assertEquals(mesTypesBatiments.size(),3);
 	}
 	
 }
