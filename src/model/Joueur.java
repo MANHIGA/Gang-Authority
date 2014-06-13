@@ -1,6 +1,6 @@
 package model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,9 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.collection.internal.PersistentBag;
+
 
 @Entity
 @Table(name="Joueur")
@@ -46,8 +49,8 @@ public class Joueur {
 	@Column(name="nomGang")
     private String nomGang;
     
-	@OneToMany
-	private List <Construire> mesBatiments;
+	@OneToMany(mappedBy="joueur")
+	private Set<Construire> mesBatiments;
 	
 	//private List <Entrainer> mesSbires;
 	
@@ -140,21 +143,7 @@ public class Joueur {
 		this.nomGang = nomGang;
 	}
 	
-	public List<Construire> getMesBatiments(){
-		
-		if(mesBatiments == null){
-			
-			SessionFactory sessionFactory = AppFactory.getSessionFactory();
-			Session session = sessionFactory.openSession();
-			
-			Query q = session.createQuery("from Construire where Construire_idCompte = " + this.idCompte);
-			
-			if(!(q.list().isEmpty())){
-				mesBatiments = (List<Construire>)q.list();
-			}
-			session.close();
-		}
-		
+	public Set<Construire> getMesBatiments(){
 		return mesBatiments;
 	}
 	
