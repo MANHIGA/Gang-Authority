@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.List;
 
 import model.AppFactory;
+import model.Construire;
 import model.Joueur;
 import model.TypeBatiment;
 
@@ -36,10 +37,17 @@ public class JoueurTest {
 		List <TypeBatiment> mesTypesBatiments = TypeBatiment.getTypesBatiments();
 		Joueur j = Joueur.getJoueurByPseudoMdp("Shioon", "gaju");
 		
-		int nbBatiments = j.getMesBatiments().size() + 1;
+		List<Construire> mb = j.getMesBatiments();
+		int nbBatiments;
+		
+		if(mb == null){
+			nbBatiments = 0;
+		}else{
+			nbBatiments = mb.size();
+		}
 		
 		j.creerBatiment(mesTypesBatiments.get(0));
-		assertEquals(j.getMesBatiments().size(),nbBatiments);		
+		assertEquals(j.getMesBatiments().size(),nbBatiments + 1);		
 	}
 
 	@Test

@@ -142,7 +142,7 @@ public class Joueur {
 	
 	public List<Construire> getMesBatiments(){
 		
-		if(mesBatiments.isEmpty()){
+		if(mesBatiments == null){
 			
 			SessionFactory sessionFactory = AppFactory.getSessionFactory();
 			Session session = sessionFactory.openSession();
@@ -150,7 +150,7 @@ public class Joueur {
 			Query q = session.createQuery("from Construire where Construire_idCompte = " + this.idCompte);
 			
 			if(!(q.list().isEmpty())){
-				mesBatiments = (List<Construire>) q.list();
+				mesBatiments = (List<Construire>)q.list();
 			}
 			session.close();
 		}
