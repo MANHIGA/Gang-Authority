@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name="Joueur")
@@ -51,7 +53,8 @@ public class Joueur {
 	@OneToMany(mappedBy="joueur",fetch=FetchType.EAGER)
 	private List <Construire> mesBatiments;
 	
-	//private List <Entrainer> mesSbires;
+	@OneToMany(mappedBy="joueur",fetch=FetchType.EAGER)
+	private List <Entrainer> mesSbires;
 	
 	public Joueur(){}
 	
@@ -146,6 +149,10 @@ public class Joueur {
 		return mesBatiments;
 	}
 	
+	public List<Entrainer> getMesSbires(){
+		return mesSbires;
+	}
+	
 	public static Joueur getJoueurByPseudoMdp(String pseudo, String mdp){
 		
 		SessionFactory sessionFactory = AppFactory.getSessionFactory();
@@ -167,30 +174,56 @@ public class Joueur {
 	public void creerBatiment(TypeBatiment b){
 		
 		Session session = AppFactory.getSessionFactory().openSession();
-		
 		Construire c = new Construire(this,b,1,10);
 		session.save(c);
-		
 		mesBatiments.add(c);
+		session.close();
+	}
+	
+	public void ameliorerBatiment(Construire c){
+		
+		Session session = AppFactory.getSessionFactory().openSession();
+	
+		c.setNiveau(c.getNiveau() + 1);
+		c.setPopulationMax(c.getPopulationMax() + 10);
+		session.update(c);
+			
+		session.close();
+	}
+	
+	public Entrainer getTypeSbireEntrainer(TypeSbire s){
+		
+		for(int i = 0; i < mesSbires.size(); i++){
+			if(mesSbires.get(i).getTypeSbire().getLibelleTypeSbire() == s.getLibelleTypeSbire()){
+				return mesSbires.get(i);
+			}
+		}
+		
+		return null;
+	}
+    
+	public void recruterTypeSbire(TypeSbire s){
+		
+		Session session = AppFactory.getSessionFactory().openSession();
+		
+		boolean sbireTrouve = false;
+		
+		for(int i = 0; i < this.getMesSbires().size(); i++){
+			
+			if(this.getMesSbires().get(i).getTypeSbire().getLibelleTypeSbire() == s.getLibelleTypeSbire()){
+				this.getMesSbires().get(i).setNbSbire(1);
+				session.update(this.getMesSbires().get(i));
+				sbireTrouve = true;
+			}
+		}
+		
+		if(!sbireTrouve){
+			Entrainer e = new Entrainer(this,s);
+			mesSbires.add(e);
+			session.save(e);
+		}
 		
 		session.close();
 	}
 	
-	public void ameliorerBatiment(TypeBatiment b){
-		
-		Session session = AppFactory.getSessionFactory().openSession();
-		
-		Query query = session.createQuery("from Construire where Construire_idCompte = " + idCompte + " and Construire_idTypeBatiment = " + b.getIdTypeBatiment());
-		
-		if(!(query.list().isEmpty())){
-			Construire c = (Construire)query.list().get(0);
-			System.out.println(c.getNiveau());
-			c.setNiveau(c.getNiveau() + 1);
-			c.setPopulationMax(c.getPopulationMax() + 10);
-			session.update(c);
-			
-			session.close();
-		}
-	}
-    
 }
