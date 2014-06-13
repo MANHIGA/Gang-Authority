@@ -1,9 +1,11 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -46,7 +48,7 @@ public class Joueur {
 	@Column(name="nomGang")
     private String nomGang;
     
-	@OneToMany
+	@OneToMany(mappedBy="joueur",fetch=FetchType.EAGER)
 	private List <Construire> mesBatiments;
 	
 	//private List <Entrainer> mesSbires;
@@ -140,21 +142,7 @@ public class Joueur {
 		this.nomGang = nomGang;
 	}
 	
-	public List<Construire> getMesBatiments(){
-		
-		if(mesBatiments == null){
-			
-			SessionFactory sessionFactory = AppFactory.getSessionFactory();
-			Session session = sessionFactory.openSession();
-			
-			Query q = session.createQuery("from Construire where Construire_idCompte = " + this.idCompte);
-			
-			if(!(q.list().isEmpty())){
-				mesBatiments = (List<Construire>)q.list();
-			}
-			session.close();
-		}
-		
+	public List<Construire> getMesBatiments(){		
 		return mesBatiments;
 	}
 	

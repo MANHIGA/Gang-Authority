@@ -4,12 +4,10 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import model.AppFactory;
 import model.Construire;
 import model.Joueur;
 import model.TypeBatiment;
 
-import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
