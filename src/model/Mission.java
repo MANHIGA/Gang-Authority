@@ -39,6 +39,8 @@ public class Mission {
 	@Column(name="nbMiniSbiresRequis")
 	private Integer nbMiniSbiresRequis;
 	
+	
+	
 	public Mission(){}
 
 	public Mission(Integer dureeMission, Integer recompenseArgent,

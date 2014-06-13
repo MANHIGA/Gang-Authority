@@ -45,7 +45,7 @@ public class JoueurTest {
 		}
 		
 		j.creerBatiment(mesTypesBatiments.get(0));
-		assertEquals(j.getMesBatiments().size(),nbBatiments + 1);		
+		assertEquals(j.getMesBatiments().size(), nbBatiments + 1);		
 	}
 
 	@Test
