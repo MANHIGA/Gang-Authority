@@ -22,7 +22,7 @@ public class Entrainer implements Serializable{
 	
 	@Id
 	@ManyToOne
-	@JoinColumn(name="entrainer_typeSbire")
+	@JoinColumn(name="entrainer_idtypeSbire")
 	private TypeSbire typeSbire;
 	
 	@Column(name="nbSbire")
@@ -40,7 +40,9 @@ public class Entrainer implements Serializable{
 		super();
 		this.joueur = joueur;
 		this.typeSbire = typeSbire;
-		this.nbSbire ++;
+		this.nbSbire = 1;
+		this.pointAttaque = 100;
+		this.pointDefense = 100;
 	}
 
 	public Joueur getJoueur() {
@@ -72,7 +74,7 @@ public class Entrainer implements Serializable{
 	}
 
 	public void setPointAttaque(Integer pointAttaque) {
-		this.pointAttaque = pointAttaque;
+		this.pointAttaque += pointAttaque;
 	}
 
 	public Integer getPointDefense() {
@@ -80,7 +82,7 @@ public class Entrainer implements Serializable{
 	}
 
 	public void setPointDefense(Integer pointDefense) {
-		this.pointDefense = pointDefense;
+		this.pointDefense += pointDefense;
 	}
 	
 	@Override

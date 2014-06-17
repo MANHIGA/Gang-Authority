@@ -16,6 +16,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name="Joueur")
@@ -51,9 +53,11 @@ public class Joueur {
     private String nomGang;
     
 	@OneToMany(mappedBy="joueur",fetch=FetchType.EAGER)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List <Construire> mesBatiments;
 	
-	@OneToMany(mappedBy="joueur",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="joueur")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List <Entrainer> mesSbires;
 	
 	public Joueur(){}
@@ -110,7 +114,10 @@ public class Joueur {
 	}
 
 	public void setPointAutorite(Integer pointAutorite) {
-		this.pointAutorite = pointAutorite;
+		Session session = AppFactory.getSessionFactory().openSession();
+		this.pointAutorite += pointAutorite;
+		session.update(this);
+		session.close();
 	}
 
 	public Integer getNbMorts() {
@@ -118,7 +125,10 @@ public class Joueur {
 	}
 
 	public void setNbMorts(Integer nbMorts) {
-		this.nbMorts = nbMorts;
+		Session session = AppFactory.getSessionFactory().openSession();
+		this.nbMorts += nbMorts;
+		session.update(this);
+		session.close();
 	}
 
 	public Integer getNbTues() {
@@ -126,7 +136,10 @@ public class Joueur {
 	}
 
 	public void setNbTues(Integer nbTues) {
-		this.nbTues = nbTues;
+		Session session = AppFactory.getSessionFactory().openSession();
+		this.nbTues += nbTues;
+		session.update(this);
+		session.close();
 	}
 
 	public Integer getArgent() {
@@ -134,7 +147,10 @@ public class Joueur {
 	}
 
 	public void setArgent(Integer argent) {
-		this.argent = argent;
+		Session session = AppFactory.getSessionFactory().openSession();
+		this.argent += argent;
+		session.update(this);
+		session.close();
 	}
 
 	public String getNomGang() {
@@ -226,4 +242,32 @@ public class Joueur {
 		session.close();
 	}
 	
+	public void ameliorerTypeSbire(Entrainer e){
+		
+		Session session = AppFactory.getSessionFactory().openSession();
+	
+		e.setPointAttaque(100);
+		e.setPointDefense(100);
+		session.update(e);
+			
+		session.close();
+	}
+	
+	public void recompenserJoueur(int recompensePointAutorite, int recompenseArgent){
+		this.setPointAutorite(recompensePointAutorite);
+		this.setArgent(recompenseArgent);
+	}
+	
+	public boolean verifierJoueurArgent(int argentDepense){
+		
+		if(this.argent < argentDepense){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public void signalerJoueur(Joueur j, String justification){
+		
+	}
 }

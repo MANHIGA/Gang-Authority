@@ -79,6 +79,40 @@ public class JoueurTest {
 		}
 		
 		j.recruterTypeSbire(mesTypesSbires.get(0));
-		assertEquals(j.getTypeSbireEntrainer(mesTypesSbires.get(0)),nbSbires + 1);
+		assertEquals(j.getTypeSbireEntrainer(mesTypesSbires.get(0)).getNbSbire(), new Integer (nbSbires + 1));
 	}
+	
+	@Test
+	public void testAmeliorerTypeSbire(){
+		
+		List <TypeSbire> mesTypesSbires = TypeSbire.getTypesSbires();
+		Joueur j = Joueur.getJoueurByPseudoMdp("Shioon", "gaju");
+		
+		int pointAttaque;
+		int pointDefense;
+		
+		j.recruterTypeSbire(mesTypesSbires.get(0));
+		Entrainer s = j.getTypeSbireEntrainer(mesTypesSbires.get(0));
+		
+		pointAttaque = s.getPointAttaque();
+		pointDefense = s.getPointDefense();
+		j.ameliorerTypeSbire(s);
+		
+		assertNotSame(s.getPointAttaque(),pointAttaque);
+		assertNotSame(s.getPointDefense(),pointDefense);
+	}
+	
+	@Test
+	public void testRecompenserJoueur(){
+		Joueur j = Joueur.getJoueurByPseudoMdp("Shioon", "gaju");
+		
+		int argent = j.getArgent();
+		int pa = j.getPointAutorite();
+		
+		j.recompenserJoueur(100, 4500);
+		
+		assertNotSame(j.getArgent(),argent);
+		assertNotSame(j.getPointAutorite(),pa);
+	}
+	
 }
