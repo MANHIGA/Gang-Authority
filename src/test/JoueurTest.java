@@ -1,15 +1,20 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
 import java.util.List;
 
+import javax.persistence.Query;
+
+import model.AppFactory;
 import model.Construire;
 import model.Entrainer;
 import model.Joueur;
 import model.TypeBatiment;
 import model.TypeSbire;
 
+import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -115,4 +120,15 @@ public class JoueurTest {
 		assertNotSame(j.getPointAutorite(),pa);
 	}
 	
+	@Test
+	public void testSignalerJoueur(){
+		Joueur j = Joueur.getJoueurByPseudoMdp("Shioon", "gaju");
+		String justification = "Test de signalement";
+		j.signalerJoueur(j, justification);
+		
+		Session session = AppFactory.getSessionFactory().openSession();
+		org.hibernate.Query q = session.createQuery("from Signalement where Signalement_idCompte = " + j.getIdCompte() + " AND justification = '" + justification + "'");
+		
+		assertEquals(q.list().isEmpty(),false);
+	}
 }

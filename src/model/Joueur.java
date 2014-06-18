@@ -269,5 +269,9 @@ public class Joueur {
 	
 	public void signalerJoueur(Joueur j, String justification){
 		
+		Session session = AppFactory.getSessionFactory().openSession();
+		Signalement s = new Signalement(j,justification);
+		session.save(s);
+		session.close();
 	}
 }
