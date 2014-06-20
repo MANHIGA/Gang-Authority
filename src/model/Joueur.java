@@ -274,4 +274,39 @@ public class Joueur {
 		session.save(s);
 		session.close();
 	}
+	
+	public List<Mission> getMissionsDisponibles(){
+				
+		Session s = AppFactory.getSessionFactory().openSession();
+		
+		Query q = s.createQuery("from Realiser where Realiser_idCompte = " + this.getIdCompte());		
+		List<Realiser> mesMissionsRealisees = (List<Realiser>)q.list();
+		
+		List<Mission> missionsDisponibles = Mission.getMissions();
+		
+		for(Realiser r : mesMissionsRealisees){
+			missionsDisponibles.remove(r.getMission());
+		}
+		
+		s.close();
+		
+		if(missionsDisponibles.isEmpty()){
+			return null;
+		}else{
+			return missionsDisponibles;
+		}
+	}
+	
+	public void realiserMission(Mission m){
+		
+		Session s = AppFactory.getSessionFactory().openSession();
+		
+		for(Mission uneMission : this.getMissionsDisponibles()){
+			
+//			if(uneMission.getIdMission() = m.getIdMission()){
+//				
+//			}
+		}
+		
+	}
 }
