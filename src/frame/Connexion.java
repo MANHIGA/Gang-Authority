@@ -14,14 +14,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import java.awt.Color;
 
-public class Accueil extends JFrame {
+public class Connexion extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JLabel lblCrerUnCompte;
-	private JLabel lblMotDePasse;
+	private JTextField txtPseudo;
+	private JTextField txtMotDePasse;
+	private JLabel lblCreerUnCompte;
+	private JLabel lblOubliMotDePasse;
 
 	/**
 	 * Launch the application.
@@ -30,7 +31,7 @@ public class Accueil extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Accueil frame = new Accueil();
+					Connexion frame = new Connexion();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,8 +43,8 @@ public class Accueil extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Accueil() {
-		setTitle("Gang Authority");
+	public Connexion() {
+		setTitle("Gang Authority - Connexion");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -51,23 +52,25 @@ public class Accueil extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Pseudo");
-		lblNewLabel.setBounds(88, 88, 61, 16);
-		contentPane.add(lblNewLabel);
+		JLabel lblPseudo = new JLabel("Pseudo");
+		lblPseudo.setBounds(88, 88, 61, 16);
+		contentPane.add(lblPseudo);
 		
-		JLabel lblNewLabel_1 = new JLabel("Mot de passe");
-		lblNewLabel_1.setBounds(72, 140, 96, 16);
-		contentPane.add(lblNewLabel_1);
+		JLabel lblMotDePasse = new JLabel("Mot de passe");
+		lblMotDePasse.setBounds(72, 140, 96, 16);
+		contentPane.add(lblMotDePasse);
 		
-		textField = new JTextField();
-		textField.setBounds(225, 82, 134, 28);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		txtPseudo = new JTextField();
+		lblPseudo.setLabelFor(txtPseudo);
+		txtPseudo.setBounds(225, 82, 134, 28);
+		contentPane.add(txtPseudo);
+		txtPseudo.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(225, 134, 134, 28);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		txtMotDePasse = new JTextField();
+		lblMotDePasse.setLabelFor(txtMotDePasse);
+		txtMotDePasse.setBounds(225, 134, 134, 28);
+		contentPane.add(txtMotDePasse);
+		txtMotDePasse.setColumns(10);
 		
 		JButton btnValider = new JButton("Valider");
 		btnValider.addMouseListener(new MouseAdapter() {
@@ -79,8 +82,9 @@ public class Accueil extends JFrame {
 		btnValider.setBounds(149, 199, 117, 29);
 		contentPane.add(btnValider);
 		
-		lblCrerUnCompte = new JLabel("Cr\u00E9er un compte");
-		lblCrerUnCompte.addMouseListener(new MouseAdapter() {
+		lblCreerUnCompte = new JLabel("Cr\u00E9er un compte");
+		lblCreerUnCompte.setForeground(Color.BLUE);
+		lblCreerUnCompte.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
@@ -98,11 +102,12 @@ public class Accueil extends JFrame {
 				}
 			}
 		});
-		lblCrerUnCompte.setBounds(68, 243, 117, 16);
-		contentPane.add(lblCrerUnCompte);
+		lblCreerUnCompte.setBounds(68, 243, 117, 16);
+		contentPane.add(lblCreerUnCompte);
 		
-		lblMotDePasse = new JLabel("Mot de passe oubli\u00E9");
-		lblMotDePasse.addMouseListener(new MouseAdapter() {
+		lblOubliMotDePasse = new JLabel("Mot de passe oubli\u00E9");
+		lblOubliMotDePasse.setForeground(Color.BLUE);
+		lblOubliMotDePasse.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
@@ -119,7 +124,7 @@ public class Accueil extends JFrame {
 				}
 			}
 		});
-		lblMotDePasse.setBounds(238, 243, 155, 16);
-		contentPane.add(lblMotDePasse);
+		lblOubliMotDePasse.setBounds(238, 243, 155, 16);
+		contentPane.add(lblOubliMotDePasse);
 	}
 }
