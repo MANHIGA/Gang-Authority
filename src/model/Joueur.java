@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -279,12 +280,13 @@ public class Joueur {
 				
 		Session s = AppFactory.getSessionFactory().openSession();
 		
-		Query q = s.createQuery("from Realiser where Realiser_idCompte = " + this.getIdCompte());		
+		Query q = s.createQuery("from Realiser where Realiser_idCompte = " + this.getIdCompte() + " order by dateRealisation");		
 		List<Realiser> mesMissionsRealisees = (List<Realiser>)q.list();
 		
 		List<Mission> missionsDisponibles = Mission.getMissions();
 		
 		for(Realiser r : mesMissionsRealisees){
+			// Avant la suppression, faudra comparer la date d'aujourd'hui et dateRealisation + Mission.tempsReapparition
 			missionsDisponibles.remove(r.getMission());
 		}
 		
@@ -297,16 +299,29 @@ public class Joueur {
 		}
 	}
 	
-	public void realiserMission(Mission m){
+	public void realiserMission(Mission m, int nbSbiresEnvoyes){
 		
 		Session s = AppFactory.getSessionFactory().openSession();
+		boolean missionTrouvee = false;
+		int i = 0;
 		
-		for(Mission uneMission : this.getMissionsDisponibles()){
+		List<Mission> missionsDisponibles = this.getMissionsDisponibles();
+		
+		while(!missionTrouvee && i < missionsDisponibles.size()){
 			
-//			if(uneMission.getIdMission() = m.getIdMission()){
-//				
-//			}
+			if(m.getIdMission().equals(missionsDisponibles.get(i).getIdMission())){
+				Realiser r = new Realiser(this,missionsDisponibles.get(i),new Date(),nbSbiresEnvoyes);
+				s.save(r);
+				missionTrouvee = true;
+			}
+			i++;
 		}
-		
+		s.close();
 	}
+	
+	public static List<Joueur> getJoueursConnectes(){
+		
+		return null;
+	}
+	
 }
