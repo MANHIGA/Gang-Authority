@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -286,8 +287,12 @@ public class Joueur {
 		List<Mission> missionsDisponibles = Mission.getMissions();
 		
 		for(Realiser r : mesMissionsRealisees){
-			// Avant la suppression, faudra comparer la date d'aujourd'hui et dateRealisation + Mission.tempsReapparition
-			missionsDisponibles.remove(r.getMission());
+			
+			Date dateMissionDisponible = r.getDateRealisation();
+			
+			if(dateMissionDisponible.before(new Date())){
+				missionsDisponibles.remove(r.getMission());
+			}		
 		}
 		
 		s.close();

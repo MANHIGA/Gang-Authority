@@ -37,7 +37,6 @@ public class Realiser implements Serializable{
 		super();
 		this.joueur = joueur;
 		this.mission = mission;
-		this.dateRealisation = dateRealisation;
 		this.nbSbiresEnvoyesRealisation = nbSbiresEnvoyesRealisation;
 	}
 

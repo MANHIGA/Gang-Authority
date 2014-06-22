@@ -39,7 +39,6 @@ public class Signalement implements Serializable{
 	public Signalement(Joueur j, String raison){
 		this.joueur = j;
 		this.justification = raison;
-		this.dateSignalement= new Date();
 	}
 	
 	public Joueur getJoueur() {
