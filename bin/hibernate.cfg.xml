@@ -22,5 +22,7 @@
 		<mapping class="model.Mission" />
 		<mapping class="model.Realiser" />
 		<mapping class="model.TypeSbire" />
-		<mapping class="model.Signalement"></mapping></session-factory>
+		<mapping class="model.Concerner" />
+		<mapping class="model.Signalement"></mapping>
+	</session-factory>
 </hibernate-configuration>
