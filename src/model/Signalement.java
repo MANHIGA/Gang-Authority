@@ -23,7 +23,6 @@ public class Signalement implements Serializable{
 	@Column(name="idSignalement")
 	private Integer idSignalement;
 	
-	@Id
 	@OneToOne
 	@JoinColumn(name="Signalement_idCompte")
 	private Joueur joueur;

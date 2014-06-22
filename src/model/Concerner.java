@@ -18,12 +18,12 @@ public class Concerner implements Serializable {
 	
 	@Id
 	@OneToOne
-	@JoinColumn(name = "idSignalement")
+	@JoinColumn(name = "Concerner_idSignalement")
 	private Signalement idSignalement;
 	
 	@Id
 	@OneToOne
-	@JoinColumn(name = "idCompte")
+	@JoinColumn(name = "Concerner_idCompte")
 	private Joueur idCompte;
 
 	public Signalement getIdSignalement() {
