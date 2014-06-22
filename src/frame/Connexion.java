@@ -80,6 +80,7 @@ public class Connexion extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				if(Joueur.getJoueurByPseudoMdp(txtPseudo.getText(), txtMotDePasse.getText()) != null){
 					Menu page = new Menu();
+					page.main(new String[]{"e","o"});
 				}
 			}
 		});
