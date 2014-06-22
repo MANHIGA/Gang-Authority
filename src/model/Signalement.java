@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -40,6 +41,7 @@ public class Signalement implements Serializable{
 	public Signalement(Joueur j, Joueur joueurSignale, String raison){
 		this.joueur = j;
 		this.justification = raison;
+		this.dateSignalement = new Date();
 		
 		Concerner c = new Concerner(this,joueurSignale);
 	}
@@ -70,10 +72,6 @@ public class Signalement implements Serializable{
 
 	public Date getDateSignalement() {
 		return dateSignalement;
-	}
-
-	public void setDateSignalement(Date dateSignalement) {
-		this.dateSignalement = dateSignalement;
 	}
 	
 	@Override
