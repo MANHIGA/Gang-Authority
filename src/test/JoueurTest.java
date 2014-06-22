@@ -11,6 +11,7 @@ import model.AppFactory;
 import model.Construire;
 import model.Entrainer;
 import model.Joueur;
+import model.Mission;
 import model.TypeBatiment;
 import model.TypeSbire;
 
@@ -131,4 +132,22 @@ public class JoueurTest {
 		
 		assertEquals(q.list().isEmpty(),false);
 	}
+	
+	@Test
+	public void testGetMissionsDisponibles(){
+		Joueur j = Joueur.getJoueurByPseudoMdp("Shioon", "gaju");
+		
+		assertNotSame(j.getMissionsDisponibles().size(),0);
+	}
+	
+	@Test
+	public void testRealiserMission(){
+		Joueur j = Joueur.getJoueurByPseudoMdp("Shioon", "gaju");
+		
+		int nbMissionsDisponibles = j.getMissionsDisponibles().size();
+		j.realiserMission(j.getMissionsDisponibles().get(1), j.getMissionsDisponibles().get(1).getNbMiniSbiresRequis());
+		
+		assertNotSame(nbMissionsDisponibles,j.getMissionsDisponibles().size());
+	}
+
 }
