@@ -1,5 +1,6 @@
 package frame;
 
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
@@ -14,7 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
+
+import model.Joueur;
+import model.SessionJoueur;
 
 public class Connexion extends JFrame {
 
@@ -27,7 +30,7 @@ public class Connexion extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String args[]) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -51,47 +54,59 @@ public class Connexion extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblPseudo = new JLabel("Pseudo");
 		lblPseudo.setBounds(88, 88, 61, 16);
 		contentPane.add(lblPseudo);
-		
+
 		JLabel lblMotDePasse = new JLabel("Mot de passe");
 		lblMotDePasse.setBounds(72, 140, 96, 16);
 		contentPane.add(lblMotDePasse);
-		
+
 		txtPseudo = new JTextField();
 		lblPseudo.setLabelFor(txtPseudo);
 		txtPseudo.setBounds(225, 82, 134, 28);
 		contentPane.add(txtPseudo);
 		txtPseudo.setColumns(10);
-		
+
 		txtMotDePasse = new JTextField();
 		lblMotDePasse.setLabelFor(txtMotDePasse);
 		txtMotDePasse.setBounds(225, 134, 134, 28);
 		contentPane.add(txtMotDePasse);
 		txtMotDePasse.setColumns(10);
-		
+
 		JButton btnValider = new JButton("Valider");
 		btnValider.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				if (!txtPseudo.getText().equals("") && !txtMotDePasse.getText().equals("")) {
+					Joueur joueur = Joueur.getJoueurByPseudoMdp(
+							txtPseudo.getText(), txtMotDePasse.getText());
+					if (joueur != null) {
+						SessionJoueur sessionJoueur = SessionJoueur
+								.getInstance();
+						sessionJoueur.setJoueur(joueur);
+						Menu.main(new String[0]);
+						dispose();
+					}
+				}
 			}
 		});
 		btnValider.setBounds(149, 199, 117, 29);
 		contentPane.add(btnValider);
-		
+
 		lblCreerUnCompte = new JLabel("Cr\u00E9er un compte");
 		lblCreerUnCompte.setForeground(Color.BLUE);
 		lblCreerUnCompte.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 				try {
-					if(Desktop.isDesktopSupported()){
-						//A remplacer par l'adresse menant à la création de compte
-						Desktop.getDesktop().browse(new URI("http://www.google.com"));
+					if (Desktop.isDesktopSupported()) {
+						// A remplacer par l'adresse menant à la création de
+						// compte
+						Desktop.getDesktop().browse(
+								new URI("http://www.google.com"));
 					}
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -104,16 +119,18 @@ public class Connexion extends JFrame {
 		});
 		lblCreerUnCompte.setBounds(68, 243, 117, 16);
 		contentPane.add(lblCreerUnCompte);
-		
+
 		lblOubliMotDePasse = new JLabel("Mot de passe oubli\u00E9");
 		lblOubliMotDePasse.setForeground(Color.BLUE);
 		lblOubliMotDePasse.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					if(Desktop.isDesktopSupported()){
-						//A remplacer par l'adresse menant au mot de passe oublié
-						Desktop.getDesktop().browse(new URI("http://www.google.com"));
+					if (Desktop.isDesktopSupported()) {
+						// A remplacer par l'adresse menant au mot de passe
+						// oublié
+						Desktop.getDesktop().browse(
+								new URI("http://www.google.com"));
 					}
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block

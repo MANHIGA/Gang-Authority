@@ -1,12 +1,13 @@
 package frame;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Gang extends JFrame {
 
@@ -41,18 +42,46 @@ public class Gang extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnAccederMissions = new JButton("Acc\u00E9der aux missions");
+		btnAccederMissions.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Missions.main(new String[0]);
+				dispose();
+			}
+		});
 		btnAccederMissions.setBounds(16, 28, 191, 54);
 		contentPane.add(btnAccederMissions);
 		
 		JButton btnRecruterSbires = new JButton("Recruter des sbires");
+		btnRecruterSbires.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Sbires.main(new String[0]);
+				dispose();
+			}
+		});
 		btnRecruterSbires.setBounds(238, 106, 191, 57);
 		contentPane.add(btnRecruterSbires);
 		
 		JButton btnGererBatiments = new JButton("G\u00E9rer les b\u00E2timents");
+		btnGererBatiments.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Batiments.main(new String[0]);
+				dispose();
+			}
+		});
 		btnGererBatiments.setBounds(16, 106, 191, 57);
 		contentPane.add(btnGererBatiments);
 		
 		JButton btnConsulterPatrimoine = new JButton("Consulter mon patrimoine");
+		btnConsulterPatrimoine.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Patrimoine.main(new String[0]);
+				dispose();
+			}
+		});
 		btnConsulterPatrimoine.setBounds(238, 27, 191, 57);
 		contentPane.add(btnConsulterPatrimoine);
 		

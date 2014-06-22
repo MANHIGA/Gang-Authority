@@ -5,15 +5,7 @@
  */
 
 package controller;
-import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import frame.Connexion;
 
 
 
@@ -23,7 +15,7 @@ public class GangAuthority {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-    	try {
+    	/*try {
     		String mailSmtpHost = "smtp.free.fr";
 
     		String mailTo = "kevin.suy@me.com";
@@ -50,9 +42,8 @@ public class GangAuthority {
 			e.printStackTrace();
 		} catch (MessagingException e) {
 			e.printStackTrace();
-		}
-        //Accueil page = new Accueil();
-        //page.main(args);
+		}*/
+        Connexion.main(args);
     }
     
 }
