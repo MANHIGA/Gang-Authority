@@ -1,5 +1,6 @@
 package frame;
 
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
@@ -14,7 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
+
+import model.Joueur;
 
 public class Connexion extends JFrame {
 
@@ -76,7 +78,9 @@ public class Connexion extends JFrame {
 		btnValider.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				if(Joueur.getJoueurByPseudoMdp(txtPseudo.getText(), txtMotDePasse.getText()) != null){
+					Menu page = new Menu();
+				}
 			}
 		});
 		btnValider.setBounds(149, 199, 117, 29);
