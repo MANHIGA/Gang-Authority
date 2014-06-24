@@ -5,8 +5,6 @@ import static org.junit.Assert.assertNotSame;
 
 import java.util.List;
 
-import javax.persistence.Query;
-
 import model.AppFactory;
 import model.Construire;
 import model.Entrainer;
@@ -15,6 +13,7 @@ import model.Mission;
 import model.TypeBatiment;
 import model.TypeSbire;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
@@ -123,11 +122,19 @@ public class JoueurTest {
 	
 	@Test
 	public void testSignalerJoueur(){
+		Session session = AppFactory.getSessionFactory().openSession();
+		Query query = session.createQuery("select count(*) from Signalement");
+		Object nb = query.list().get(0);
+		session.close();
 		Joueur j = Joueur.getJoueurByPseudoMdp("Shioon", "gaju");
 		String justification = "Test de signalement";
 		j.signalerJoueur(j, justification);
 		
-		
+		Session session1 = AppFactory.getSessionFactory().openSession();
+		Query query1 = session1.createQuery("select count(*) from Signalement");
+		Object nb1 = query1.list().get(0);
+		session1.close();
+		assertNotSame(nb, nb1);
 	}
 	
 	@Test
