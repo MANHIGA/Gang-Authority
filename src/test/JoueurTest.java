@@ -127,10 +127,7 @@ public class JoueurTest {
 		String justification = "Test de signalement";
 		j.signalerJoueur(j, justification);
 		
-		Session session = AppFactory.getSessionFactory().openSession();
-		org.hibernate.Query q = session.createQuery("from Signalement where Signalement_idCompte = " + j.getIdCompte() + " AND justification = '" + justification + "'");
 		
-		assertEquals(q.list().isEmpty(),false);
 	}
 	
 	@Test
