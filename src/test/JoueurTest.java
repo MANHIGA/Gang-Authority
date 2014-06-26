@@ -165,5 +165,15 @@ public class JoueurTest {
 		
 		assertNotSame(nbMissionsDisponibles,j.getMissionsDisponibles().size());
 	}
+	
+	@Test
+	public void testGetJoueursConnectes(){
+		
+		int nbJoueursConnectes = Joueur.getJoueursConnectes().size();
+		
+		j.setJoueurConnecte(true);
+		
+		assertNotSame(nbJoueursConnectes,Joueur.getJoueursConnectes().size());
+	}
 
 }

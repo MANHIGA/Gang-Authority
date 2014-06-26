@@ -36,13 +36,12 @@ public class Combattre implements Serializable {
 	public Combattre() {
 	}
 
-	public Combattre(Joueur attaquant, Joueur defenseur,
-			Integer nbSbiresEnvoyesPvp, Date datePvp) {
+	public Combattre(Joueur attaquant, Joueur defenseur, Integer nbSbiresEnvoyesPvp) {
 		super();
 		this.attaquant = attaquant;
 		this.defenseur = defenseur;
 		this.nbSbiresEnvoyesPvp = nbSbiresEnvoyesPvp;
-		this.datePvp = datePvp;
+		//this.datePvp = new Date();
 	}
 
 	public Joueur getAttaquant() {

@@ -152,9 +152,8 @@ public class Joueur {
 		
 		Session s = AppFactory.getSessionFactory().openSession();
 		Transaction tx = s.beginTransaction();
-		
 			this.argent += argent;
-		
+		s.update(this);	
 		tx.commit();
 		s.close();	
 	}
@@ -165,6 +164,20 @@ public class Joueur {
 
 	public void setNomGang(String nomGang) {
 		this.nomGang = nomGang;
+	}
+	
+	public Boolean getJoueurConnecte() {
+		return joueurConnecte;
+	}
+
+	public void setJoueurConnecte(Boolean joueurConnecte) {
+		
+		Session s = AppFactory.getSessionFactory().openSession();
+		Transaction tx = s.beginTransaction();
+			this.joueurConnecte = joueurConnecte;
+		s.update(this);
+		tx.commit();
+		s.close();
 	}
 	
 	public List<Construire> getMesBatiments(){		
@@ -276,17 +289,8 @@ public class Joueur {
 	}
 	
 	public void recompenserJoueur(int recompensePointAutorite, int recompenseArgent){
-		
-//		Session session = AppFactory.getSessionFactory().openSession();
-//		Transaction tx = session.beginTransaction();
-		
 		this.setPointAutorite(recompensePointAutorite);
 		this.setArgent(recompenseArgent);
-		
-//		session.save(this);
-//		
-//		tx.commit();
-//		session.close();
 	}
 	
 	public boolean verifierJoueurArgent(int argentDepense){
@@ -372,7 +376,22 @@ public class Joueur {
 	
 	public static List<Joueur> getJoueursConnectes(){
 		
-		return null;
+		Session s = AppFactory.getSessionFactory().openSession();
+		Query q = s.createQuery("from Joueur where joueurConnecte = 1");	
+		List<Joueur> joueursConnectes = (List<Joueur>)q.list();
+		
+		return joueursConnectes;
 	}
 	
+	public void combattreJoueur(Joueur defenseur, int nbSbiresEnvoyes){
+		
+		Session session = AppFactory.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+			Combattre c = new Combattre(this,defenseur,nbSbiresEnvoyes);
+			session.save(c);
+		
+		tx.commit();
+		session.close();
+	}
 }
