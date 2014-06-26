@@ -149,7 +149,14 @@ public class Joueur {
 	}
 
 	public void setArgent(Integer argent) {
-		this.argent += argent;
+		
+		Session s = AppFactory.getSessionFactory().openSession();
+		Transaction tx = s.beginTransaction();
+		
+			this.argent += argent;
+		
+		tx.commit();
+		s.close();	
 	}
 
 	public String getNomGang() {
@@ -190,12 +197,13 @@ public class Joueur {
 		Session session = AppFactory.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
 		
-		Construire c = new Construire(this,b,1,10);
-		session.save(c);
+			Construire c = new Construire(this,b,1,10);
+			session.save(c);
 		
 		tx.commit();
 		session.close();
 		
+		this.setArgent(new Integer(-10000));
 		mesBatiments.add(c);
 	}
 	
@@ -204,12 +212,15 @@ public class Joueur {
 		Session session = AppFactory.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
 		
-		c.setNiveau(c.getNiveau() + 1);
-		c.setPopulationMax(c.getPopulationMax() + 10);
-		session.update(c);
+			c.setNiveau(c.getNiveau() + 1);
+			c.setPopulationMax(c.getPopulationMax() + 10);
+			session.update(c);
 		
 		tx.commit();
 		session.close();
+		
+		int argentDepense = c.getNiveau() * 10000 * -2;
+		this.setArgent(new Integer(argentDepense));		
 	}
 	
 	public Entrainer getTypeSbireEntrainer(TypeSbire s){
@@ -235,6 +246,7 @@ public class Joueur {
 			if(this.getMesSbires().get(i).getTypeSbire().getLibelleTypeSbire() == s.getLibelleTypeSbire()){
 				this.getMesSbires().get(i).setNbSbire(1);
 				session.update(this.getMesSbires().get(i));
+				this.setArgent(-100);
 				sbireTrouve = true;
 			}
 		}
@@ -243,6 +255,7 @@ public class Joueur {
 			Entrainer e = new Entrainer(this,s);
 			mesSbires.add(e);
 			session.save(e);
+			this.setArgent(-100);
 		}
 		
 		tx.commit();
@@ -300,18 +313,27 @@ public class Joueur {
 	public List<Mission> getMissionsDisponibles(){
 				
 		Session s = AppFactory.getSessionFactory().openSession();
-		
 		Query q = s.createQuery("from Realiser where Realiser_idCompte = " + this.getIdCompte() + " order by dateRealisation");		
 		List<Realiser> mesMissionsRealisees = (List<Realiser>)q.list();
-		
+
 		List<Mission> missionsDisponibles = Mission.getMissions();
+		boolean missionTrouvee = false;
+		int i = 0;
 		
 		for(Realiser r : mesMissionsRealisees){
 			
 			Date dateMissionDisponible = r.getDateRealisation();
 			
 			if(dateMissionDisponible.before(new Date())){
-				missionsDisponibles.remove(r.getMission());
+				
+				while(!missionTrouvee && i < missionsDisponibles.size()){
+					if(missionsDisponibles.get(i).getIdMission().equals(r.getMission().getIdMission())){
+						missionsDisponibles.remove(i);
+						missionTrouvee = true;
+					}
+					i++;
+				}
+
 			}		
 		}
 		
