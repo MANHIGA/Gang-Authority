@@ -10,6 +10,12 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 
+import model.Joueur;
+import model.SessionJoueur;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class Signalement extends JFrame {
 
 	private JPanel contentPane;
@@ -17,11 +23,11 @@ public class Signalement extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Signalement frame = new Signalement();
+					Signalement frame = new Signalement(args[0]);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -32,8 +38,9 @@ public class Signalement extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param args 
 	 */
-	public Signalement() {
+	public Signalement(String args) {
 		setTitle("Gang Authority - Signaler un joueur");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -42,7 +49,7 @@ public class Signalement extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblPseudoJoueur = new JLabel("Nom du joueur :");
+		JLabel lblPseudoJoueur = new JLabel("Nom du joueur :"+args);
 		lblPseudoJoueur.setBounds(97, 23, 198, 16);
 		contentPane.add(lblPseudoJoueur);
 		
@@ -50,7 +57,14 @@ public class Signalement extends JFrame {
 		textArea.setBounds(20, 56, 408, 129);
 		contentPane.add(textArea);
 		
+		final Joueur joueur = SessionJoueur.getInstance().getJoueur();
 		JButton btnSignaler = new JButton("Signaler");
+		btnSignaler.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Menu.main(new String[0]);
+			}
+		});
 		btnSignaler.setBounds(145, 217, 117, 29);
 		contentPane.add(btnSignaler);
 	}

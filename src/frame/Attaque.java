@@ -3,7 +3,9 @@ package frame;
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,8 +13,10 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.ListModel;
 import javax.swing.border.EmptyBorder;
 
+import model.Joueur;
 import model.SessionJoueur;
 
 public class Attaque extends JFrame {
@@ -51,7 +55,12 @@ public class Attaque extends JFrame {
 		lblGangsDisponibles.setBounds(82, 31, 125, 16);
 		contentPane.add(lblGangsDisponibles);
 		
-		JList listGangsDisponibles = new JList();
+		List<Joueur> liste = Joueur.getJoueursConnectes();
+		DefaultListModel lm = new DefaultListModel();
+		for(Joueur j : liste){
+			lm.addElement(j.getPseudo());
+		}
+		final JList listGangsDisponibles = new JList(lm);
 		listGangsDisponibles.setBounds(16, 68, 263, 193);
 		contentPane.add(listGangsDisponibles);
 		
@@ -60,6 +69,15 @@ public class Attaque extends JFrame {
 		contentPane.add(btnAttaquer);
 		
 		JButton btnSignalerJoueur = new JButton("Signaler le joueur");
+		btnSignalerJoueur.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String[] s = new String[1];
+				s[0] = listGangsDisponibles.getSelectedValue().toString();
+				Signalement.main(s);
+				dispose();
+			}
+		});
 		btnSignalerJoueur.setBounds(291, 159, 153, 29);
 		contentPane.add(btnSignalerJoueur);
 		
