@@ -390,9 +390,11 @@ public class Joueur {
 		Query q = s.createQuery("from Joueur where pseudo = '" + pseudo + "'");
 		
 		if(q.list().size() == 0){
+			s.close();
 			return null;
 		}else{
 			Joueur j = (Joueur)q.list().get(0);
+			s.close();
 			return j;
 		}
 	}
