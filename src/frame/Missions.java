@@ -1,18 +1,20 @@
 package frame;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTextArea;
-import javax.swing.JLabel;
-import javax.swing.JSpinner;
-import javax.swing.JTextPane;
-import javax.swing.JList;
-import javax.swing.JButton;
-import java.awt.Color;
+
+import model.SessionJoueur;
 
 public class Missions extends JFrame {
 
@@ -92,5 +94,30 @@ public class Missions extends JFrame {
 		JButton btnAttaquer = new JButton("Attaquer");
 		btnAttaquer.setBounds(310, 231, 117, 29);
 		contentPane.add(btnAttaquer);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 450, 22);
+		contentPane.add(menuBar);
+		
+		JMenu mnMenu = new JMenu("Menu");
+		mnMenu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Menu.main(new String[0]);
+				dispose();
+			}
+		});
+		menuBar.add(mnMenu);
+		
+		JMenu mnDconnexion = new JMenu("Déconnexion");
+		mnDconnexion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				SessionJoueur.close();
+				Connexion.main(new String[0]);
+				dispose();
+			}
+		});
+		menuBar.add(mnDconnexion);
 	}
 }

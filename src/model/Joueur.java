@@ -315,7 +315,7 @@ public class Joueur {
 		while(!missionTrouvee && i < missionsDisponibles.size()){
 			
 			if(m.getIdMission().equals(missionsDisponibles.get(i).getIdMission())){
-				Realiser r = new Realiser(this,missionsDisponibles.get(i),new Date(),nbSbiresEnvoyes);
+				Realiser r = new Realiser(this,missionsDisponibles.get(i),nbSbiresEnvoyes);
 				s.save(r);
 				missionTrouvee = true;
 			}

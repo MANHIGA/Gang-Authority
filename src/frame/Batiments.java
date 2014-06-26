@@ -1,14 +1,19 @@
 package frame;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.Color;
-import javax.swing.JButton;
+
+import model.SessionJoueur;
 
 public class Batiments extends JFrame {
 
@@ -94,6 +99,31 @@ public class Batiments extends JFrame {
 		JButton btnConstruireCy = new JButton("Construire");
 		btnConstruireCy.setBounds(327, 217, 117, 29);
 		contentPane.add(btnConstruireCy);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 450, 22);
+		contentPane.add(menuBar);
+		
+		JMenu mnMenu = new JMenu("Menu");
+		mnMenu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Menu.main(new String[0]);
+				dispose();
+			}
+		});
+		menuBar.add(mnMenu);
+		
+		JMenu mnDconnexion = new JMenu("Déconnexion");
+		mnDconnexion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				SessionJoueur.close();
+				Connexion.main(new String[0]);
+				dispose();
+			}
+		});
+		menuBar.add(mnDconnexion);
 	}
 
 }

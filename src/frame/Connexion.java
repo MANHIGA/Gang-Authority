@@ -18,14 +18,15 @@ import javax.swing.border.EmptyBorder;
 
 import model.Joueur;
 import model.SessionJoueur;
+import javax.swing.JPasswordField;
 
 public class Connexion extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtPseudo;
-	private JTextField txtMotDePasse;
 	private JLabel lblCreerUnCompte;
 	private JLabel lblOubliMotDePasse;
+	private JPasswordField txtMotDePasse;
 
 	/**
 	 * Launch the application.
@@ -55,6 +56,11 @@ public class Connexion extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+		final JLabel lblErreur = new JLabel();
+		lblErreur.setForeground(Color.RED);
+		lblErreur.setBounds(106, 25, 287, 16);
+		contentPane.add(lblErreur);
+		
 		JLabel lblPseudo = new JLabel("Pseudo");
 		lblPseudo.setBounds(88, 88, 61, 16);
 		contentPane.add(lblPseudo);
@@ -69,12 +75,6 @@ public class Connexion extends JFrame {
 		contentPane.add(txtPseudo);
 		txtPseudo.setColumns(10);
 
-		txtMotDePasse = new JTextField();
-		lblMotDePasse.setLabelFor(txtMotDePasse);
-		txtMotDePasse.setBounds(225, 134, 134, 28);
-		contentPane.add(txtMotDePasse);
-		txtMotDePasse.setColumns(10);
-
 		JButton btnValider = new JButton("Valider");
 		btnValider.addMouseListener(new MouseAdapter() {
 			@Override
@@ -88,6 +88,8 @@ public class Connexion extends JFrame {
 						sessionJoueur.setJoueur(joueur);
 						Menu.main(new String[0]);
 						dispose();
+					}else{
+						lblErreur.setText("Identifiant ou mot de passe incorrect");
 					}
 				}
 			}
@@ -143,5 +145,10 @@ public class Connexion extends JFrame {
 		});
 		lblOubliMotDePasse.setBounds(238, 243, 155, 16);
 		contentPane.add(lblOubliMotDePasse);
+		
+		txtMotDePasse = new JPasswordField();
+		txtMotDePasse.setBounds(225, 134, 134, 28);
+		contentPane.add(txtMotDePasse);
+		
 	}
 }

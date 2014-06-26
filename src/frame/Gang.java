@@ -1,13 +1,17 @@
 package frame;
 
 import java.awt.EventQueue;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
+import model.SessionJoueur;
 
 public class Gang extends JFrame {
 
@@ -49,7 +53,7 @@ public class Gang extends JFrame {
 				dispose();
 			}
 		});
-		btnAccederMissions.setBounds(16, 28, 191, 54);
+		btnAccederMissions.setBounds(16, 40, 191, 54);
 		contentPane.add(btnAccederMissions);
 		
 		JButton btnRecruterSbires = new JButton("Recruter des sbires");
@@ -60,7 +64,7 @@ public class Gang extends JFrame {
 				dispose();
 			}
 		});
-		btnRecruterSbires.setBounds(238, 106, 191, 57);
+		btnRecruterSbires.setBounds(238, 120, 191, 57);
 		contentPane.add(btnRecruterSbires);
 		
 		JButton btnGererBatiments = new JButton("G\u00E9rer les b\u00E2timents");
@@ -71,7 +75,7 @@ public class Gang extends JFrame {
 				dispose();
 			}
 		});
-		btnGererBatiments.setBounds(16, 106, 191, 57);
+		btnGererBatiments.setBounds(16, 120, 191, 57);
 		contentPane.add(btnGererBatiments);
 		
 		JButton btnConsulterPatrimoine = new JButton("Consulter mon patrimoine");
@@ -82,12 +86,43 @@ public class Gang extends JFrame {
 				dispose();
 			}
 		});
-		btnConsulterPatrimoine.setBounds(238, 27, 191, 57);
+		btnConsulterPatrimoine.setBounds(238, 39, 191, 57);
 		contentPane.add(btnConsulterPatrimoine);
 		
 		JButton btnAttaquerGang = new JButton("Attaquer un gang");
-		btnAttaquerGang.setBounds(140, 192, 163, 57);
+		btnAttaquerGang.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Attaque.main(new String[0]);
+				dispose();
+			}
+		});
+		btnAttaquerGang.setBounds(142, 203, 163, 57);
 		contentPane.add(btnAttaquerGang);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 460, 22);
+		contentPane.add(menuBar);
+		
+		JMenu mnMenu = new JMenu("Menu");
+		mnMenu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Menu.main(new String[0]);
+				dispose();
+			}
+		});
+		menuBar.add(mnMenu);
+		
+		JMenu mnDconnexion = new JMenu("Déconnexion");
+		mnDconnexion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				SessionJoueur.close();
+				Connexion.main(new String[0]);
+				dispose();
+			}
+		});
+		menuBar.add(mnDconnexion);
 	}
-
 }
