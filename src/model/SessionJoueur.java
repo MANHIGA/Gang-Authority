@@ -12,6 +12,10 @@ public class SessionJoueur {
 			return instance;
 		}
 	}
+	
+	public static void close(){
+		instance = null;
+	}
 
 	public void setJoueur(Joueur joueur) {
 		this.joueur = joueur;

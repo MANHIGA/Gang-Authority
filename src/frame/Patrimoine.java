@@ -1,12 +1,20 @@
 package frame;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
+
+import model.Construire;
+import model.Joueur;
+import model.SessionJoueur;
 
 public class Patrimoine extends JFrame {
 
@@ -40,16 +48,23 @@ public class Patrimoine extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		Joueur joueur = SessionJoueur.getInstance().getJoueur();
+		List<Construire> batiments = joueur.getMesBatiments();
+		
+		for(int i=0; i<batiments.size(); i++){
+			
+		}
+		
 		JLabel lblQG = new JLabel("Quartier G\u00E9n\u00E9ral");
-		lblQG.setBounds(25, 17, 107, 16);
+		lblQG.setBounds(25, 34, 107, 16);
 		contentPane.add(lblQG);
 		
 		JLabel lblNiveauQG = new JLabel("Niveau : 0");
-		lblNiveauQG.setBounds(176, 17, 97, 16);
+		lblNiveauQG.setBounds(176, 34, 97, 16);
 		contentPane.add(lblNiveauQG);
 		
 		JLabel lblPopulationQG = new JLabel("Population totale : 0");
-		lblPopulationQG.setBounds(285, 17, 159, 16);
+		lblPopulationQG.setBounds(285, 34, 159, 16);
 		contentPane.add(lblPopulationQG);
 		
 		JLabel lblCa = new JLabel("Casino");
@@ -65,27 +80,27 @@ public class Patrimoine extends JFrame {
 		contentPane.add(lblPopulationHDM);
 		
 		JLabel lblCy = new JLabel("Cybercafe");
-		lblCy.setBounds(25, 137, 107, 16);
+		lblCy.setBounds(25, 125, 107, 16);
 		contentPane.add(lblCy);
 		
 		JLabel lblNiveauCy = new JLabel("Niveau : 0");
-		lblNiveauCy.setBounds(176, 137, 97, 16);
+		lblNiveauCy.setBounds(176, 125, 97, 16);
 		contentPane.add(lblNiveauCy);
 		
 		JLabel lblPopulationH = new JLabel("Hackers : 0");
-		lblPopulationH.setBounds(285, 137, 159, 16);
+		lblPopulationH.setBounds(285, 125, 159, 16);
 		contentPane.add(lblPopulationH);
 		
 		JLabel lblU = new JLabel("Usine");
-		lblU.setBounds(25, 197, 61, 16);
+		lblU.setBounds(25, 174, 61, 16);
 		contentPane.add(lblU);
 		
 		JLabel lblNiveauU = new JLabel("Niveau : 0");
-		lblNiveauU.setBounds(176, 197, 97, 16);
+		lblNiveauU.setBounds(176, 174, 97, 16);
 		contentPane.add(lblNiveauU);
 		
 		JLabel lblPopulationT = new JLabel("Trafiquants : 0");
-		lblPopulationT.setBounds(285, 197, 159, 16);
+		lblPopulationT.setBounds(285, 174, 159, 16);
 		contentPane.add(lblPopulationT);
 		
 		JLabel lblCapital = new JLabel("Capital : 0$");
@@ -95,6 +110,30 @@ public class Patrimoine extends JFrame {
 		JLabel lblPointsAutorite = new JLabel("Points d'autorit\u00E9 : 0");
 		lblPointsAutorite.setBounds(200, 238, 175, 16);
 		contentPane.add(lblPointsAutorite);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 450, 22);
+		contentPane.add(menuBar);
+		
+		JMenu mnMenu = new JMenu("Menu");
+		mnMenu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Menu.main(new String[0]);
+				dispose();
+			}
+		});
+		menuBar.add(mnMenu);
+		
+		JMenu mnDconnexion = new JMenu("D\u00E9connexion");
+		mnDconnexion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				SessionJoueur.close();
+				Connexion.main(new String[0]);
+				dispose();
+			}
+		});
+		menuBar.add(mnDconnexion);
 	}
-
 }

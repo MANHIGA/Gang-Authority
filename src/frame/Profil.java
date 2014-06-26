@@ -9,6 +9,10 @@ import javax.swing.border.EmptyBorder;
 
 import model.Joueur;
 import model.SessionJoueur;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Profil extends JFrame {
 
@@ -34,6 +38,30 @@ public class Profil extends JFrame {
 	 * Create the frame.
 	 */
 	public Profil() {
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnMenu = new JMenu("Menu");
+		mnMenu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Menu.main(new String[0]);
+				dispose();
+			}
+		});
+		menuBar.add(mnMenu);
+		
+		JMenu mnDconnexion = new JMenu("D\u00E9connexion");
+		mnDconnexion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				SessionJoueur.close();
+				Connexion.main(new String[0]);
+				dispose();
+			}
+		});
+		menuBar.add(mnDconnexion);
 		SessionJoueur sessionJoueur = SessionJoueur.getInstance();
 		if(sessionJoueur != null){
 			Joueur joueur = sessionJoueur.getJoueur();
