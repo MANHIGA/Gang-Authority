@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,6 +14,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import model.Construire;
+import model.Joueur;
 import model.SessionJoueur;
 
 public class Batiments extends JFrame {
@@ -47,7 +50,10 @@ public class Batiments extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblCapital = new JLabel("Capital : 0$");
+		final Joueur joueur = SessionJoueur.getInstance().getJoueur();
+		final List<Construire> batiments = joueur.getMesBatiments();
+		Integer argent = joueur.getArgent();
+		JLabel lblCapital = new JLabel("Capital : $"+ argent +"");
 		lblCapital.setBounds(335, 30, 109, 16);
 		contentPane.add(lblCapital);
 		
@@ -57,6 +63,18 @@ public class Batiments extends JFrame {
 		contentPane.add(lblQuartierGeneral);
 		
 		JButton btnConstruireQG = new JButton("Construire");
+		btnConstruireQG.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				for(Construire batiment : batiments){
+					if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Quartier Général")){
+						joueur.ameliorerBatiment(batiment);
+					}
+				}
+				Batiments.main(new String[0]);
+				dispose();
+			}
+		});
 		btnConstruireQG.setBounds(327, 71, 117, 29);
 		contentPane.add(btnConstruireQG);
 		
@@ -72,31 +90,83 @@ public class Batiments extends JFrame {
 		lblCybercaf.setBounds(20, 222, 109, 16);
 		contentPane.add(lblCybercaf);
 		
-		JLabel lblNiveauQG = new JLabel("Niveau : 0");
+		Integer niveauQG = 0;
+		Integer niveauCasino = 0;
+		Integer niveauUsine = 0;
+		Integer niveauCyber = 0;
+		for(Construire batiment : batiments){
+			if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Quartier Général")){
+				niveauQG = batiment.getNiveau();
+			} else if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Casino")) {
+				niveauCasino = batiment.getNiveau();
+			} else if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Usine")) {
+				niveauUsine = batiment.getNiveau();
+			} else if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Cybercafé")) {
+				niveauCyber = batiment.getNiveau();
+			}
+		}
+
+		JLabel lblNiveauQG = new JLabel("Niveau : "+niveauQG);
 		lblNiveauQG.setBounds(190, 76, 109, 16);
 		contentPane.add(lblNiveauQG);
 		
-		JLabel lblNiveauCa = new JLabel("Niveau : 0");
+		JLabel lblNiveauCa = new JLabel("Niveau : "+niveauCasino);
 		lblNiveauCa.setBounds(190, 124, 109, 16);
 		contentPane.add(lblNiveauCa);
 		
-		JLabel lvlNiveauU = new JLabel("Niveau : 0");
+		JLabel lvlNiveauU = new JLabel("Niveau : "+niveauUsine);
 		lvlNiveauU.setBounds(190, 173, 109, 16);
 		contentPane.add(lvlNiveauU);
 		
-		JLabel lblNiveauCy = new JLabel("Niveau : 0");
+		JLabel lblNiveauCy = new JLabel("Niveau : "+niveauCyber);
 		lblNiveauCy.setBounds(190, 222, 109, 16);
 		contentPane.add(lblNiveauCy);
 		
 		JButton btnConstruireCa = new JButton("Construire");
+		btnConstruireCa.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				for(Construire batiment : batiments){
+					if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Casino")){
+						joueur.ameliorerBatiment(batiment);
+					}
+				}
+				Batiments.main(new String[0]);
+				dispose();
+			}
+		});
 		btnConstruireCa.setBounds(327, 119, 117, 29);
 		contentPane.add(btnConstruireCa);
 		
 		JButton btnConstruireU = new JButton("Construire");
+		btnConstruireU.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				for(Construire batiment : batiments){
+					if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Usine")){
+						joueur.ameliorerBatiment(batiment);
+					}
+				}
+				Batiments.main(new String[0]);
+				dispose();
+			}
+		});
 		btnConstruireU.setBounds(327, 168, 117, 29);
 		contentPane.add(btnConstruireU);
 		
 		JButton btnConstruireCy = new JButton("Construire");
+		btnConstruireCy.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				for(Construire batiment : batiments){
+					if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Cybercafé")){
+						joueur.ameliorerBatiment(batiment);
+					}
+				}
+				Batiments.main(new String[0]);
+				dispose();
+			}
+		});
 		btnConstruireCy.setBounds(327, 217, 117, 29);
 		contentPane.add(btnConstruireCy);
 		

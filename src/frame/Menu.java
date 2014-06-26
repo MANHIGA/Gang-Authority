@@ -78,7 +78,7 @@ public class Menu extends JFrame {
 				try {
 					if(Desktop.isDesktopSupported()){
 						//A remplacer par l'adresse menant à la création de compte
-						Desktop.getDesktop().browse(new URI("http://www.google.com"));
+						Desktop.getDesktop().browse(new URI("http://localhost/www.gangauthority.com/web/app.php/"));
 					}
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
