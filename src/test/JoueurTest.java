@@ -15,32 +15,49 @@ import model.TypeSbire;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class JoueurTest {
-
+	
+	private Joueur j;
+	
 	@Before
 	public void setUp() throws Exception {
-
+		
+		Session session = AppFactory.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		j = new Joueur("JUnit_JoueurTest", "emailTest", "mdpTest","JUnit_GangTest");
+		
+		session.save(j);
+		tx.commit();
+		session.close();
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		
+		Session session = AppFactory.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		session.delete(j);
+		tx.commit();
+		session.close();
 	}
 
 	@Test
 	public void testGetJoueurByPseudoMdp() {
-		Joueur j = Joueur.getJoueurByPseudoMdp("Shioon", "gaju");
-		assertEquals(j.getPseudo(), "Shioon");
-		assertEquals(j.getMdp(), "gaju");
+		Joueur joueur = Joueur.getJoueurByPseudoMdp("JUnit_JoueurTest", "mdpTest");
+		assertEquals(joueur.getPseudo(), "JUnit_JoueurTest");
+		assertEquals(joueur.getMdp(), "mdpTest");
 	}
 	
 	@Test
 	public void testCreerBatiment() {	
 		List <TypeBatiment> mesTypesBatiments = TypeBatiment.getTypesBatiments();
-		Joueur j = Joueur.getJoueurByPseudoMdp("Shioon", "gaju");
 		
 		List<Construire> mb = j.getMesBatiments();
 		int nbBatiments;
@@ -58,7 +75,6 @@ public class JoueurTest {
 	@Test
 	public void testAmeliorerBatiment() {
 		List <TypeBatiment> mesTypesBatiments = TypeBatiment.getTypesBatiments();
-		Joueur j = Joueur.getJoueurByPseudoMdp("Shioon", "gaju");
 		
 		List<Construire>mb = j.getMesBatiments();
 		
@@ -72,7 +88,6 @@ public class JoueurTest {
 	@Test
 	public void testRecruterTypeSbire(){
 		List <TypeSbire> mesTypesSbires = TypeSbire.getTypesSbires();
-		Joueur j = Joueur.getJoueurByPseudoMdp("Shioon", "gaju");
 		
 		Entrainer s = j.getTypeSbireEntrainer(mesTypesSbires.get(0));
 		int nbSbires;
@@ -91,7 +106,6 @@ public class JoueurTest {
 	public void testAmeliorerTypeSbire(){
 		
 		List <TypeSbire> mesTypesSbires = TypeSbire.getTypesSbires();
-		Joueur j = Joueur.getJoueurByPseudoMdp("Shioon", "gaju");
 		
 		int pointAttaque;
 		int pointDefense;
@@ -109,7 +123,6 @@ public class JoueurTest {
 	
 	@Test
 	public void testRecompenserJoueur(){
-		Joueur j = Joueur.getJoueurByPseudoMdp("Shioon", "gaju");
 		
 		int argent = j.getArgent();
 		int pa = j.getPointAutorite();
@@ -126,7 +139,7 @@ public class JoueurTest {
 		Query query = session.createQuery("select count(*) from Signalement");
 		Object nb = query.list().get(0);
 		session.close();
-		Joueur j = Joueur.getJoueurByPseudoMdp("Shioon", "gaju");
+		
 		String justification = "Test de signalement";
 		j.signalerJoueur(j, justification);
 		
@@ -139,17 +152,15 @@ public class JoueurTest {
 	
 	@Test
 	public void testGetMissionsDisponibles(){
-		Joueur j = Joueur.getJoueurByPseudoMdp("Shioon", "gaju");
-		
 		assertNotSame(j.getMissionsDisponibles().size(),0);
 	}
 	
 	@Test
 	public void testRealiserMission(){
-		Joueur j = Joueur.getJoueurByPseudoMdp("Shioon", "gaju");
+		List<Mission> missionsDisponibles = j.getMissionsDisponibles();
 		
-		int nbMissionsDisponibles = j.getMissionsDisponibles().size();
-		j.realiserMission(j.getMissionsDisponibles().get(1), j.getMissionsDisponibles().get(1).getNbMiniSbiresRequis());
+		int nbMissionsDisponibles = missionsDisponibles.size();
+		j.realiserMission(missionsDisponibles.get(0), missionsDisponibles.get(0).getNbMiniSbiresRequis());
 		
 		assertNotSame(nbMissionsDisponibles,j.getMissionsDisponibles().size());
 	}

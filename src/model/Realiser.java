@@ -33,7 +33,6 @@ public class Realiser implements Serializable{
 	public Realiser(){}
 
 	public Realiser(Joueur joueur, Mission mission,Integer nbSbiresEnvoyesRealisation) {
-		super();
 		this.joueur = joueur;
 		this.mission = mission;
 		this.nbSbiresEnvoyesRealisation = nbSbiresEnvoyesRealisation;

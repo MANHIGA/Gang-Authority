@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
@@ -53,30 +54,38 @@ public class Joueur {
 	
 	@Column(name="nomGang")
     private String nomGang;
+	
+	@Column(name="joueurConnecte")
+    private Boolean joueurConnecte;
+	
+	@Column(name="salt")
+	private String salt;
     
+	@Column(name="is_active")
+	private Boolean is_active;
+	
 	@OneToMany(mappedBy="joueur",fetch=FetchType.EAGER)
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List <Construire> mesBatiments;
+	private List <Construire> mesBatiments = new ArrayList<Construire>();
 	
 	@OneToMany(mappedBy="joueur")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List <Entrainer> mesSbires;
+	private List <Entrainer> mesSbires = new ArrayList<Entrainer>();;
 	
 	public Joueur(){}
 	
-	public Joueur(String pseudo, String email, String mdp,
-			Integer pointAutorite, Integer nbMorts, Integer nbTues,
-			Integer argent, String nomGang) {
-		super();
+	public Joueur(String pseudo, String email, String mdp, String nomGang) {
 		this.pseudo = pseudo;
 		this.email = email;
 		this.mdp = mdp;
-		this.pointAutorite = pointAutorite;
-		this.nbMorts = nbMorts;
-		this.nbTues = nbTues;
-		this.argent = argent;
+		this.pointAutorite = new Integer(0);
+		this.nbMorts = new Integer(0);
+		this.nbTues = new Integer(0);
+		this.argent = new Integer(56);
 		this.nomGang = nomGang;
-	
+		this.joueurConnecte = false;
+		this.salt = "";
+		this.is_active = false;
 	}
 
 	public Integer getIdCompte() {
@@ -116,10 +125,7 @@ public class Joueur {
 	}
 
 	public void setPointAutorite(Integer pointAutorite) {
-		Session session = AppFactory.getSessionFactory().openSession();
 		this.pointAutorite += pointAutorite;
-		session.update(this);
-		session.close();
 	}
 
 	public Integer getNbMorts() {
@@ -127,10 +133,7 @@ public class Joueur {
 	}
 
 	public void setNbMorts(Integer nbMorts) {
-		Session session = AppFactory.getSessionFactory().openSession();
 		this.nbMorts += nbMorts;
-		session.update(this);
-		session.close();
 	}
 
 	public Integer getNbTues() {
@@ -138,10 +141,7 @@ public class Joueur {
 	}
 
 	public void setNbTues(Integer nbTues) {
-		Session session = AppFactory.getSessionFactory().openSession();
 		this.nbTues += nbTues;
-		session.update(this);
-		session.close();
 	}
 
 	public Integer getArgent() {
@@ -149,10 +149,7 @@ public class Joueur {
 	}
 
 	public void setArgent(Integer argent) {
-		Session session = AppFactory.getSessionFactory().openSession();
 		this.argent += argent;
-		session.update(this);
-		session.close();
 	}
 
 	public String getNomGang() {
@@ -173,8 +170,7 @@ public class Joueur {
 	
 	public static Joueur getJoueurByPseudoMdp(String pseudo, String mdp){
 		
-		SessionFactory sessionFactory = AppFactory.getSessionFactory();
-		Session session = sessionFactory.openSession();
+		Session session = AppFactory.getSessionFactory().openSession();
 	
 		Query query = session.createQuery("from Joueur where pseudo = '" + pseudo + "' and mdp = '" + mdp + "'");
 		
@@ -192,20 +188,27 @@ public class Joueur {
 	public void creerBatiment(TypeBatiment b){
 		
 		Session session = AppFactory.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
 		Construire c = new Construire(this,b,1,10);
 		session.save(c);
-		mesBatiments.add(c);
+		
+		tx.commit();
 		session.close();
+		
+		mesBatiments.add(c);
 	}
 	
 	public void ameliorerBatiment(Construire c){
 		
 		Session session = AppFactory.getSessionFactory().openSession();
-	
+		Transaction tx = session.beginTransaction();
+		
 		c.setNiveau(c.getNiveau() + 1);
 		c.setPopulationMax(c.getPopulationMax() + 10);
 		session.update(c);
-			
+		
+		tx.commit();
 		session.close();
 	}
 	
@@ -223,6 +226,7 @@ public class Joueur {
 	public void recruterTypeSbire(TypeSbire s){
 		
 		Session session = AppFactory.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
 		
 		boolean sbireTrouve = false;
 		
@@ -241,23 +245,35 @@ public class Joueur {
 			session.save(e);
 		}
 		
+		tx.commit();
 		session.close();
 	}
 	
 	public void ameliorerTypeSbire(Entrainer e){
 		
 		Session session = AppFactory.getSessionFactory().openSession();
-	
+		Transaction tx = session.beginTransaction();
+		
 		e.setPointAttaque(100);
 		e.setPointDefense(100);
 		session.update(e);
-			
+		
+		tx.commit();
 		session.close();
 	}
 	
 	public void recompenserJoueur(int recompensePointAutorite, int recompenseArgent){
+		
+//		Session session = AppFactory.getSessionFactory().openSession();
+//		Transaction tx = session.beginTransaction();
+		
 		this.setPointAutorite(recompensePointAutorite);
 		this.setArgent(recompenseArgent);
+		
+//		session.save(this);
+//		
+//		tx.commit();
+//		session.close();
 	}
 	
 	public boolean verifierJoueurArgent(int argentDepense){
@@ -272,8 +288,12 @@ public class Joueur {
 	public void signalerJoueur(Joueur j, String justification){
 		
 		Session session = AppFactory.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
 		Signalement s = new Signalement(this,j,justification);
 		session.save(s);
+		
+		tx.commit();
 		session.close();
 	}
 	
@@ -306,22 +326,26 @@ public class Joueur {
 	
 	public void realiserMission(Mission m, int nbSbiresEnvoyes){
 		
-		Session s = AppFactory.getSessionFactory().openSession();
 		boolean missionTrouvee = false;
-		int i = 0;
-		
+		int i = 0;	
 		List<Mission> missionsDisponibles = this.getMissionsDisponibles();
 		
 		while(!missionTrouvee && i < missionsDisponibles.size()){
 			
 			if(m.getIdMission().equals(missionsDisponibles.get(i).getIdMission())){
+				Session session = AppFactory.getSessionFactory().openSession();
+				Transaction tx = session.beginTransaction();
+				
 				Realiser r = new Realiser(this,missionsDisponibles.get(i),nbSbiresEnvoyes);
-				s.save(r);
+				session.save(r);
+				
+				tx.commit();
+				session.close();
+				
 				missionTrouvee = true;
 			}
 			i++;
-		}
-		s.close();
+		}	
 	}
 	
 	public static List<Joueur> getJoueursConnectes(){
