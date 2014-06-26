@@ -24,6 +24,7 @@ public class Realiser implements Serializable{
 	@JoinColumn(name="realiser_idMission")
 	private Mission mission;
 	
+	@Id
 	@Column(name="dateRealisation")
 	private Date dateRealisation;
 	

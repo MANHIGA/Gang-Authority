@@ -379,8 +379,22 @@ public class Joueur {
 		Session s = AppFactory.getSessionFactory().openSession();
 		Query q = s.createQuery("from Joueur where joueurConnecte = 1");	
 		List<Joueur> joueursConnectes = (List<Joueur>)q.list();
+		s.close();
 		
 		return joueursConnectes;
+	}
+	
+	public static Joueur getJoueurByPseudo(String pseudo){
+		
+		Session s = AppFactory.getSessionFactory().openSession();
+		Query q = s.createQuery("from Joueur where pseudo = '" + pseudo + "'");
+		
+		if(q.list().size() == 0){
+			return null;
+		}else{
+			Joueur j = (Joueur)q.list().get(0);
+			return j;
+		}
 	}
 	
 	public void combattreJoueur(Joueur defenseur, int nbSbiresEnvoyes){
@@ -388,7 +402,7 @@ public class Joueur {
 		Session session = AppFactory.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
 		
-			Combattre c = new Combattre(this,defenseur,nbSbiresEnvoyes);
+			Combattre c = new Combattre(this,defenseur, new Integer(nbSbiresEnvoyes));
 			session.save(c);
 		
 		tx.commit();

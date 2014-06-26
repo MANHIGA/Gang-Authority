@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotSame;
 import java.util.List;
 
 import model.AppFactory;
+import model.Combattre;
 import model.Construire;
 import model.Entrainer;
 import model.Joueur;
@@ -175,5 +176,16 @@ public class JoueurTest {
 		
 		assertNotSame(nbJoueursConnectes,Joueur.getJoueursConnectes().size());
 	}
-
+	
+	@Test
+	public void testCombattreJoueur(){
+		
+		Joueur adversaire = Joueur.getJoueurByPseudoMdp("Shiwoon", "gaju");
+		j.combattreJoueur(adversaire, 5);
+		
+		Session session = AppFactory.getSessionFactory().openSession();
+		Query query = session.createQuery("From Combattre where Combattre_idCompte_Attaquant = " + j.getIdCompte());
+		
+		assertEquals(query.list().size(), 1);	
+	}
 }

@@ -1,7 +1,7 @@
 package model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,12 +18,12 @@ public class Combattre implements Serializable {
 
 	@Id
 	@OneToOne
-	@JoinColumn(name = "idCompte")
+	@JoinColumn(name = "Combattre_idCompte_Attaquant")
 	private Joueur attaquant;
 
 	@Id
 	@OneToOne
-	@JoinColumn(name = "idCompte")
+	@JoinColumn(name = "Combattre_idCompte_Defenseur")
 	private Joueur defenseur;
 
 	@Column(name = "nbSbiresEnvoyesPvp")
@@ -37,11 +37,10 @@ public class Combattre implements Serializable {
 	}
 
 	public Combattre(Joueur attaquant, Joueur defenseur, Integer nbSbiresEnvoyesPvp) {
-		super();
 		this.attaquant = attaquant;
 		this.defenseur = defenseur;
 		this.nbSbiresEnvoyesPvp = nbSbiresEnvoyesPvp;
-		//this.datePvp = new Date();
+		this.datePvp = new Date();
 	}
 
 	public Joueur getAttaquant() {
