@@ -108,7 +108,7 @@ public class Connexion extends JFrame {
 						// A remplacer par l'adresse menant à la création de
 						// compte
 						Desktop.getDesktop().browse(
-								new URI("http://www.google.com"));
+								new URI("http://localhost/www.gangauthority.com/web/app.php/signup"));
 					}
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
