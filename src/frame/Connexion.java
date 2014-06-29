@@ -10,15 +10,16 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import model.Joueur;
 import model.SessionJoueur;
-import javax.swing.JPasswordField;
 
 public class Connexion extends JFrame {
 
@@ -55,47 +56,88 @@ public class Connexion extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		
 		final JLabel lblErreur = new JLabel();
 		lblErreur.setForeground(Color.RED);
 		lblErreur.setBounds(106, 25, 287, 16);
 		contentPane.add(lblErreur);
 		
 		JLabel lblPseudo = new JLabel("Pseudo");
-		lblPseudo.setBounds(88, 88, 61, 16);
+		lblPseudo.setBounds(88, 53, 61, 16);
 		contentPane.add(lblPseudo);
 
 		JLabel lblMotDePasse = new JLabel("Mot de passe");
-		lblMotDePasse.setBounds(72, 140, 96, 16);
+		lblMotDePasse.setBounds(68, 111, 96, 16);
 		contentPane.add(lblMotDePasse);
 
 		txtPseudo = new JTextField();
 		lblPseudo.setLabelFor(txtPseudo);
-		txtPseudo.setBounds(225, 82, 134, 28);
+		txtPseudo.setBounds(225, 53, 134, 28);
 		contentPane.add(txtPseudo);
 		txtPseudo.setColumns(10);
 
-		JButton btnValider = new JButton("Valider");
-		btnValider.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (!txtPseudo.getText().equals("") && !txtMotDePasse.getText().equals("")) {
-					Joueur joueur = Joueur.getJoueurByPseudoMdp(
-							txtPseudo.getText(), txtMotDePasse.getText());
-					if (joueur != null) {
-						SessionJoueur sessionJoueur = SessionJoueur
-								.getInstance();
-						sessionJoueur.setJoueur(joueur);
-						Menu.main(new String[0]);
-						dispose();
-					}else{
-						lblErreur.setText("Identifiant ou mot de passe incorrect");
+		try{
+			Class.forName("model.Admin");
+			Class.forName("frame.Administration");
+			final JCheckBox chckbxAdministrateur = new JCheckBox("Administrateur");
+			chckbxAdministrateur.setBounds(149, 155, 128, 23);
+			contentPane.add(chckbxAdministrateur);
+			
+			JButton btnValider = new JButton("Valider");
+			btnValider.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					if (!txtPseudo.getText().equals("") && !txtMotDePasse.getText().equals("")) {
+						if(chckbxAdministrateur.getSelectedObjects() == null){
+							Joueur joueur = Joueur.getJoueurByPseudoMdp(
+									txtPseudo.getText(), txtMotDePasse.getText());
+							if (joueur != null) {
+								SessionJoueur sessionJoueur = SessionJoueur
+										.getInstance();
+								sessionJoueur.setJoueur(joueur);
+								Menu.main(new String[0]);
+								dispose();
+							}else{
+								lblErreur.setText("Identifiant ou mot de passe incorrect");
+							}
+						}else{
+							Integer adminId = model.Admin.getAdminId(txtPseudo.getText(), txtMotDePasse.getText());
+							if(adminId != null){
+								String str[] = {adminId.toString()};
+								frame.Administration.main(str);
+								dispose();
+							}else{
+								lblErreur.setText("Identifiant ou mot de passe incorrect");
+							}
+						}
 					}
 				}
-			}
-		});
-		btnValider.setBounds(149, 199, 117, 29);
-		contentPane.add(btnValider);
+			});
+			btnValider.setBounds(149, 199, 117, 29);
+			contentPane.add(btnValider);
+		}catch(Exception e){
+			JButton btnValider = new JButton("Valider");
+			btnValider.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					if (!txtPseudo.getText().equals("") && !txtMotDePasse.getText().equals("")) {
+						Joueur joueur = Joueur.getJoueurByPseudoMdp(
+								txtPseudo.getText(), txtMotDePasse.getText());
+						if (joueur != null) {
+							SessionJoueur sessionJoueur = SessionJoueur
+									.getInstance();
+							sessionJoueur.setJoueur(joueur);
+							Menu.main(new String[0]);
+							dispose();
+						}else{
+							lblErreur.setText("Identifiant ou mot de passe incorrect");
+						}
+					}
+				}
+			});
+			btnValider.setBounds(149, 199, 117, 29);
+			contentPane.add(btnValider);
+		}
 
 		lblCreerUnCompte = new JLabel("Cr\u00E9er un compte");
 		lblCreerUnCompte.setForeground(Color.BLUE);
@@ -147,7 +189,7 @@ public class Connexion extends JFrame {
 		contentPane.add(lblOubliMotDePasse);
 		
 		txtMotDePasse = new JPasswordField();
-		txtMotDePasse.setBounds(225, 134, 134, 28);
+		txtMotDePasse.setBounds(225, 105, 134, 28);
 		contentPane.add(txtMotDePasse);
 		
 	}

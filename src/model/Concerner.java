@@ -25,6 +25,10 @@ public class Concerner implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "Concerner_idCompte")
 	private Joueur idCompte;
+	
+	public Concerner(){
+		
+	}
 
 	public Signalement getIdSignalement() {
 		return idSignalement;
