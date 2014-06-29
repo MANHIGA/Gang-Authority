@@ -10,6 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 
 @Entity
 @Table(name="Entrainer")
@@ -66,7 +69,12 @@ public class Entrainer implements Serializable{
 	}
 
 	public void setNbSbire(Integer nbSbire) {
-		this.nbSbire += nbSbire;
+		Session s = AppFactory.getSessionFactory().openSession();
+		Transaction tx = s.beginTransaction();
+			this.nbSbire += nbSbire;
+		s.update(this);	
+		tx.commit();
+		s.close();
 	}
 
 	public Integer getPointAttaque() {
@@ -74,7 +82,12 @@ public class Entrainer implements Serializable{
 	}
 
 	public void setPointAttaque(Integer pointAttaque) {
-		this.pointAttaque += pointAttaque;
+		Session s = AppFactory.getSessionFactory().openSession();
+		Transaction tx = s.beginTransaction();		
+			this.pointAttaque += pointAttaque;
+		s.update(this);	
+		tx.commit();
+		s.close();
 	}
 
 	public Integer getPointDefense() {
@@ -82,7 +95,12 @@ public class Entrainer implements Serializable{
 	}
 
 	public void setPointDefense(Integer pointDefense) {
-		this.pointDefense += pointDefense;
+		Session s = AppFactory.getSessionFactory().openSession();
+		Transaction tx = s.beginTransaction();	
+			this.pointDefense += pointDefense;
+		s.update(this);	
+		tx.commit();
+		s.close();
 	}
 	
 	@Override

@@ -125,7 +125,13 @@ public class Joueur {
 	}
 
 	public void setPointAutorite(Integer pointAutorite) {
-		this.pointAutorite += pointAutorite;
+		
+		Session s = AppFactory.getSessionFactory().openSession();
+		Transaction tx = s.beginTransaction();
+			this.pointAutorite += pointAutorite;
+		s.update(this);	
+		tx.commit();
+		s.close();	
 	}
 
 	public Integer getNbMorts() {
@@ -368,6 +374,9 @@ public class Joueur {
 				tx.commit();
 				session.close();
 				
+				this.setArgent(m.getRecompenseArgent());
+				this.setPointAutorite(m.getRecompensePointsAutorites());
+				
 				missionTrouvee = true;
 			}
 			i++;
@@ -403,11 +412,17 @@ public class Joueur {
 		
 		Session session = AppFactory.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
-		
+				
 			Combattre c = new Combattre(this,defenseur, new Integer(nbSbiresEnvoyes));
 			session.save(c);
 		
 		tx.commit();
 		session.close();
+		
+		for(Entrainer e : this.getMesSbires()){
+			if(e.getTypeSbire().getLibelleTypeSbire() == "Homme de main"){
+				e.setNbSbire(new Integer(nbSbiresEnvoyes * -1));
+			}
+		}
 	}
 }
