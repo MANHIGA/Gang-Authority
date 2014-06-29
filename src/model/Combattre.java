@@ -25,6 +25,11 @@ public class Combattre implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "Combattre_idCompte_Defenseur")
 	private Joueur defenseur;
+	
+	@Id
+	@OneToOne
+	@JoinColumn(name = "Combattre_idCompte_Gagnant")
+	private Joueur gagnant;	
 
 	@Column(name = "nbSbiresEnvoyesPvp")
 	private Integer nbSbiresEnvoyesPvp;
@@ -74,7 +79,19 @@ public class Combattre implements Serializable {
 	public void setDatePvp(Date datePvp) {
 		this.datePvp = datePvp;
 	}
+	
+	public Joueur getGagnant() {
+		return gagnant;
+	}
 
+	public void setGagnant(Joueur gagnant) {
+		this.gagnant = gagnant;
+	}
+
+	public void setNbSbiresEnvoyesPvp(Integer nbSbiresEnvoyesPvp) {
+		this.nbSbiresEnvoyesPvp = nbSbiresEnvoyesPvp;
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof Combattre) {

@@ -274,7 +274,7 @@ public class Joueur {
 			Entrainer e = new Entrainer(this,s);
 			mesSbires.add(e);
 			session.save(e);
-			this.setArgent(-100);
+			this.setArgent(s.getCout());
 		}
 		
 		tx.commit();
@@ -425,4 +425,24 @@ public class Joueur {
 			}
 		}
 	}
+	
+	public List<Combattre> getMesCombats(){
+		
+		Session s = AppFactory.getSessionFactory().openSession();
+		Query q = s.createQuery("from Combattre where Combattre_idCompte_Attaquant = " + this.getIdCompte() + "");
+			List<Combattre> mesCombats = (List<Combattre>)q.list();
+		s.close();
+		
+		Session s1 = AppFactory.getSessionFactory().openSession();
+		Query q1 = s1.createQuery("from Combattre where Combattre_idCompte_Defenseur = " + this.getIdCompte() + "");
+			List<Combattre> mesCombatsDefendus = (List<Combattre>)q1.list();
+		s1.close();
+		
+		for(Combattre c : mesCombatsDefendus){
+			mesCombats.add(c);
+		}
+		
+		return mesCombats;	
+	}
+	
 }
