@@ -59,43 +59,43 @@ public class Sbires extends JFrame {
 		contentPane.add(lblHacker);
 		
 		JLabel lblNombreHDM = new JLabel("Nombre : 0");
-		lblNombreHDM.setBounds(20, 109, 106, 16);
+		lblNombreHDM.setBounds(16, 90, 106, 16);
 		contentPane.add(lblNombreHDM);
 		
 		JLabel lblNombreT = new JLabel("Nombre : 0");
-		lblNombreT.setBounds(181, 109, 106, 16);
+		lblNombreT.setBounds(181, 90, 106, 16);
 		contentPane.add(lblNombreT);
 		
 		JLabel lblNombreH = new JLabel("Nombre : 0");
-		lblNombreH.setBounds(329, 109, 106, 16);
+		lblNombreH.setBounds(318, 90, 106, 16);
 		contentPane.add(lblNombreH);
 		
 		JButton btnRecruter = new JButton("Recruter");
-		btnRecruter.setBounds(6, 210, 117, 29);
+		btnRecruter.setBounds(9, 190, 117, 29);
 		contentPane.add(btnRecruter);
 		
 		JButton btnRecruter_1 = new JButton("Recruter");
-		btnRecruter_1.setBounds(170, 210, 117, 29);
+		btnRecruter_1.setBounds(168, 190, 117, 29);
 		contentPane.add(btnRecruter_1);
 		
 		JButton btnNewButton = new JButton("Recruter");
-		btnNewButton.setBounds(318, 210, 117, 29);
+		btnNewButton.setBounds(318, 190, 117, 29);
 		contentPane.add(btnNewButton);
 		
 		JLabel lblCoutHDM = new JLabel("Co\u00FBt :  0$");
-		lblCoutHDM.setBounds(20, 167, 106, 16);
+		lblCoutHDM.setBounds(16, 146, 106, 16);
 		contentPane.add(lblCoutHDM);
 		
 		JLabel lblCoutT = new JLabel("Co\u00FBt : 0$");
-		lblCoutT.setBounds(181, 167, 106, 16);
+		lblCoutT.setBounds(181, 146, 106, 16);
 		contentPane.add(lblCoutT);
 		
 		JLabel lblCoutH = new JLabel("Co\u00FBt : 0$");
-		lblCoutH.setBounds(329, 167, 106, 16);
+		lblCoutH.setBounds(318, 146, 106, 16);
 		contentPane.add(lblCoutH);
 		
 		JLabel lblCapital = new JLabel("Capital : 0$");
-		lblCapital.setBounds(16, 251, 117, 16);
+		lblCapital.setBounds(16, 234, 117, 16);
 		contentPane.add(lblCapital);
 		
 		JMenuBar menuBar = new JMenuBar();

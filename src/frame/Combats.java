@@ -2,11 +2,22 @@ package frame;
 
 import java.awt.EventQueue;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+import model.AppFactory;
+import model.Joueur;
+import model.SessionJoueur;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Combats extends JFrame {
 
@@ -40,11 +51,20 @@ public class Combats extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		Joueur j = SessionJoueur.getInstance().getJoueur();
+		
 		JList listCombats = new JList();
 		listCombats.setBounds(6, 6, 242, 266);
 		contentPane.add(listCombats);
 		
 		JButton btnVoirCompteRendu = new JButton("Voir le compte rendu");
+		btnVoirCompteRendu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Resultat.main(new String[0]);
+				dispose();
+			}
+		});
 		btnVoirCompteRendu.setBounds(272, 92, 160, 77);
 		contentPane.add(btnVoirCompteRendu);
 	}

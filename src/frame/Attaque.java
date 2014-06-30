@@ -65,6 +65,15 @@ public class Attaque extends JFrame {
 		contentPane.add(listGangsDisponibles);
 		
 		JButton btnAttaquer = new JButton("Attaquer");
+		btnAttaquer.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String[] s = new String[1];
+				s[0] = listGangsDisponibles.getSelectedValue().toString();
+				Preparation.main(s);
+				dispose(); 
+			}
+		});
 		btnAttaquer.setBounds(309, 66, 117, 29);
 		contentPane.add(btnAttaquer);
 		

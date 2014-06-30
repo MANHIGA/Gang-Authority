@@ -40,7 +40,7 @@ public class Signalement extends JFrame {
 	 * Create the frame.
 	 * @param args 
 	 */
-	public Signalement(String args) {
+	public Signalement(final String args) {
 		setTitle("Gang Authority - Signaler un joueur");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -53,7 +53,7 @@ public class Signalement extends JFrame {
 		lblPseudoJoueur.setBounds(97, 23, 198, 16);
 		contentPane.add(lblPseudoJoueur);
 		
-		JTextArea textArea = new JTextArea();
+		final JTextArea textArea = new JTextArea();
 		textArea.setBounds(20, 56, 408, 129);
 		contentPane.add(textArea);
 		
@@ -62,7 +62,9 @@ public class Signalement extends JFrame {
 		btnSignaler.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				joueur.signalerJoueur(Joueur.getJoueurByPseudo(args), textArea.getText());
 				Menu.main(new String[0]);
+				dispose();
 			}
 		});
 		btnSignaler.setBounds(145, 217, 117, 29);
