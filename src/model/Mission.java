@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.Query;
@@ -39,7 +41,9 @@ public class Mission {
 	@Column(name="nbMiniSbiresRequis")
 	private Integer nbMiniSbiresRequis;
 	
-	
+	@OneToOne
+	@JoinColumn(name = "Mission_idTypeSbire")
+	private TypeSbire missionTypeSbire;
 	
 	public Mission(){}
 
@@ -109,6 +113,14 @@ public class Mission {
 
 	public void setNbMiniSbiresRequis(int nbMiniSbiresRequis) {
 		this.nbMiniSbiresRequis = nbMiniSbiresRequis;
+	}
+	
+	public TypeSbire getMissionTypeSbire() {
+		return missionTypeSbire;
+	}
+
+	public void setMissionTypeSbire(TypeSbire missionTypeSbire) {
+		this.missionTypeSbire = missionTypeSbire;
 	}
 	
 	public static List<Mission> getMissions(){

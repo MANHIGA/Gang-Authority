@@ -41,9 +41,10 @@ public class Combattre implements Serializable {
 	public Combattre() {
 	}
 
-	public Combattre(Joueur attaquant, Joueur defenseur, Integer nbSbiresEnvoyesPvp) {
+	public Combattre(Joueur attaquant, Joueur defenseur, Integer nbSbiresEnvoyesPvp, Joueur gagnant) {
 		this.attaquant = attaquant;
 		this.defenseur = defenseur;
+		this.gagnant = gagnant;
 		this.nbSbiresEnvoyesPvp = nbSbiresEnvoyesPvp;
 		this.datePvp = new Date();
 	}

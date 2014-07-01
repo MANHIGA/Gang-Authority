@@ -325,30 +325,35 @@ public class Joueur {
 		Session s = AppFactory.getSessionFactory().openSession();
 		Query q = s.createQuery("from Realiser where Realiser_idCompte = " + this.getIdCompte() + " order by dateRealisation");		
 		List<Realiser> mesMissionsRealisees = (List<Realiser>)q.list();
-
+		s.close();
+		
 		List<Mission> missionsDisponibles = Mission.getMissions();
-		boolean missionTrouvee = false;
-		int i = 0;
+//		boolean missionTrouvee = false;
+//		int i = 0;
 		
 		for(Realiser r : mesMissionsRealisees){
 			
-			Date dateMissionDisponible = r.getDateRealisation();
-			
-			if(dateMissionDisponible.before(new Date())){
+			if(r.getDateRealisation().before(new Date())){
 				
-				while(!missionTrouvee && i < missionsDisponibles.size()){
-					if(missionsDisponibles.get(i).getIdMission().equals(r.getMission().getIdMission())){
-						missionsDisponibles.remove(i);
-						missionTrouvee = true;
-					}
-					i++;
+				if (missionsDisponibles.contains(r.getMission())){
+					missionsDisponibles.remove(r.getMission());
 				}
-
-			}		
+				
+			}
+		
+//			if(r.getDateRealisation().before(new Date())){
+//				
+//				while(!missionTrouvee && i < missionsDisponibles.size()){
+//					if(missionsDisponibles.get(i).getIdMission().equals(r.getMission().getIdMission())){
+//						missionsDisponibles.remove(i);
+//						missionTrouvee = true;
+//					}
+//					i++;
+//				}
+//
+//			}	
 		}
-		
-		s.close();
-		
+
 		if(missionsDisponibles.isEmpty()){
 			return null;
 		}else{
@@ -358,29 +363,23 @@ public class Joueur {
 	
 	public void realiserMission(Mission m, int nbSbiresEnvoyes){
 		
-		boolean missionTrouvee = false;
-		int i = 0;	
-		List<Mission> missionsDisponibles = this.getMissionsDisponibles();
-		
-		while(!missionTrouvee && i < missionsDisponibles.size()){
-			
-			if(m.getIdMission().equals(missionsDisponibles.get(i).getIdMission())){
-				Session session = AppFactory.getSessionFactory().openSession();
-				Transaction tx = session.beginTransaction();
+		Session session = AppFactory.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
 				
-				Realiser r = new Realiser(this,missionsDisponibles.get(i),nbSbiresEnvoyes);
-				session.save(r);
+		Realiser r = new Realiser(this,m,nbSbiresEnvoyes);
+		session.save(r);
 				
-				tx.commit();
-				session.close();
+		tx.commit();
+		session.close();
 				
-				this.setArgent(m.getRecompenseArgent());
-				this.setPointAutorite(m.getRecompensePointsAutorites());
+		this.setArgent(m.getRecompenseArgent());
+		this.setPointAutorite(m.getRecompensePointsAutorites());
 				
-				missionTrouvee = true;
+		for(Entrainer e : this.getMesSbires()){
+			if(e.getTypeSbire().getLibelleTypeSbire() == m.getMissionTypeSbire().getLibelleTypeSbire()){
+				e.setNbSbire(new Integer(nbSbiresEnvoyes * -1));
 			}
-			i++;
-		}	
+		}
 	}
 	
 	public static List<Joueur> getJoueursConnectes(){
@@ -410,12 +409,31 @@ public class Joueur {
 	
 	public void combattreJoueur(Joueur defenseur, int nbSbiresEnvoyes){
 		
+		 int pointAttaqueTotal = 0;
+		 
+		 for(Entrainer e : this.getMesSbires()){
+			 if(e.getTypeSbire().getLibelleTypeSbire() == "Homme de main"){	 
+				 pointAttaqueTotal = e.getPointAttaque();			 
+			 }
+		 }
+		 
+		 for(Entrainer e : defenseur.getMesSbires()){
+			 if(e.getTypeSbire().getLibelleTypeSbire() == "Homme de main"){		 
+				 pointAttaqueTotal -= e.getPointDefense();		 
+			 }
+		 }
+		
 		Session session = AppFactory.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
-				
-			Combattre c = new Combattre(this,defenseur, new Integer(nbSbiresEnvoyes));
-			session.save(c);
-		
+			
+			if(pointAttaqueTotal < 0){
+				Combattre c = new Combattre(this,defenseur, new Integer(nbSbiresEnvoyes),defenseur);
+				session.save(c);
+			}else{
+				Combattre c = new Combattre(this,defenseur, new Integer(nbSbiresEnvoyes),this);
+				session.save(c);
+			}
+	
 		tx.commit();
 		session.close();
 		
