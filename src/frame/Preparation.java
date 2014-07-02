@@ -10,6 +10,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+import model.AppFactory;
 import model.Entrainer;
 import model.Joueur;
 import model.SessionJoueur;
@@ -63,37 +67,14 @@ public class Preparation extends JFrame {
 		lblHDM.setBounds(24, 54, 254, 16);
 		contentPane.add(lblHDM);
 		
-		JButton btnPlusHDM = new JButton("+");
-		btnPlusHDM.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				for(Entrainer sbire : j.getMesSbires()){
-					if(sbire.getTypeSbire().getLibelleTypeSbire().equals("Homme de main")){
-						if(sbire.getNbSbire() >= nbHDM + 1){
-							nbHDM += 1;
-						}
-					}
-				}
-			}
-		});
-		btnPlusHDM.setBounds(24, 82, 40, 30);
-		contentPane.add(btnPlusHDM);
 		
-		JButton btnMoinsHDM = new JButton("-");
-		btnMoinsHDM.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(nbHDM > 0){
-					nbHDM -= 1;
-				}
-			}
-		});
-		btnMoinsHDM.setBounds(144, 82, 40, 30);
-		contentPane.add(btnMoinsHDM);
+
 		
-		JLabel lblNbHDM = new JLabel(""+nbHDM);
+		final JLabel lblNbHDM = new JLabel(""+nbHDM);
 		lblNbHDM.setBounds(92, 88, 40, 16);
 		contentPane.add(lblNbHDM);
+		
+		
 		List<Entrainer> sbires = j.getMesSbires();
 		Integer atk = 0;
 		Integer def = 0;
@@ -103,22 +84,61 @@ public class Preparation extends JFrame {
 				def = sbire.getPointDefense();
 			}
 		}
-		Integer puiAtk = nbHDM * atk;
-		Integer puiDef = nbHDM * def;
-		JLabel lblAttaque = new JLabel("Puissance d'attaque : "+puiAtk);
+		final Integer ata = atk;
+		final Integer defs = def;
+		
+		final JLabel lblAttaque = new JLabel("Puissance d'attaque : "+nbHDM*ata);
 		lblAttaque.setBounds(256, 81, 194, 16);
 		contentPane.add(lblAttaque);
 		
-		JLabel lblDefense = new JLabel("Puissance défensive : "+puiDef);
+		final JLabel lblDefense = new JLabel("Puissance défensive : "+nbHDM*defs);
 		lblDefense.setBounds(256, 152, 194, 16);
 		contentPane.add(lblDefense);
+		
+		JButton btnPlusHDM = new JButton("+");
+		btnPlusHDM.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				for(Entrainer sbire : j.getMesSbires()){
+					if(sbire.getTypeSbire().getLibelleTypeSbire().equals("Homme de main")){
+						if(sbire.getNbSbire() >= nbHDM + 1){
+							nbHDM += 1;
+							lblNbHDM.setText(""+nbHDM);
+							lblAttaque.setText("Puissance d'attaque : "+nbHDM*ata);
+							lblDefense.setText("Puissance défensive : "+nbHDM*defs);
+						}
+					}
+				}
+			}
+		});
+		btnPlusHDM.setBounds(24, 82, 40, 30);
+		contentPane.add(btnPlusHDM);
+		
+		
+		JButton btnMoinsHDM = new JButton("-");
+		btnMoinsHDM.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(nbHDM > 0){
+					nbHDM -= 1;
+					lblNbHDM.setText(""+nbHDM);
+					lblAttaque.setText("Puissance d'attaque : "+nbHDM*ata);
+					lblDefense.setText("Puissance défensive : "+nbHDM*defs);
+				}
+			}
+		});
+		btnMoinsHDM.setBounds(144, 82, 40, 30);
+		contentPane.add(btnMoinsHDM);
 		
 		JButton btnValider = new JButton("Valider");
 		btnValider.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				j.combattreJoueur(ennemi, nbHDM);
-				Combats.main(new String[0]);
+				//j.combattreJoueur(ennemi, nbHDM);
+//				Session session = AppFactory.getSessionFactory().openSession();
+//				Query query = session.createQuery("select * from Combattre");
+//				System.out.println(query.list().get(0));
+				//Resultat.main(new String[0], j.getMesCombats().get(0));
 				dispose();
 			}
 		});

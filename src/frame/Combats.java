@@ -13,11 +13,13 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import model.AppFactory;
+import model.Combattre;
 import model.Joueur;
 import model.SessionJoueur;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 public class Combats extends JFrame {
 
@@ -52,8 +54,16 @@ public class Combats extends JFrame {
 		contentPane.setLayout(null);
 		
 		Joueur j = SessionJoueur.getInstance().getJoueur();
-		
-		JList listCombats = new JList();
+		List<Combattre> combats = j.getMesCombats();
+		DefaultListModel<String> dlm = new DefaultListModel<String>();
+		for(Combattre combat : combats){
+			if(combat.getAttaquant().getIdCompte().equals(j.getIdCompte())){
+				dlm.addElement(combat.getDefenseur().getPseudo());
+			} else {
+				dlm.addElement(combat.getAttaquant().getPseudo());
+			}
+		}
+		final JList listCombats = new JList(dlm);
 		listCombats.setBounds(6, 6, 242, 266);
 		contentPane.add(listCombats);
 		
@@ -61,8 +71,6 @@ public class Combats extends JFrame {
 		btnVoirCompteRendu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Resultat.main(new String[0]);
-				dispose();
 			}
 		});
 		btnVoirCompteRendu.setBounds(272, 92, 160, 77);
