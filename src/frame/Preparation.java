@@ -3,6 +3,7 @@ package frame;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,6 +15,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import model.AppFactory;
+import model.Combattre;
 import model.Entrainer;
 import model.Joueur;
 import model.SessionJoueur;
@@ -135,10 +137,15 @@ public class Preparation extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//j.combattreJoueur(ennemi, nbHDM);
-//				Session session = AppFactory.getSessionFactory().openSession();
-//				Query query = session.createQuery("select * from Combattre");
-//				System.out.println(query.list().get(0));
-				//Resultat.main(new String[0], j.getMesCombats().get(0));
+				Session session = AppFactory.getSessionFactory().openSession();
+				System.out.println("plop");
+				Query query = session.createSQLQuery("select * From Combattre where Combattre_idCompte_Attaquant = "+ j.getIdCompte()+" order by datePvP desc LIMIT 1");
+				List<?> results = query.list();
+				for(ListIterator<?> iter = results.listIterator(); iter.hasNext(); ) {
+					Object[] row = (Object[]) iter.next();
+					Resultat.main(new String[0], row[0]);
+				}
+				session.close();
 				dispose();
 			}
 		});

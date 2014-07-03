@@ -21,7 +21,11 @@ import model.SessionJoueur;
 public class Batiments extends JFrame {
 
 	private JPanel contentPane;
-
+	private Integer lvlQG = 0;
+	private Integer lvlCas = 0;
+	private Integer lvlUs = 0;
+	private Integer lvlCyb = 0;
+	private Integer argent = 0;
 	/**
 	 * Launch the application.
 	 */
@@ -52,8 +56,22 @@ public class Batiments extends JFrame {
 		
 		final Joueur joueur = SessionJoueur.getInstance().getJoueur();
 		final List<Construire> batiments = joueur.getMesBatiments();
-		Integer argent = joueur.getArgent();
-		JLabel lblCapital = new JLabel("Capital : $"+ argent +"");
+		argent = joueur.getArgent();
+		
+		for(Construire batiment : batiments){
+			if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Quartier Général")){
+				lvlQG = batiment.getNiveau();
+			} else if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Casino")) {
+				lvlCas = batiment.getNiveau();
+			} else if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Usine")) {
+				lvlUs = batiment.getNiveau();
+			} else if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Cybercafé")) {
+				lvlCyb = batiment.getNiveau();
+			}
+		}
+		
+		
+		final JLabel lblCapital = new JLabel("Capital : $"+ argent);
 		lblCapital.setBounds(335, 30, 109, 16);
 		contentPane.add(lblCapital);
 		
@@ -61,6 +79,10 @@ public class Batiments extends JFrame {
 		lblQuartierGeneral.setBackground(Color.RED);
 		lblQuartierGeneral.setBounds(20, 73, 109, 23);
 		contentPane.add(lblQuartierGeneral);
+
+		final JLabel lblNiveauQG = new JLabel("Niveau : "+lvlQG);
+		lblNiveauQG.setBounds(190, 76, 109, 16);
+		contentPane.add(lblNiveauQG);
 		
 		JButton btnConstruireQG = new JButton("Construire");
 		btnConstruireQG.addMouseListener(new MouseAdapter() {
@@ -69,6 +91,10 @@ public class Batiments extends JFrame {
 				for(Construire batiment : batiments){
 					if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Quartier Général")){
 						joueur.ameliorerBatiment(batiment);
+						lvlQG = batiment.getNiveau();
+						argent = joueur.getArgent();
+						lblNiveauQG.setText("Niveau : "+lvlQG);
+						lblCapital.setText("Capital : $"+ argent);
 					}
 				}
 				Batiments.main(new String[0]);
@@ -90,35 +116,15 @@ public class Batiments extends JFrame {
 		lblCybercaf.setBounds(20, 222, 109, 16);
 		contentPane.add(lblCybercaf);
 		
-		Integer niveauQG = 0;
-		Integer niveauCasino = 0;
-		Integer niveauUsine = 0;
-		Integer niveauCyber = 0;
-		for(Construire batiment : batiments){
-			if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Quartier Général")){
-				niveauQG = batiment.getNiveau();
-			} else if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Casino")) {
-				niveauCasino = batiment.getNiveau();
-			} else if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Usine")) {
-				niveauUsine = batiment.getNiveau();
-			} else if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Cybercafé")) {
-				niveauCyber = batiment.getNiveau();
-			}
-		}
-
-		JLabel lblNiveauQG = new JLabel("Niveau : "+niveauQG);
-		lblNiveauQG.setBounds(190, 76, 109, 16);
-		contentPane.add(lblNiveauQG);
-		
-		JLabel lblNiveauCa = new JLabel("Niveau : "+niveauCasino);
+		final JLabel lblNiveauCa = new JLabel("Niveau : "+lvlCas);
 		lblNiveauCa.setBounds(190, 124, 109, 16);
 		contentPane.add(lblNiveauCa);
 		
-		JLabel lvlNiveauU = new JLabel("Niveau : "+niveauUsine);
+		final JLabel lvlNiveauU = new JLabel("Niveau : "+lvlUs);
 		lvlNiveauU.setBounds(190, 173, 109, 16);
 		contentPane.add(lvlNiveauU);
 		
-		JLabel lblNiveauCy = new JLabel("Niveau : "+niveauCyber);
+		final JLabel lblNiveauCy = new JLabel("Niveau : "+lvlCyb);
 		lblNiveauCy.setBounds(190, 222, 109, 16);
 		contentPane.add(lblNiveauCy);
 		
@@ -129,10 +135,12 @@ public class Batiments extends JFrame {
 				for(Construire batiment : batiments){
 					if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Casino")){
 						joueur.ameliorerBatiment(batiment);
+						lvlCas = batiment.getNiveau();
+						argent = joueur.getArgent();
+						lblNiveauCa.setText("Niveau : "+lvlCas);
+						lblCapital.setText("Capital : $"+ argent);
 					}
 				}
-				Batiments.main(new String[0]);
-				dispose();
 			}
 		});
 		btnConstruireCa.setBounds(327, 119, 117, 29);
@@ -145,10 +153,12 @@ public class Batiments extends JFrame {
 				for(Construire batiment : batiments){
 					if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Usine")){
 						joueur.ameliorerBatiment(batiment);
+						lvlUs = batiment.getNiveau();
+						argent = joueur.getArgent();
+						lvlNiveauU.setText("Niveau : "+lvlUs);
+						lblCapital.setText("Capital : $"+ argent);
 					}
 				}
-				Batiments.main(new String[0]);
-				dispose();
 			}
 		});
 		btnConstruireU.setBounds(327, 168, 117, 29);
@@ -161,10 +171,12 @@ public class Batiments extends JFrame {
 				for(Construire batiment : batiments){
 					if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Cybercafé")){
 						joueur.ameliorerBatiment(batiment);
+						lvlCyb = batiment.getNiveau();
+						argent = joueur.getArgent();
+						lblNiveauCy.setText("Niveau : "+lvlCyb);
+						lblCapital.setText("Capital : $"+ argent);
 					}
 				}
-				Batiments.main(new String[0]);
-				dispose();
 			}
 		});
 		btnConstruireCy.setBounds(327, 217, 117, 29);

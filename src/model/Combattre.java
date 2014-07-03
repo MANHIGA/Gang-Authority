@@ -5,8 +5,10 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -17,17 +19,16 @@ import org.hibernate.Session;
 public class Combattre implements Serializable {
 
 	@Id
-	@OneToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Combattre_idCompte_Attaquant")
 	private Joueur attaquant;
 
 	@Id
-	@OneToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Combattre_idCompte_Defenseur")
 	private Joueur defenseur;
 	
-	@Id
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "Combattre_idCompte_Gagnant")
 	private Joueur gagnant;	
 

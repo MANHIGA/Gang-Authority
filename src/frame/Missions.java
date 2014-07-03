@@ -28,6 +28,9 @@ public class Missions extends JFrame {
 	private JPanel contentPane;
 	private Integer nbHDM = 0;
 	private Integer recompenseArg = 0;
+	private Integer dureeMission = 0;
+	private Integer ata = 0;
+	private Integer defs = 0;
 
 	/**
 	 * Launch the application.
@@ -64,17 +67,57 @@ public class Missions extends JFrame {
 		lblMissions.setBounds(36, 30, 144, 16);
 		contentPane.add(lblMissions);
 		
-		List<Mission> missions = Mission.getMissions();
+		//List<Mission> missions = Mission.getMissions();
+		List<Mission> missions = j.getMissionsDisponibles();
 		DefaultListModel<Mission> dlm = new DefaultListModel<Mission>();
 		for(Mission m : missions){
 			dlm.addElement(m);
 		}
-
+		
+		JLabel lblNombreDeSbires = new JLabel("Nombre de sbires");
+		lblNombreDeSbires.setBounds(220, 33, 117, 16);
+		contentPane.add(lblNombreDeSbires);
+		
+		final JLabel lblCountSbires = new JLabel(""+nbHDM);
+		lblCountSbires.setBackground(Color.LIGHT_GRAY);
+		lblCountSbires.setBounds(305, 62, 44, 29);
+		contentPane.add(lblCountSbires);
+		
+		final JLabel lblAttaque = new JLabel("Puissance d'attaque : "+nbHDM*ata);
+		lblAttaque.setBounds(220, 118, 156, 16);
+		contentPane.add(lblAttaque);
+		
+		final JLabel lblDefense = new JLabel("Puissance défensive : "+nbHDM*defs);
+		lblDefense.setBounds(220, 146, 156, 16);
+		contentPane.add(lblDefense);
+		
+		final JLabel lblRecompense = new JLabel("Récompense : $"+recompenseArg);
+		lblRecompense.setBounds(36, 216, 211, 16);
+		contentPane.add(lblRecompense);
+		
+		final JLabel lblTempsRequis = new JLabel("Temps requis : "+dureeMission);
+		lblTempsRequis.setBounds(36, 244, 211, 16);
+		contentPane.add(lblTempsRequis);
+		
 		final JList<Mission> listMissions = new JList(dlm);
 		listMissions.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				List<Entrainer> sbires = j.getMesSbires();
+				for(Entrainer sbire : sbires){
+					if(sbire.getTypeSbire().getLibelleTypeSbire().equals(listMissions.getSelectedValue().getMissionTypeSbire().getLibelleTypeSbire())){
+						ata = sbire.getPointAttaque();
+						defs = sbire.getPointDefense();
+					}
+				}
 				recompenseArg = listMissions.getSelectedValue().getRecompenseArgent();
+				dureeMission = listMissions.getSelectedValue().getDureeMission();
+				lblRecompense.setText("Récompense : $"+recompenseArg);
+				lblTempsRequis.setText("Temps requis : "+dureeMission);
+				nbHDM = 0;
+				lblCountSbires.setText(""+nbHDM);
+				lblAttaque.setText("Puissance d'attaque : "+nbHDM*ata);
+				lblDefense.setText("Puissance défensive : "+nbHDM*defs);
 			}
 		});
 		listMissions.setCellRenderer(new DefaultListCellRenderer() {
@@ -91,18 +134,32 @@ public class Missions extends JFrame {
 		listMissions.setBounds(36, 58, 138, 146);
 		contentPane.add(listMissions);
 		
-		JLabel lblNombreDeSbires = new JLabel("Nombre de sbires");
-		lblNombreDeSbires.setBounds(220, 33, 117, 16);
-		contentPane.add(lblNombreDeSbires);
+		JButton btnMoins = new JButton("-");
+		btnMoins.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(nbHDM > 0){
+					nbHDM -= 1;
+					lblCountSbires.setText(""+nbHDM);
+					lblAttaque.setText("Puissance d'attaque : "+nbHDM*ata);
+					lblDefense.setText("Puissance défensive : "+nbHDM*defs);
+				}
+			}
+		});
+		btnMoins.setBounds(349, 61, 44, 30);
+		contentPane.add(btnMoins);
 		
 		JButton btnPlus = new JButton("+");
 		btnPlus.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				for(Entrainer sbire : j.getMesSbires()){
-					if(sbire.getTypeSbire().getLibelleTypeSbire().equals("Homme de main")){
+					if(sbire.getTypeSbire().getLibelleTypeSbire().equals(listMissions.getSelectedValue().getMissionTypeSbire().getLibelleTypeSbire())){
 						if(sbire.getNbSbire() >= nbHDM + 1){
 							nbHDM += 1;
+							lblCountSbires.setText(""+nbHDM);
+							lblAttaque.setText("Puissance d'attaque : "+nbHDM*ata);
+							lblDefense.setText("Puissance défensive : "+nbHDM*defs);
 						}
 					}
 				}
@@ -111,58 +168,15 @@ public class Missions extends JFrame {
 		btnPlus.setBounds(220, 61, 44, 30);
 		contentPane.add(btnPlus);
 		
-		JLabel lblCountSbires = new JLabel(""+nbHDM);
-		lblCountSbires.setBackground(Color.LIGHT_GRAY);
-		lblCountSbires.setBounds(305, 62, 44, 29);
-		contentPane.add(lblCountSbires);
-		
-		JButton btnMoins = new JButton("-");
-		btnMoins.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(nbHDM > 0){
-					nbHDM -= 1;
-				}
-			}
-		});
-		btnMoins.setBounds(349, 61, 44, 30);
-		contentPane.add(btnMoins);
-		
-		List<Entrainer> sbires = j.getMesSbires();
-		Integer atk = 0;
-		Integer def = 0;
-		for(Entrainer sbire : sbires){
-			if(sbire.getTypeSbire().getLibelleTypeSbire().equals("Homme de main")){
-				atk = sbire.getPointAttaque();
-				def = sbire.getPointDefense();
-			}
-		}
-		Integer puiAtk = nbHDM * atk;
-		Integer puiDef = nbHDM * def;
-		
-		JLabel lblAttaque = new JLabel("Puissance d'attaque : "+puiAtk);
-		lblAttaque.setBounds(220, 118, 156, 16);
-		contentPane.add(lblAttaque);
-		
-		JLabel lblDefense = new JLabel("Puissance défensive : "+puiDef);
-		lblDefense.setBounds(220, 146, 156, 16);
-		contentPane.add(lblDefense);
-		
-		JLabel lblRecompense = new JLabel("Récompense : $"+recompenseArg);
-		lblRecompense.setBounds(36, 216, 211, 16);
-		contentPane.add(lblRecompense);
-		
-		JLabel lblTempsRequis = new JLabel("Temps requis : 0 secondes");
-		lblTempsRequis.setBounds(36, 244, 211, 16);
-		contentPane.add(lblTempsRequis);
-		
 		JButton btnAttaquer = new JButton("Attaquer");
 		btnAttaquer.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				if(nbHDM > 0){
 				j.realiserMission(listMissions.getSelectedValue(), nbHDM);
 				Menu.main(new String[0]);
 				dispose();
+				}
 			}
 		});
 		btnAttaquer.setBounds(257, 210, 117, 29);

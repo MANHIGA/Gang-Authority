@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +20,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.LazyToOne;
 
 @Entity
 @Table(name="Joueur")
@@ -70,7 +70,7 @@ public class Joueur {
 	
 	@OneToMany(mappedBy="joueur")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List <Entrainer> mesSbires = new ArrayList<Entrainer>();;
+	private List <Entrainer> mesSbires = new ArrayList<Entrainer>();
 	
 	public Joueur(){}
 	

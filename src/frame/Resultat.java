@@ -12,21 +12,23 @@ import javax.swing.JButton;
 import model.Combattre;
 import model.Joueur;
 import model.SessionJoueur;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 public class Resultat extends JFrame {
 
 	private JPanel contentPane;
-
+	private Combattre combat;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args, final Combattre combat) {
+	public static void main(String[] args, final Object date) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Resultat frame = new Resultat(combat);
+					Resultat frame = new Resultat(date);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,7 +40,7 @@ public class Resultat extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Resultat(final Combattre combat) {
+	public Resultat(final Object date) {
 		setTitle("Gang Authority - Compte Rendu");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -48,6 +50,12 @@ public class Resultat extends JFrame {
 		contentPane.setLayout(null);
 		
 		final Joueur j = SessionJoueur.getInstance().getJoueur();
+		List<Combattre> combats = j.getMesCombats();
+		for(Combattre c : combats){
+			if(c.getDatePvp().equals(date) && c.getAttaquant().getIdCompte().equals(j.getIdCompte())){
+				combat = c;
+			}
+		}
 		Joueur ennemi = null;
 		if(j.getIdCompte().equals(combat.getAttaquant().getIdCompte())){
 			ennemi = combat.getDefenseur();
