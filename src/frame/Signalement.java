@@ -7,9 +7,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import model.AppFactory;
 import model.Joueur;
 import model.SessionJoueur;
 
@@ -69,6 +75,37 @@ public class Signalement extends JFrame {
 		});
 		btnSignaler.setBounds(145, 217, 117, 29);
 		contentPane.add(btnSignaler);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 450, 22);
+		contentPane.add(menuBar);
+		
+		JMenu mnMenu = new JMenu("Menu");
+		mnMenu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Menu.main(new String[0]);
+				dispose();
+			}
+		});
+		menuBar.add(mnMenu);
+		
+		JMenu mnDconnexion = new JMenu("Déconnexion");
+		mnDconnexion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				SessionJoueur.getInstance().getJoueur().setJoueurConnecte(false);
+				Session session = AppFactory.getSessionFactory().openSession();
+				Transaction tx = session.beginTransaction();
+				session.update(SessionJoueur.getInstance().getJoueur());
+				tx.commit();
+				session.close();
+				SessionJoueur.close();
+				Connexion.main(new String[0]);
+				dispose();
+			}
+		});
+		menuBar.add(mnDconnexion);
 	}
 
 }

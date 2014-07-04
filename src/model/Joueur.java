@@ -23,57 +23,58 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.LazyToOne;
 
 @Entity
-@Table(name="Joueur")
+@Table(name = "Joueur")
 public class Joueur {
-	
+
 	@Id
 	@GeneratedValue
-	@Column(name="idCompte")
-    private Integer idCompte;
-	
-	@Column(name="pseudo")
-    private String pseudo;
-	
-	@Column(name="email")
-    private String email;
-	
-	@Column(name="mdp")
-    private String mdp;
-	
-	@Column(name="pointAutorite")
-    private Integer pointAutorite;
-	
-	@Column(name="nbMorts")
-    private Integer nbMorts;
-	
-	@Column(name="nbTues")
-    private Integer nbTues;
-	
-	@Column(name="argent")
-    private Integer argent;
-	
-	@Column(name="nomGang")
-    private String nomGang;
-	
-	@Column(name="joueurConnecte")
-    private Boolean joueurConnecte;
-	
-	@Column(name="salt")
+	@Column(name = "idCompte")
+	private Integer idCompte;
+
+	@Column(name = "pseudo")
+	private String pseudo;
+
+	@Column(name = "email")
+	private String email;
+
+	@Column(name = "mdp")
+	private String mdp;
+
+	@Column(name = "pointAutorite")
+	private Integer pointAutorite;
+
+	@Column(name = "nbMorts")
+	private Integer nbMorts;
+
+	@Column(name = "nbTues")
+	private Integer nbTues;
+
+	@Column(name = "argent")
+	private Integer argent;
+
+	@Column(name = "nomGang")
+	private String nomGang;
+
+	@Column(name = "joueurConnecte")
+	private Boolean joueurConnecte;
+
+	@Column(name = "salt")
 	private String salt;
-    
-	@Column(name="is_active")
+
+	@Column(name = "is_active")
 	private Boolean is_active;
-	
-	@OneToMany(mappedBy="joueur",fetch=FetchType.EAGER)
+
+	@OneToMany(mappedBy = "joueur", fetch = FetchType.EAGER)
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List <Construire> mesBatiments = new ArrayList<Construire>();
-	
-	@OneToMany(mappedBy="joueur")
+	private List<Construire> mesBatiments = new ArrayList<Construire>();
+
+	@OneToMany(mappedBy = "joueur")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List <Entrainer> mesSbires = new ArrayList<Entrainer>();
-	
-	public Joueur(){}
-	
+	private List<Entrainer> mesSbires = new ArrayList<Entrainer>();
+
+	public Joueur() {
+	}
+
 	public Joueur(String pseudo, String email, String mdp, String nomGang) {
 		this.pseudo = pseudo;
 		this.email = email;
@@ -125,13 +126,13 @@ public class Joueur {
 	}
 
 	public void setPointAutorite(Integer pointAutorite) {
-		
+
 		Session s = AppFactory.getSessionFactory().openSession();
 		Transaction tx = s.beginTransaction();
-			this.pointAutorite += pointAutorite;
-		s.update(this);	
+		this.pointAutorite += pointAutorite;
+		s.update(this);
 		tx.commit();
-		s.close();	
+		s.close();
 	}
 
 	public Integer getNbMorts() {
@@ -155,13 +156,13 @@ public class Joueur {
 	}
 
 	public void setArgent(Integer argent) {
-		
+
 		Session s = AppFactory.getSessionFactory().openSession();
 		Transaction tx = s.beginTransaction();
-			this.argent += argent;
-		s.update(this);	
+		this.argent += argent;
+		s.update(this);
 		tx.commit();
-		s.close();	
+		s.close();
 	}
 
 	public String getNomGang() {
@@ -171,296 +172,316 @@ public class Joueur {
 	public void setNomGang(String nomGang) {
 		this.nomGang = nomGang;
 	}
-	
+
 	public Boolean getJoueurConnecte() {
 		return joueurConnecte;
 	}
 
 	public void setJoueurConnecte(Boolean joueurConnecte) {
-		
+
 		Session s = AppFactory.getSessionFactory().openSession();
 		Transaction tx = s.beginTransaction();
-			this.joueurConnecte = joueurConnecte;
+		this.joueurConnecte = joueurConnecte;
 		s.update(this);
 		tx.commit();
 		s.close();
 	}
-	
-	public List<Construire> getMesBatiments(){		
+
+	public List<Construire> getMesBatiments() {
 		return mesBatiments;
 	}
-	
-	public List<Entrainer> getMesSbires(){
+
+	public List<Entrainer> getMesSbires() {
 		return mesSbires;
 	}
-	
-	public static Joueur getJoueurByPseudoMdp(String pseudo, String mdp){
-		
+
+	public static Joueur getJoueurByPseudoMdp(String pseudo, String mdp) {
+
 		Session session = AppFactory.getSessionFactory().openSession();
-	
-		Query query = session.createQuery("from Joueur where pseudo = '" + pseudo + "' and mdp = '" + mdp + "'");
-		
-		if(query.list().isEmpty()){
+
+		Query query = session.createQuery("from Joueur where pseudo = '"
+				+ pseudo + "' and mdp = '" + mdp + "'");
+
+		if (query.list().isEmpty()) {
 			session.close();
 			return null;
-		}else {
-			Joueur j = (Joueur)query.list().get(0);
+		} else {
+			Joueur j = (Joueur) query.list().get(0);
 			session.close();
 			return j;
 		}
-			
+
 	}
-	
-	public void creerBatiment(TypeBatiment b){
-		
+
+	public void creerBatiment(TypeBatiment b) {
+
 		Session session = AppFactory.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
-		
-			Construire c = new Construire(this,b,1,10);
-			session.save(c);
-		
+
+		Construire c = new Construire(this, b, 1, 10);
+		session.save(c);
+
 		tx.commit();
 		session.close();
-		
+
 		this.setArgent(new Integer(-10000));
 		mesBatiments.add(c);
 	}
-	
-	public void ameliorerBatiment(Construire c){
+
+	public void ameliorerBatiment(Construire c) {
 		
+		int argentDepense = c.getNiveau() * 10000 * -2;
+		if(this.argent - argentDepense > 0) {
 		Session session = AppFactory.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
-		
-			c.setNiveau(c.getNiveau() + 1);
-			c.setPopulationMax(c.getPopulationMax() + 10);
-			session.update(c);
-		
+
+		c.setNiveau(c.getNiveau() + 1);
+		c.setPopulationMax(c.getPopulationMax() + 10);
+		session.update(c);
+
 		tx.commit();
 		session.close();
 		
-		int argentDepense = c.getNiveau() * 10000 * -2;
-		this.setArgent(new Integer(argentDepense));		
+		this.setArgent(new Integer(argentDepense));
+		}
 	}
-	
-	public Entrainer getTypeSbireEntrainer(TypeSbire s){
-		
-		for(int i = 0; i < mesSbires.size(); i++){
-			if(mesSbires.get(i).getTypeSbire().getLibelleTypeSbire() == s.getLibelleTypeSbire()){
+
+	public Entrainer getTypeSbireEntrainer(TypeSbire s) {
+
+		for (int i = 0; i < mesSbires.size(); i++) {
+			if (mesSbires.get(i).getTypeSbire().getLibelleTypeSbire() == s
+					.getLibelleTypeSbire()) {
 				return mesSbires.get(i);
 			}
 		}
-		
+
 		return null;
 	}
-    
-	public void recruterTypeSbire(TypeSbire s){
-		
+
+	public void recruterTypeSbire(TypeSbire s) {
+
 		Session session = AppFactory.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
-		
+
 		boolean sbireTrouve = false;
-		
-		for(int i = 0; i < this.getMesSbires().size(); i++){
-			
-			if(this.getMesSbires().get(i).getTypeSbire().getLibelleTypeSbire() == s.getLibelleTypeSbire()){
+
+		for (int i = 0; i < this.getMesSbires().size(); i++) {
+
+			if (this.getMesSbires().get(i).getTypeSbire().getLibelleTypeSbire() == s
+					.getLibelleTypeSbire()) {
 				this.getMesSbires().get(i).setNbSbire(1);
 				session.update(this.getMesSbires().get(i));
 				this.setArgent(-100);
 				sbireTrouve = true;
 			}
 		}
-		
-		if(!sbireTrouve){
-			Entrainer e = new Entrainer(this,s);
+
+		if (!sbireTrouve) {
+			Entrainer e = new Entrainer(this, s);
 			mesSbires.add(e);
 			session.save(e);
 			this.setArgent(s.getCout());
 		}
-		
+
 		tx.commit();
 		session.close();
 	}
-	
-	public void ameliorerTypeSbire(Entrainer e){
-		
+
+	public void ameliorerTypeSbire(Entrainer e) {
+
 		Session session = AppFactory.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
-		
+
 		e.setPointAttaque(100);
 		e.setPointDefense(100);
 		session.update(e);
-		
+
 		tx.commit();
 		session.close();
 	}
-	
-	public void recompenserJoueur(int recompensePointAutorite, int recompenseArgent){
+
+	public void recompenserJoueur(int recompensePointAutorite,
+			int recompenseArgent) {
 		this.setPointAutorite(recompensePointAutorite);
 		this.setArgent(recompenseArgent);
 	}
-	
-	public boolean verifierJoueurArgent(int argentDepense){
-		
-		if(this.argent < argentDepense){
+
+	public boolean verifierJoueurArgent(int argentDepense) {
+
+		if (this.argent < argentDepense) {
 			return false;
-		}else{
+		} else {
 			return true;
 		}
 	}
-	
-	public void signalerJoueur(Joueur j, String justification){
-		
+
+	public void signalerJoueur(Joueur j, String justification) {
+
 		Session session = AppFactory.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
+
+		Signalement s = new Signalement(this, justification);
+		Concerner c = new Concerner(s, j);
 		
-		Signalement s = new Signalement(this,j,justification);
 		session.save(s);
-		
+		session.save(c);
+
 		tx.commit();
 		session.close();
 	}
-	
-	public List<Mission> getMissionsDisponibles(){
-				
+
+	public List<Mission> getMissionsDisponibles() {
+
 		Session s = AppFactory.getSessionFactory().openSession();
-		Query q = s.createQuery("from Realiser where Realiser_idCompte = " + this.getIdCompte() + " order by dateRealisation");		
-		List<Realiser> mesMissionsRealisees = (List<Realiser>)q.list();
+		Query q = s.createQuery("from Realiser where Realiser_idCompte = "
+				+ this.getIdCompte() + " order by dateRealisation");
+		List<Realiser> mesMissionsRealisees = (List<Realiser>) q.list();
 		s.close();
-		
+
 		List<Mission> missionsDisponibles = Mission.getMissions();
-//		boolean missionTrouvee = false;
-//		int i = 0;
-		
-		for(Realiser r : mesMissionsRealisees){
-			
-			if(r.getDateRealisation().before(new Date())){
-				
-				if (missionsDisponibles.contains(r.getMission())){
+		// boolean missionTrouvee = false;
+		// int i = 0;
+
+		for (Realiser r : mesMissionsRealisees) {
+
+			if (r.getDateRealisation().before(new Date())) {
+
+				if (missionsDisponibles.contains(r.getMission())) {
 					missionsDisponibles.remove(r.getMission());
 				}
-				
+
 			}
-		
-//			if(r.getDateRealisation().before(new Date())){
-//				
-//				while(!missionTrouvee && i < missionsDisponibles.size()){
-//					if(missionsDisponibles.get(i).getIdMission().equals(r.getMission().getIdMission())){
-//						missionsDisponibles.remove(i);
-//						missionTrouvee = true;
-//					}
-//					i++;
-//				}
-//
-//			}	
+
+			// if(r.getDateRealisation().before(new Date())){
+			//
+			// while(!missionTrouvee && i < missionsDisponibles.size()){
+			// if(missionsDisponibles.get(i).getIdMission().equals(r.getMission().getIdMission())){
+			// missionsDisponibles.remove(i);
+			// missionTrouvee = true;
+			// }
+			// i++;
+			// }
+			//
+			// }
 		}
 
-		if(missionsDisponibles.isEmpty()){
+		if (missionsDisponibles.isEmpty()) {
 			return null;
-		}else{
+		} else {
 			return missionsDisponibles;
 		}
 	}
-	
-	public void realiserMission(Mission m, int nbSbiresEnvoyes){
-		
+
+	public void realiserMission(Mission m, int nbSbiresEnvoyes) {
+
 		Session session = AppFactory.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
-				
-		Realiser r = new Realiser(this,m,nbSbiresEnvoyes);
+
+		Realiser r = new Realiser(this, m, nbSbiresEnvoyes);
 		session.save(r);
-				
+
 		tx.commit();
 		session.close();
-				
+
 		this.setArgent(m.getRecompenseArgent());
 		this.setPointAutorite(m.getRecompensePointsAutorites());
-				
-		for(Entrainer e : this.getMesSbires()){
-			if(e.getTypeSbire().getLibelleTypeSbire() == m.getMissionTypeSbire().getLibelleTypeSbire()){
+
+		for (Entrainer e : this.getMesSbires()) {
+			if (e.getTypeSbire().getLibelleTypeSbire() == m
+					.getMissionTypeSbire().getLibelleTypeSbire()) {
 				e.setNbSbire(new Integer(nbSbiresEnvoyes * -1));
 			}
 		}
 	}
-	
-	public static List<Joueur> getJoueursConnectes(){
-		
+
+	public static List<Joueur> getJoueursConnectes() {
+
 		Session s = AppFactory.getSessionFactory().openSession();
-		Query q = s.createQuery("from Joueur where joueurConnecte = 1");	
-		List<Joueur> joueursConnectes = (List<Joueur>)q.list();
+		Query q = s.createQuery("from Joueur where joueurConnecte = 1");
+		List<Joueur> joueursConnectes = (List<Joueur>) q.list();
 		s.close();
-		
+
 		return joueursConnectes;
 	}
-	
-	public static Joueur getJoueurByPseudo(String pseudo){
-		
+
+	public static Joueur getJoueurByPseudo(String pseudo) {
+
 		Session s = AppFactory.getSessionFactory().openSession();
 		Query q = s.createQuery("from Joueur where pseudo = '" + pseudo + "'");
-		
-		if(q.list().size() == 0){
+
+		if (q.list().size() == 0) {
 			s.close();
 			return null;
-		}else{
-			Joueur j = (Joueur)q.list().get(0);
+		} else {
+			Joueur j = (Joueur) q.list().get(0);
 			s.close();
 			return j;
 		}
 	}
-	
-	public void combattreJoueur(Joueur defenseur, int nbSbiresEnvoyes){
-		
-		 int pointAttaqueTotal = 0;
-		 
-		 for(Entrainer e : this.getMesSbires()){
-			 if(e.getTypeSbire().getLibelleTypeSbire() == "Homme de main"){	 
-				 pointAttaqueTotal = e.getPointAttaque();			 
-			 }
-		 }
-		 
-		 for(Entrainer e : defenseur.getMesSbires()){
-			 if(e.getTypeSbire().getLibelleTypeSbire() == "Homme de main"){		 
-				 pointAttaqueTotal -= e.getPointDefense();		 
-			 }
-		 }
-		
+
+	public Combattre combattreJoueur(Joueur defenseur, int nbSbiresEnvoyes) {
+
+		int pointAttaqueTotal = 0;
+
+		for (Entrainer e : this.getMesSbires()) {
+			if (e.getTypeSbire().getLibelleTypeSbire() == "Homme de main") {
+				pointAttaqueTotal = e.getPointAttaque();
+			}
+		}
+
+		for (Entrainer e : defenseur.getMesSbires()) {
+			if (e.getTypeSbire().getLibelleTypeSbire() == "Homme de main") {
+				pointAttaqueTotal -= e.getPointDefense();
+			}
+		}
+
 		Session session = AppFactory.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
-			
-			if(pointAttaqueTotal < 0){
-				Combattre c = new Combattre(this,defenseur, new Integer(nbSbiresEnvoyes),defenseur);
-				session.save(c);
-			}else{
-				Combattre c = new Combattre(this,defenseur, new Integer(nbSbiresEnvoyes),this);
-				session.save(c);
-			}
-	
+		
+		Combattre c;
+		
+		if (pointAttaqueTotal < 0) {
+			c = new Combattre(this, defenseur, new Integer(nbSbiresEnvoyes),
+					defenseur);
+			session.save(c);
+		} else {
+			c = new Combattre(this, defenseur, new Integer(nbSbiresEnvoyes),
+					this);
+			session.save(c);
+		}
+
 		tx.commit();
 		session.close();
-		
-		for(Entrainer e : this.getMesSbires()){
-			if(e.getTypeSbire().getLibelleTypeSbire() == "Homme de main"){
+
+		for (Entrainer e : this.getMesSbires()) {
+			if (e.getTypeSbire().getLibelleTypeSbire() == "Homme de main") {
 				e.setNbSbire(new Integer(nbSbiresEnvoyes * -1));
 			}
 		}
+		return c;
 	}
-	
-	public List<Combattre> getMesCombats(){
-		
+
+	public List<Combattre> getMesCombats() {
+
 		Session s = AppFactory.getSessionFactory().openSession();
-		Query q = s.createQuery("from Combattre where Combattre_idCompte_Attaquant = " + this.getIdCompte() + "");
-			List<Combattre> mesCombats = (List<Combattre>)q.list();
+		Query q = s
+				.createQuery("from Combattre where Combattre_idCompte_Attaquant = "
+						+ this.getIdCompte() + "");
+		List<Combattre> mesCombats = (List<Combattre>) q.list();
 		s.close();
-		
+
 		Session s1 = AppFactory.getSessionFactory().openSession();
-		Query q1 = s1.createQuery("from Combattre where Combattre_idCompte_Defenseur = " + this.getIdCompte() + "");
-			List<Combattre> mesCombatsDefendus = (List<Combattre>)q1.list();
+		Query q1 = s1
+				.createQuery("from Combattre where Combattre_idCompte_Defenseur = "
+						+ this.getIdCompte() + "");
+		List<Combattre> mesCombatsDefendus = (List<Combattre>) q1.list();
 		s1.close();
-		
-		for(Combattre c : mesCombatsDefendus){
+
+		for (Combattre c : mesCombatsDefendus) {
 			mesCombats.add(c);
 		}
-		
-		return mesCombats;	
+
+		return mesCombats;
 	}
-	
+
 }

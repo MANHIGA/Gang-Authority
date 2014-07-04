@@ -18,6 +18,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import model.AppFactory;
 import model.Entrainer;
 import model.Joueur;
 import model.Mission;
@@ -62,13 +66,12 @@ public class Missions extends JFrame {
 		contentPane.setLayout(null);
 		
 		final Joueur j = SessionJoueur.getInstance().getJoueur();
-//		final Joueur j = Joueur.getJoueurByPseudo("noob");
 		JLabel lblMissions = new JLabel("Missions disponibles");
 		lblMissions.setBounds(36, 30, 144, 16);
 		contentPane.add(lblMissions);
 		
-		//List<Mission> missions = Mission.getMissions();
-		List<Mission> missions = j.getMissionsDisponibles();
+		List<Mission> missions = Mission.getMissions();
+		//List<Mission> missions = j.getMissionsDisponibles();
 		DefaultListModel<Mission> dlm = new DefaultListModel<Mission>();
 		for(Mission m : missions){
 			dlm.addElement(m);
@@ -200,6 +203,12 @@ public class Missions extends JFrame {
 		mnDconnexion.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				SessionJoueur.getInstance().getJoueur().setJoueurConnecte(false);
+				Session session = AppFactory.getSessionFactory().openSession();
+				Transaction tx = session.beginTransaction();
+				session.update(SessionJoueur.getInstance().getJoueur());
+				tx.commit();
+				session.close();
 				SessionJoueur.close();
 				Connexion.main(new String[0]);
 				dispose();

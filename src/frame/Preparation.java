@@ -56,58 +56,60 @@ public class Preparation extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		final Joueur ennemi = Joueur.getJoueurByPseudo(arg);
 		final Joueur j = SessionJoueur.getInstance().getJoueur();
-		
-		JLabel lblJoueurEnnemi = new JLabel("Ennemi : "+arg+"("+ennemi.getPointAutorite()+" points d'autorité)");
+
+		JLabel lblJoueurEnnemi = new JLabel("Ennemi : " + arg + "("
+				+ ennemi.getPointAutorite() + " points d'autorité)");
 		lblJoueurEnnemi.setBounds(24, 26, 279, 16);
 		contentPane.add(lblJoueurEnnemi);
-		
-		
+
 		JLabel lblHDM = new JLabel("Nombre d'hommes de main :");
 		lblHDM.setBounds(24, 54, 254, 16);
 		contentPane.add(lblHDM);
-		
-		
 
-		
-		final JLabel lblNbHDM = new JLabel(""+nbHDM);
+		final JLabel lblNbHDM = new JLabel("" + nbHDM);
 		lblNbHDM.setBounds(92, 88, 40, 16);
 		contentPane.add(lblNbHDM);
-		
-		
+
 		List<Entrainer> sbires = j.getMesSbires();
 		Integer atk = 0;
 		Integer def = 0;
-		for(Entrainer sbire : sbires){
-			if(sbire.getTypeSbire().getLibelleTypeSbire().equals("Homme de main")){
+		for (Entrainer sbire : sbires) {
+			if (sbire.getTypeSbire().getLibelleTypeSbire()
+					.equals("Homme de main")) {
 				atk = sbire.getPointAttaque();
 				def = sbire.getPointDefense();
 			}
 		}
 		final Integer ata = atk;
 		final Integer defs = def;
-		
-		final JLabel lblAttaque = new JLabel("Puissance d'attaque : "+nbHDM*ata);
+
+		final JLabel lblAttaque = new JLabel("Puissance d'attaque : " + nbHDM
+				* ata);
 		lblAttaque.setBounds(256, 81, 194, 16);
 		contentPane.add(lblAttaque);
-		
-		final JLabel lblDefense = new JLabel("Puissance défensive : "+nbHDM*defs);
+
+		final JLabel lblDefense = new JLabel("Puissance défensive : " + nbHDM
+				* defs);
 		lblDefense.setBounds(256, 152, 194, 16);
 		contentPane.add(lblDefense);
-		
+
 		JButton btnPlusHDM = new JButton("+");
 		btnPlusHDM.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				for(Entrainer sbire : j.getMesSbires()){
-					if(sbire.getTypeSbire().getLibelleTypeSbire().equals("Homme de main")){
-						if(sbire.getNbSbire() >= nbHDM + 1){
+				for (Entrainer sbire : j.getMesSbires()) {
+					if (sbire.getTypeSbire().getLibelleTypeSbire()
+							.equals("Homme de main")) {
+						if (sbire.getNbSbire() >= nbHDM + 1) {
 							nbHDM += 1;
-							lblNbHDM.setText(""+nbHDM);
-							lblAttaque.setText("Puissance d'attaque : "+nbHDM*ata);
-							lblDefense.setText("Puissance défensive : "+nbHDM*defs);
+							lblNbHDM.setText("" + nbHDM);
+							lblAttaque.setText("Puissance d'attaque : " + nbHDM
+									* ata);
+							lblDefense.setText("Puissance défensive : " + nbHDM
+									* defs);
 						}
 					}
 				}
@@ -115,37 +117,28 @@ public class Preparation extends JFrame {
 		});
 		btnPlusHDM.setBounds(24, 82, 40, 30);
 		contentPane.add(btnPlusHDM);
-		
-		
+
 		JButton btnMoinsHDM = new JButton("-");
 		btnMoinsHDM.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(nbHDM > 0){
+				if (nbHDM > 0) {
 					nbHDM -= 1;
-					lblNbHDM.setText(""+nbHDM);
-					lblAttaque.setText("Puissance d'attaque : "+nbHDM*ata);
-					lblDefense.setText("Puissance défensive : "+nbHDM*defs);
+					lblNbHDM.setText("" + nbHDM);
+					lblAttaque.setText("Puissance d'attaque : " + nbHDM * ata);
+					lblDefense.setText("Puissance défensive : " + nbHDM * defs);
 				}
 			}
 		});
 		btnMoinsHDM.setBounds(144, 82, 40, 30);
 		contentPane.add(btnMoinsHDM);
-		
+
 		JButton btnValider = new JButton("Valider");
 		btnValider.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//j.combattreJoueur(ennemi, nbHDM);
-				Session session = AppFactory.getSessionFactory().openSession();
-				System.out.println("plop");
-				Query query = session.createSQLQuery("select * From Combattre where Combattre_idCompte_Attaquant = "+ j.getIdCompte()+" order by datePvP desc LIMIT 1");
-				List<?> results = query.list();
-				for(ListIterator<?> iter = results.listIterator(); iter.hasNext(); ) {
-					Object[] row = (Object[]) iter.next();
-					Resultat.main(new String[0], row[0]);
-				}
-				session.close();
+				// j.combattreJoueur(ennemi, nbHDM);
+				Resultat.main(new String[0], j.combattreJoueur(ennemi, nbHDM));
 				dispose();
 			}
 		});

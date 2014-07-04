@@ -12,6 +12,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import model.AppFactory;
 import model.Construire;
 import model.Joueur;
 import model.SessionJoueur;
@@ -151,6 +155,12 @@ public class Patrimoine extends JFrame {
 		mnDconnexion.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				SessionJoueur.getInstance().getJoueur().setJoueurConnecte(false);
+				Session session = AppFactory.getSessionFactory().openSession();
+				Transaction tx = session.beginTransaction();
+				session.update(SessionJoueur.getInstance().getJoueur());
+				tx.commit();
+				session.close();
 				SessionJoueur.close();
 				Connexion.main(new String[0]);
 				dispose();

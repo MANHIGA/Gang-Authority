@@ -18,6 +18,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import model.AppFactory;
 import model.Joueur;
 import model.SessionJoueur;
 
@@ -124,6 +128,13 @@ public class Connexion extends JFrame {
 						Joueur joueur = Joueur.getJoueurByPseudoMdp(
 								txtPseudo.getText(), txtMotDePasse.getText());
 						if (joueur != null) {
+							Session s = AppFactory.getSessionFactory().openSession();
+							Transaction tx = s.beginTransaction();
+							joueur.setJoueurConnecte(true);
+							s.update(joueur);
+							tx.commit();
+							s.close();
+							
 							SessionJoueur sessionJoueur = SessionJoueur
 									.getInstance();
 							sessionJoueur.setJoueur(joueur);
@@ -174,7 +185,7 @@ public class Connexion extends JFrame {
 						// A remplacer par l'adresse menant au mot de passe
 						// oublié
 						Desktop.getDesktop().browse(
-								new URI("http://www.google.com"));
+								new URI("http://localhost/www.gangauthority.com/web/app.php/oublimdp"));
 					}
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block

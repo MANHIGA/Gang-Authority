@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 @Entity
 @Table(name="Signalement")
@@ -38,12 +39,10 @@ public class Signalement implements Serializable{
 	
 	public Signalement(){}
 	
-	public Signalement(Joueur j, Joueur joueurSignale, String raison){
+	public Signalement(Joueur j, String raison){
 		this.joueur = j;
 		this.justification = raison;
 		this.dateSignalement = new Date();
-		
-		Concerner c = new Concerner(this,joueurSignale);
 	}
 	
 	public Joueur getJoueur() {

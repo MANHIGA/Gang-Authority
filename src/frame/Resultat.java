@@ -4,11 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import model.AppFactory;
 import model.Combattre;
 import model.Joueur;
 import model.SessionJoueur;
@@ -24,11 +30,11 @@ public class Resultat extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args, final Object date) {
+	public static void main(String[] args, final Combattre combat) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Resultat frame = new Resultat(date);
+					Resultat frame = new Resultat(combat);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +46,7 @@ public class Resultat extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Resultat(final Object date) {
+	public Resultat(Combattre combat) {
 		setTitle("Gang Authority - Compte Rendu");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -50,18 +56,8 @@ public class Resultat extends JFrame {
 		contentPane.setLayout(null);
 		
 		final Joueur j = SessionJoueur.getInstance().getJoueur();
-		List<Combattre> combats = j.getMesCombats();
-		for(Combattre c : combats){
-			if(c.getDatePvp().equals(date) && c.getAttaquant().getIdCompte().equals(j.getIdCompte())){
-				combat = c;
-			}
-		}
-		Joueur ennemi = null;
-		if(j.getIdCompte().equals(combat.getAttaquant().getIdCompte())){
-			ennemi = combat.getDefenseur();
-		} else {
-			ennemi = combat.getAttaquant();
-		}
+		
+		final Joueur ennemi = combat.getDefenseur();
 		
 		JLabel lblCombatContreJoueur = new JLabel("Combat contre"+ennemi.getPseudo());
 		lblCombatContreJoueur.setBounds(37, 49, 200, 16);
@@ -85,12 +81,6 @@ public class Resultat extends JFrame {
 		btnSignalerLeJoueur.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				Joueur ennemi = null;
-				if(j.getIdCompte().equals(combat.getAttaquant().getIdCompte())){
-					ennemi = combat.getDefenseur();
-				} else {
-					ennemi = combat.getAttaquant();
-				}
 				String[] s = new String[1];
 				s[0] = ennemi.getPseudo();
 				Signalement.main(s);
@@ -99,6 +89,37 @@ public class Resultat extends JFrame {
 		});
 		btnSignalerLeJoueur.setBounds(129, 164, 173, 77);
 		contentPane.add(btnSignalerLeJoueur);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 450, 22);
+		contentPane.add(menuBar);
+		
+		JMenu mnMenu = new JMenu("Menu");
+		mnMenu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Menu.main(new String[0]);
+				dispose();
+			}
+		});
+		menuBar.add(mnMenu);
+		
+		JMenu mnDconnexion = new JMenu("Déconnexion");
+		mnDconnexion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				SessionJoueur.getInstance().getJoueur().setJoueurConnecte(false);
+				Session session = AppFactory.getSessionFactory().openSession();
+				Transaction tx = session.beginTransaction();
+				session.update(SessionJoueur.getInstance().getJoueur());
+				tx.commit();
+				session.close();
+				SessionJoueur.close();
+				Connexion.main(new String[0]);
+				dispose();
+			}
+		});
+		menuBar.add(mnDconnexion);
 	}
 
 }
