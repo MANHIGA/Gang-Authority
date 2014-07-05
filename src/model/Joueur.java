@@ -82,7 +82,7 @@ public class Joueur {
 		this.pointAutorite = new Integer(0);
 		this.nbMorts = new Integer(0);
 		this.nbTues = new Integer(0);
-		this.argent = new Integer(56);
+		this.argent = new Integer(50000);
 		this.nomGang = nomGang;
 		this.joueurConnecte = false;
 		this.salt = "";
@@ -222,35 +222,39 @@ public class Joueur {
 	}
 
 	public void creerBatiment(TypeBatiment b) {
+				
+		if(this.argent >= 10000){
+			
+			Session session = AppFactory.getSessionFactory().openSession();
+			Transaction tx = session.beginTransaction();
 
-		Session session = AppFactory.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
+			Construire c = new Construire(this, b, 1, 10);
+			session.save(c);
 
-		Construire c = new Construire(this, b, 1, 10);
-		session.save(c);
+			tx.commit();
+			session.close();
 
-		tx.commit();
-		session.close();
-
-		this.setArgent(new Integer(-10000));
-		mesBatiments.add(c);
+			this.setArgent(new Integer(-10000));
+			mesBatiments.add(c);
+		}
+	
 	}
 
 	public void ameliorerBatiment(Construire c) {
 		
 		int argentDepense = c.getNiveau() * 10000 * -2;
-		if(this.argent - argentDepense > 0) {
-		Session session = AppFactory.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
-
-		c.setNiveau(c.getNiveau() + 1);
-		c.setPopulationMax(c.getPopulationMax() + 10);
-		session.update(c);
-
-		tx.commit();
-		session.close();
-		
-		this.setArgent(new Integer(argentDepense));
+		if(this.argent - argentDepense >= 0) {
+			Session session = AppFactory.getSessionFactory().openSession();
+			Transaction tx = session.beginTransaction();
+	
+			c.setNiveau(c.getNiveau() + 1);
+			c.setPopulationMax(c.getPopulationMax() + 10);
+			session.update(c);
+	
+			tx.commit();
+			session.close();
+			
+			this.setArgent(new Integer(argentDepense));
 		}
 	}
 
