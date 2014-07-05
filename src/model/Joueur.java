@@ -126,7 +126,6 @@ public class Joueur {
 	}
 
 	public void setPointAutorite(Integer pointAutorite) {
-
 		Session s = AppFactory.getSessionFactory().openSession();
 		Transaction tx = s.beginTransaction();
 		this.pointAutorite += pointAutorite;
@@ -140,7 +139,12 @@ public class Joueur {
 	}
 
 	public void setNbMorts(Integer nbMorts) {
+		Session s = AppFactory.getSessionFactory().openSession();
+		Transaction tx = s.beginTransaction();
 		this.nbMorts += nbMorts;
+		s.update(this);
+		tx.commit();
+		s.close();
 	}
 
 	public Integer getNbTues() {
@@ -148,7 +152,12 @@ public class Joueur {
 	}
 
 	public void setNbTues(Integer nbTues) {
+		Session s = AppFactory.getSessionFactory().openSession();
+		Transaction tx = s.beginTransaction();
 		this.nbTues += nbTues;
+		s.update(this);
+		tx.commit();
+		s.close();
 	}
 
 	public Integer getArgent() {
@@ -156,7 +165,6 @@ public class Joueur {
 	}
 
 	public void setArgent(Integer argent) {
-
 		Session s = AppFactory.getSessionFactory().openSession();
 		Transaction tx = s.beginTransaction();
 		this.argent += argent;
@@ -339,30 +347,15 @@ public class Joueur {
 		s.close();
 
 		List<Mission> missionsDisponibles = Mission.getMissions();
-		// boolean missionTrouvee = false;
-		// int i = 0;
 
 		for (Realiser r : mesMissionsRealisees) {
 
 			if (r.getDateRealisation().before(new Date())) {
-
 				if (missionsDisponibles.contains(r.getMission())) {
 					missionsDisponibles.remove(r.getMission());
 				}
-
 			}
-
-			// if(r.getDateRealisation().before(new Date())){
-			//
-			// while(!missionTrouvee && i < missionsDisponibles.size()){
-			// if(missionsDisponibles.get(i).getIdMission().equals(r.getMission().getIdMission())){
-			// missionsDisponibles.remove(i);
-			// missionTrouvee = true;
-			// }
-			// i++;
-			// }
-			//
-			// }
+			
 		}
 
 		if (missionsDisponibles.isEmpty()) {
@@ -441,13 +434,15 @@ public class Joueur {
 		Combattre c;
 		
 		if (pointAttaqueTotal < 0) {
-			c = new Combattre(this, defenseur, new Integer(nbSbiresEnvoyes),
-					defenseur);
+			c = new Combattre(this, defenseur, new Integer(nbSbiresEnvoyes), defenseur);
 			session.save(c);
+			defenseur.setNbTues(1);
+			this.setNbMorts(-1);
 		} else {
-			c = new Combattre(this, defenseur, new Integer(nbSbiresEnvoyes),
-					this);
+			c = new Combattre(this, defenseur, new Integer(nbSbiresEnvoyes), this);
 			session.save(c);
+			defenseur.setNbTues(-1);
+			this.setNbMorts(1);
 		}
 
 		tx.commit();
