@@ -21,6 +21,7 @@ import model.AppFactory;
 import model.Construire;
 import model.Joueur;
 import model.SessionJoueur;
+import model.TypeBatiment;
 
 public class Batiments extends JFrame {
 
@@ -92,15 +93,30 @@ public class Batiments extends JFrame {
 		btnConstruireQG.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				boolean trouve = false;
 				for(Construire batiment : batiments){
 					if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Quartier Général")){
 						joueur.ameliorerBatiment(batiment);
+						trouve = true;
 						lvlQG = batiment.getNiveau();
-						argent = joueur.getArgent();
-						lblNiveauQG.setText("Niveau : "+lvlQG);
-						lblCapital.setText("Capital : $"+ argent);
 					}
 				}
+				if(trouve == false){
+					List<TypeBatiment> listTypeBatiment = TypeBatiment.getTypesBatiments();
+					int i = 0;
+					while(i < listTypeBatiment.size() && trouve == false){
+						if(listTypeBatiment.get(i).getLibelleTypeBatiment().equals("Quartier Général")){
+							trouve = true;
+							joueur.creerBatiment(listTypeBatiment.get(i));
+							lvlQG = 1;
+						}
+						i++;
+					}	
+					
+				}
+				argent = joueur.getArgent();
+				lblNiveauQG.setText("Niveau : "+lvlQG);
+				lblCapital.setText("Capital : $"+ argent);
 				Batiments.main(new String[0]);
 				dispose();
 			}
