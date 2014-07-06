@@ -299,7 +299,7 @@ public class Joueur {
 			Entrainer e = new Entrainer(this, s);
 			mesSbires.add(e);
 			session.save(e);
-			this.setArgent(s.getCout());
+			this.setArgent(s.getCout()*(-1));
 		}
 
 		tx.commit();
