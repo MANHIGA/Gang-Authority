@@ -96,6 +96,13 @@ public class Connexion extends JFrame {
 							Joueur joueur = Joueur.getJoueurByPseudoMdp(
 									txtPseudo.getText(), txtMotDePasse.getText());
 							if (joueur != null) {
+								Session s = AppFactory.getSessionFactory().openSession();
+								Transaction tx = s.beginTransaction();
+								joueur.setJoueurConnecte(true);
+								s.update(joueur);
+								tx.commit();
+								s.close();
+								
 								SessionJoueur sessionJoueur = SessionJoueur
 										.getInstance();
 								sessionJoueur.setJoueur(joueur);
