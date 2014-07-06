@@ -257,7 +257,7 @@ public class Joueur {
 			this.setArgent(new Integer(argentDepense));
 			
 			for(Entrainer e : this.getMesSbires()){
-				if(e.getTypeSbire().getTypeBatiment().equals(c.getTypeBatiment())){				
+				if(e.getTypeSbire().getTypeBatiment().getLibelleTypeBatiment().equals(c.getTypeBatiment().getLibelleTypeBatiment())){				
 					e.setPointAttaque(e.getPointAttaque() + 20);
 					e.setPointDefense(e.getPointDefense() + 20);
 				}
