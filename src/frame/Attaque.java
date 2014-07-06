@@ -22,6 +22,7 @@ import org.hibernate.Transaction;
 import model.AppFactory;
 import model.Joueur;
 import model.SessionJoueur;
+import java.awt.Color;
 
 public class Attaque extends JFrame {
 
@@ -59,12 +60,23 @@ public class Attaque extends JFrame {
 		lblGangsDisponibles.setBounds(82, 31, 125, 16);
 		contentPane.add(lblGangsDisponibles);
 		
+		final JLabel error = new JLabel("");
+		error.setForeground(Color.RED);
+		error.setBounds(231, 32, 195, 14);
+		contentPane.add(error);
+		
 		List<Joueur> liste = SessionJoueur.getInstance().getJoueur().getJoueursConnectes();
 		DefaultListModel lm = new DefaultListModel();
 		for(Joueur j : liste){
 			lm.addElement(j.getPseudo());
 		}
 		final JList listGangsDisponibles = new JList(lm);
+		listGangsDisponibles.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				error.setText("");
+			}
+		});
 		listGangsDisponibles.setBounds(16, 68, 263, 193);
 		contentPane.add(listGangsDisponibles);
 		
@@ -72,10 +84,14 @@ public class Attaque extends JFrame {
 		btnAttaquer.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(listGangsDisponibles.isSelectionEmpty()){
+					error.setText("Veuillez sélectionner un gang");
+				} else {
 				String[] s = new String[1];
 				s[0] = listGangsDisponibles.getSelectedValue().toString();
 				Preparation.main(s);
 				dispose(); 
+				}
 			}
 		});
 		btnAttaquer.setBounds(309, 66, 117, 29);
@@ -85,10 +101,14 @@ public class Attaque extends JFrame {
 		btnSignalerJoueur.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(listGangsDisponibles.isSelectionEmpty()){
+					error.setText("Veuillez sélectionner un gang");
+				} else {
 				String[] s = new String[1];
 				s[0] = listGangsDisponibles.getSelectedValue().toString();
 				Signalement.main(s);
 				dispose();
+				}
 			}
 		});
 		btnSignalerJoueur.setBounds(291, 159, 153, 29);

@@ -32,6 +32,7 @@ public class Missions extends JFrame {
 	private JPanel contentPane;
 	private Integer nbHDM = 0;
 	private Integer recompenseArg = 0;
+	private Integer recompensePts = 0;
 	private Integer dureeMission = 0;
 	private Integer ata = 0;
 	private Integer defs = 0;
@@ -98,10 +99,16 @@ public class Missions extends JFrame {
 		lblRecompense.setBounds(36, 216, 211, 16);
 		contentPane.add(lblRecompense);
 		
+		final JLabel error = new JLabel("");
+		error.setForeground(Color.RED);
+		error.setBounds(225, 184, 199, 14);
+		contentPane.add(error);
+		
 		final JList<Mission> listMissions = new JList(dlm);
 		listMissions.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				error.setText("");
 				List<Entrainer> sbires = j.getMesSbires();
 				for(Entrainer sbire : sbires){
 					if(sbire.getTypeSbire().getLibelleTypeSbire().equals(listMissions.getSelectedValue().getMissionTypeSbire().getLibelleTypeSbire())){
@@ -110,6 +117,7 @@ public class Missions extends JFrame {
 					}
 				}
 				recompenseArg = listMissions.getSelectedValue().getRecompenseArgent();
+				recompensePts = listMissions.getSelectedValue().getRecompensePointsAutorites();
 				dureeMission = listMissions.getSelectedValue().getDureeMission();
 				lblRecompense.setText("Récompense : $"+recompenseArg);
 				nbHDM = 0;
@@ -123,20 +131,22 @@ public class Missions extends JFrame {
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 Component renderer = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 if (renderer instanceof JLabel && value instanceof Mission) {
-                    ((JLabel) renderer).setText(((Mission) value).getDifficulte() + ((Mission) value).getRecompenseArgent() + ((Mission) value).getRecompensePointsAutorites() + ((Mission) value).getDureeMission());
+                    ((JLabel) renderer).setText(((Mission) value).getDifficulte() + " " + ((Mission)value).getMissionTypeSbire().getLibelleTypeSbire() + " " + ((Mission) value).getDureeMission());
                 }
                 return renderer;
             }
         });
 		lblMissions.setLabelFor(listMissions);
-		listMissions.setBounds(36, 58, 138, 146);
+		listMissions.setBounds(21, 58, 179, 146);
 		contentPane.add(listMissions);
 		
 		JButton btnMoins = new JButton("-");
 		btnMoins.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(nbHDM > 0){
+				if(listMissions.isSelectionEmpty()){
+					error.setText("Veuillez sélectionner une mission");
+				} else if(nbHDM > 0){
 					nbHDM -= 1;
 					lblCountSbires.setText(""+nbHDM);
 					lblAttaque.setText("Puissance d'attaque : "+nbHDM*ata);
@@ -151,6 +161,9 @@ public class Missions extends JFrame {
 		btnPlus.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(listMissions.isSelectionEmpty()){
+					error.setText("Veuillez sélectionner une mission");
+				} else {
 				for(Entrainer sbire : j.getMesSbires()){
 					if(sbire.getTypeSbire().getLibelleTypeSbire().equals(listMissions.getSelectedValue().getMissionTypeSbire().getLibelleTypeSbire())){
 						if(sbire.getNbSbire() >= nbHDM + 1){
@@ -161,15 +174,11 @@ public class Missions extends JFrame {
 						}
 					}
 				}
+				}
 			}
 		});
 		btnPlus.setBounds(220, 61, 44, 30);
 		contentPane.add(btnPlus);
-		
-		final JLabel error = new JLabel("");
-		error.setForeground(Color.RED);
-		error.setBounds(184, 184, 240, 14);
-		contentPane.add(error);
 		
 		JButton btnAttaquer = new JButton("Attaquer");
 		btnAttaquer.addMouseListener(new MouseAdapter() {
@@ -219,5 +228,9 @@ public class Missions extends JFrame {
 			}
 		});
 		menuBar.add(mnDconnexion);
+		
+		JLabel lblPoints = new JLabel("Points : "+recompensePts);
+		lblPoints.setBounds(36, 236, 46, 14);
+		contentPane.add(lblPoints);
 	}
 }
