@@ -255,6 +255,13 @@ public class Joueur {
 			session.close();
 			
 			this.setArgent(new Integer(argentDepense));
+			
+			for(Entrainer e : this.getMesSbires()){
+				if(e.getTypeSbire().getTypeBatiment().equals(c.getTypeBatiment())){				
+					e.setPointAttaque(e.getPointAttaque() + 20);
+					e.setPointDefense(e.getPointDefense() + 20);
+				}
+			}
 		}
 	}
 
@@ -294,19 +301,6 @@ public class Joueur {
 			session.save(e);
 			this.setArgent(s.getCout());
 		}
-
-		tx.commit();
-		session.close();
-	}
-
-	public void ameliorerTypeSbire(Entrainer e) {
-
-		Session session = AppFactory.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
-
-		e.setPointAttaque(100);
-		e.setPointDefense(100);
-		session.update(e);
 
 		tx.commit();
 		session.close();

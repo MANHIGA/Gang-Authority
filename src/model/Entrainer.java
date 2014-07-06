@@ -84,7 +84,7 @@ public class Entrainer implements Serializable{
 	public void setPointAttaque(Integer pointAttaque) {
 		Session s = AppFactory.getSessionFactory().openSession();
 		Transaction tx = s.beginTransaction();		
-			this.pointAttaque += pointAttaque;
+		this.pointAttaque = pointAttaque;
 		s.update(this);	
 		tx.commit();
 		s.close();
@@ -97,7 +97,7 @@ public class Entrainer implements Serializable{
 	public void setPointDefense(Integer pointDefense) {
 		Session s = AppFactory.getSessionFactory().openSession();
 		Transaction tx = s.beginTransaction();	
-			this.pointDefense += pointDefense;
+			this.pointDefense = pointDefense;
 		s.update(this);	
 		tx.commit();
 		s.close();
