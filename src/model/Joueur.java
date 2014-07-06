@@ -222,9 +222,9 @@ public class Joueur {
 	}
 
 	public void creerBatiment(TypeBatiment b) {
-				
-		if(this.argent >= 10000){
-			
+
+		if (this.argent >= 10000) {
+
 			Session session = AppFactory.getSessionFactory().openSession();
 			Transaction tx = session.beginTransaction();
 
@@ -237,27 +237,28 @@ public class Joueur {
 			this.setArgent(new Integer(-10000));
 			mesBatiments.add(c);
 		}
-	
+
 	}
 
 	public void ameliorerBatiment(Construire c) {
-		
+
 		int argentDepense = c.getNiveau() * 10000 * -2;
-		if(this.argent + argentDepense >= 0) {
+		if (this.argent + argentDepense >= 0) {
 			Session session = AppFactory.getSessionFactory().openSession();
 			Transaction tx = session.beginTransaction();
-	
+
 			c.setNiveau(c.getNiveau() + 1);
 			c.setPopulationMax(c.getPopulationMax() + 10);
 			session.update(c);
-	
+
 			tx.commit();
 			session.close();
-			
+
 			this.setArgent(new Integer(argentDepense));
-			
-			for(Entrainer e : this.getMesSbires()){
-				if(e.getTypeSbire().getTypeBatiment().equals(c.getTypeBatiment())){				
+
+			for (Entrainer e : this.getMesSbires()) {
+				if (e.getTypeSbire().getTypeBatiment()
+						.equals(c.getTypeBatiment())) {
 					e.setPointAttaque(e.getPointAttaque() + 20);
 					e.setPointDefense(e.getPointDefense() + 20);
 				}
@@ -286,11 +287,11 @@ public class Joueur {
 
 		for (int i = 0; i < this.getMesSbires().size(); i++) {
 
-			if (this.getMesSbires().get(i).getTypeSbire().getLibelleTypeSbire().equals(s
-					.getLibelleTypeSbire())) {
+			if (this.getMesSbires().get(i).getTypeSbire().getLibelleTypeSbire()
+					.equals(s.getLibelleTypeSbire())) {
 				this.getMesSbires().get(i).setNbSbire(1);
 				session.update(this.getMesSbires().get(i));
-				this.setArgent(s.getCout()*(-1));
+				this.setArgent(s.getCout() * (-1));
 				sbireTrouve = true;
 			}
 		}
@@ -299,7 +300,7 @@ public class Joueur {
 			Entrainer e = new Entrainer(this, s);
 			mesSbires.add(e);
 			session.save(e);
-			this.setArgent(s.getCout()*(-1));
+			this.setArgent(s.getCout() * (-1));
 		}
 
 		tx.commit();
@@ -328,7 +329,7 @@ public class Joueur {
 
 		Signalement s = new Signalement(this, justification);
 		Concerner c = new Concerner(s, j);
-		
+
 		session.save(s);
 		session.save(c);
 
@@ -353,7 +354,7 @@ public class Joueur {
 					missionsDisponibles.remove(r.getMission());
 				}
 			}
-			
+
 		}
 
 		if (missionsDisponibles.isEmpty()) {
@@ -364,32 +365,32 @@ public class Joueur {
 	}
 
 	public void realiserMission(Mission m, int nbSbiresEnvoyes) {
+			Session session = AppFactory.getSessionFactory().openSession();
+			Transaction tx = session.beginTransaction();
 
-		Session session = AppFactory.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
+			Realiser r = new Realiser(this, m, nbSbiresEnvoyes);
+			session.save(r);
 
-		Realiser r = new Realiser(this, m, nbSbiresEnvoyes);
-		session.save(r);
+			tx.commit();
+			session.close();
 
-		tx.commit();
-		session.close();
+			this.setArgent(m.getRecompenseArgent());
+			this.setPointAutorite(m.getRecompensePointsAutorites());
 
-		this.setArgent(m.getRecompenseArgent());
-		this.setPointAutorite(m.getRecompensePointsAutorites());
-
-		for (Entrainer e : this.getMesSbires()) {
-			if (e.getTypeSbire().getLibelleTypeSbire() == m
-					.getMissionTypeSbire().getLibelleTypeSbire()) {
-				e.setNbSbire(new Integer(nbSbiresEnvoyes * -1));
+			for (Entrainer e : this.getMesSbires()) {
+				if (e.getTypeSbire().getLibelleTypeSbire() == m
+						.getMissionTypeSbire().getLibelleTypeSbire()) {
+					e.setNbSbire(new Integer(nbSbiresEnvoyes * -1));
+				}
 			}
-		}
 	}
 
 	public List<Joueur> getJoueursConnectes() {
-		
-		
+
 		Session s = AppFactory.getSessionFactory().openSession();
-		Query q = s.createQuery("from Joueur where joueurConnecte = 1 and idCompte <> " + this.getIdCompte());
+		Query q = s
+				.createQuery("from Joueur where joueurConnecte = 1 and idCompte <> "
+						+ this.getIdCompte());
 		List<Joueur> joueursConnectes = (List<Joueur>) q.list();
 		s.close();
 
@@ -429,16 +430,18 @@ public class Joueur {
 
 		Session session = AppFactory.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
-		
+
 		Combattre c;
-		
+
 		if (pointAttaqueTotal < 0) {
-			c = new Combattre(this, defenseur, new Integer(nbSbiresEnvoyes), defenseur);
+			c = new Combattre(this, defenseur, new Integer(nbSbiresEnvoyes),
+					defenseur);
 			session.save(c);
 			defenseur.setNbTues(1);
 			this.setNbMorts(-1);
 		} else {
-			c = new Combattre(this, defenseur, new Integer(nbSbiresEnvoyes), this);
+			c = new Combattre(this, defenseur, new Integer(nbSbiresEnvoyes),
+					this);
 			session.save(c);
 			defenseur.setNbTues(-1);
 			this.setNbMorts(1);

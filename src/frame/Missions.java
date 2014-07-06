@@ -166,14 +166,23 @@ public class Missions extends JFrame {
 		btnPlus.setBounds(220, 61, 44, 30);
 		contentPane.add(btnPlus);
 		
+		final JLabel error = new JLabel("");
+		error.setForeground(Color.RED);
+		error.setBounds(184, 184, 240, 14);
+		contentPane.add(error);
+		
 		JButton btnAttaquer = new JButton("Attaquer");
 		btnAttaquer.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(nbHDM > 0){
+				if(listMissions.isSelectionEmpty()){
+					error.setText("Veuillez sélectionner une mission");
+				} else if(nbHDM > 0 & nbHDM >= listMissions.getSelectedValue().getNbMiniSbiresRequis()){
 				j.realiserMission(listMissions.getSelectedValue(), nbHDM);
 				Missions.main(new String[0]);
 				dispose();
+				} else {
+					error.setText("Pas assez de sbires");
 				}
 			}
 		});
