@@ -152,15 +152,31 @@ public class Batiments extends JFrame {
 		btnConstruireCa.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				boolean trouve = false;
 				for(Construire batiment : batiments){
 					if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Casino")){
+						trouve = true;
 						joueur.ameliorerBatiment(batiment);
-						lvlCas = batiment.getNiveau();
-						argent = joueur.getArgent();
-						lblNiveauCa.setText("Niveau : "+lvlCas);
-						lblCapital.setText("Capital : $"+ argent);
 					}
 				}
+				if(trouve == false){
+					List<TypeBatiment> listTypeBatiment = TypeBatiment.getTypesBatiments();
+					int i = 0;
+					while(i < listTypeBatiment.size() && trouve == false){
+						if(listTypeBatiment.get(i).getLibelleTypeBatiment().equals("Casino")){
+							trouve = true;
+							joueur.creerBatiment(listTypeBatiment.get(i));
+							lvlCas = 1;
+						}
+						i++;
+					}	
+					
+				}
+				argent = joueur.getArgent();
+				lblNiveauCa.setText("Niveau : "+lvlQG);
+				lblCapital.setText("Capital : $"+ argent);
+				Batiments.main(new String[0]);
+				dispose();
 			}
 		});
 		btnConstruireCa.setBounds(327, 119, 117, 29);
@@ -170,15 +186,31 @@ public class Batiments extends JFrame {
 		btnConstruireU.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				boolean trouve = false;
 				for(Construire batiment : batiments){
 					if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Usine")){
+						trouve = true;
 						joueur.ameliorerBatiment(batiment);
-						lvlUs = batiment.getNiveau();
-						argent = joueur.getArgent();
-						lvlNiveauU.setText("Niveau : "+lvlUs);
-						lblCapital.setText("Capital : $"+ argent);
 					}
 				}
+				if(trouve == false){
+					List<TypeBatiment> listTypeBatiment = TypeBatiment.getTypesBatiments();
+					int i = 0;
+					while(i < listTypeBatiment.size() && trouve == false){
+						if(listTypeBatiment.get(i).getLibelleTypeBatiment().equals("Usine")){
+							trouve = true;
+							joueur.creerBatiment(listTypeBatiment.get(i));
+							lvlUs = 1;
+						}
+						i++;
+					}	
+					
+				}
+				argent = joueur.getArgent();
+				lvlNiveauU.setText("Niveau : "+lvlUs);
+				lblCapital.setText("Capital : $"+ argent);
+				Batiments.main(new String[0]);
+				dispose();
 			}
 		});
 		btnConstruireU.setBounds(327, 168, 117, 29);
@@ -188,15 +220,31 @@ public class Batiments extends JFrame {
 		btnConstruireCy.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				boolean trouve = false;
 				for(Construire batiment : batiments){
 					if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Cybercafé")){
+						trouve = true;
 						joueur.ameliorerBatiment(batiment);
-						lvlCyb = batiment.getNiveau();
-						argent = joueur.getArgent();
-						lblNiveauCy.setText("Niveau : "+lvlCyb);
-						lblCapital.setText("Capital : $"+ argent);
 					}
 				}
+				if(trouve == false){
+					List<TypeBatiment> listTypeBatiment = TypeBatiment.getTypesBatiments();
+					int i = 0;
+					while(i < listTypeBatiment.size() && trouve == false){
+						if(listTypeBatiment.get(i).getLibelleTypeBatiment().equals("Cybercafé")){
+							trouve = true;
+							joueur.creerBatiment(listTypeBatiment.get(i));
+							lvlCyb = 1;
+						}
+						i++;
+					}	
+					
+				}
+				argent = joueur.getArgent();
+				lblNiveauCy.setText("Niveau : "+lvlQG);
+				lblCapital.setText("Capital : $"+ argent);
+				Batiments.main(new String[0]);
+				dispose();
 			}
 		});
 		btnConstruireCy.setBounds(327, 217, 117, 29);

@@ -243,7 +243,7 @@ public class Joueur {
 	public void ameliorerBatiment(Construire c) {
 		
 		int argentDepense = c.getNiveau() * 10000 * -2;
-		if(this.argent - argentDepense >= 0) {
+		if(this.argent + argentDepense >= 0) {
 			Session session = AppFactory.getSessionFactory().openSession();
 			Transaction tx = session.beginTransaction();
 	
