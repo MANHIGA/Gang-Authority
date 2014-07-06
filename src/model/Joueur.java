@@ -279,11 +279,11 @@ public class Joueur {
 
 		for (int i = 0; i < this.getMesSbires().size(); i++) {
 
-			if (this.getMesSbires().get(i).getTypeSbire().getLibelleTypeSbire() == s
-					.getLibelleTypeSbire()) {
+			if (this.getMesSbires().get(i).getTypeSbire().getLibelleTypeSbire().equals(s
+					.getLibelleTypeSbire())) {
 				this.getMesSbires().get(i).setNbSbire(1);
 				session.update(this.getMesSbires().get(i));
-				this.setArgent(-100);
+				this.setArgent(s.getCout()*(-1));
 				sbireTrouve = true;
 			}
 		}

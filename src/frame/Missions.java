@@ -87,20 +87,16 @@ public class Missions extends JFrame {
 		contentPane.add(lblCountSbires);
 		
 		final JLabel lblAttaque = new JLabel("Puissance d'attaque : "+nbHDM*ata);
-		lblAttaque.setBounds(220, 118, 156, 16);
+		lblAttaque.setBounds(220, 118, 211, 16);
 		contentPane.add(lblAttaque);
 		
 		final JLabel lblDefense = new JLabel("Puissance défensive : "+nbHDM*defs);
-		lblDefense.setBounds(220, 146, 156, 16);
+		lblDefense.setBounds(220, 146, 211, 16);
 		contentPane.add(lblDefense);
 		
 		final JLabel lblRecompense = new JLabel("Récompense : $"+recompenseArg);
 		lblRecompense.setBounds(36, 216, 211, 16);
 		contentPane.add(lblRecompense);
-		
-		final JLabel lblTempsRequis = new JLabel("Temps requis : "+dureeMission);
-		lblTempsRequis.setBounds(36, 244, 211, 16);
-		contentPane.add(lblTempsRequis);
 		
 		final JList<Mission> listMissions = new JList(dlm);
 		listMissions.addMouseListener(new MouseAdapter() {
@@ -116,7 +112,6 @@ public class Missions extends JFrame {
 				recompenseArg = listMissions.getSelectedValue().getRecompenseArgent();
 				dureeMission = listMissions.getSelectedValue().getDureeMission();
 				lblRecompense.setText("Récompense : $"+recompenseArg);
-				lblTempsRequis.setText("Temps requis : "+dureeMission);
 				nbHDM = 0;
 				lblCountSbires.setText(""+nbHDM);
 				lblAttaque.setText("Puissance d'attaque : "+nbHDM*ata);
@@ -177,7 +172,7 @@ public class Missions extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				if(nbHDM > 0){
 				j.realiserMission(listMissions.getSelectedValue(), nbHDM);
-				Menu.main(new String[0]);
+				Missions.main(new String[0]);
 				dispose();
 				}
 			}
