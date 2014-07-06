@@ -169,11 +169,12 @@ public class JoueurTest {
 	@Test
 	public void testGetJoueursConnectes(){
 		
-		int nbJoueursConnectes = Joueur.getJoueursConnectes().size();
+		int nbJoueursConnectes = j.getJoueursConnectes().size();
 		
-		j.setJoueurConnecte(true);
+		Joueur adversaire = Joueur.getJoueurByPseudoMdp("Shiwoon", "gaju");
+		adversaire.setJoueurConnecte(true);
 		
-		assertNotSame(nbJoueursConnectes,Joueur.getJoueursConnectes().size());
+		assertNotSame(nbJoueursConnectes,j.getJoueursConnectes().size());
 	}
 	
 	@Test

@@ -59,7 +59,7 @@ public class Attaque extends JFrame {
 		lblGangsDisponibles.setBounds(82, 31, 125, 16);
 		contentPane.add(lblGangsDisponibles);
 		
-		List<Joueur> liste = Joueur.getJoueursConnectes();
+		List<Joueur> liste = SessionJoueur.getInstance().getJoueur().getJoueursConnectes();
 		DefaultListModel lm = new DefaultListModel();
 		for(Joueur j : liste){
 			lm.addElement(j.getPseudo());

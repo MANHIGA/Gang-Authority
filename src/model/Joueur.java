@@ -391,10 +391,11 @@ public class Joueur {
 		}
 	}
 
-	public static List<Joueur> getJoueursConnectes() {
-
+	public List<Joueur> getJoueursConnectes() {
+		
+		
 		Session s = AppFactory.getSessionFactory().openSession();
-		Query q = s.createQuery("from Joueur where joueurConnecte = 1");
+		Query q = s.createQuery("from Joueur where joueurConnecte = 1 and idCompte <> " + this.getIdCompte());
 		List<Joueur> joueursConnectes = (List<Joueur>) q.list();
 		s.close();
 
