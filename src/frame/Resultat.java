@@ -64,16 +64,19 @@ public class Resultat extends JFrame {
 		contentPane.add(lblCombatContreJoueur);
 		
 		String resultat = "";
+		String rec = "";
 		if(j.getIdCompte().equals(combat.getGagnant().getIdCompte())){
 			resultat += "VICTOIRE";
+			rec += "Gain de $10000 et 50 points.";
 		} else {
 			resultat += "DEFAITE";
+			rec += "Perte de 30 points.";
 		}
 		JLabel lblDefaite = new JLabel(resultat);
 		lblDefaite.setBounds(323, 49, 61, 16);
 		contentPane.add(lblDefaite);
 		
-		JLabel lblPerte = new JLabel("Perte : 0$ et 0 points d'autorit\u00E9");
+		JLabel lblPerte = new JLabel(rec);
 		lblPerte.setBounds(86, 105, 321, 16);
 		contentPane.add(lblPerte);
 		

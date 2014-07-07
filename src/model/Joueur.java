@@ -438,13 +438,16 @@ public class Joueur {
 					defenseur);
 			session.save(c);
 			defenseur.setNbTues(1);
-			this.setNbMorts(-1);
+			defenseur.recompenserJoueur(50, 10000);
+			this.setNbMorts(1);
+			this.setPointAutorite(-30);
 		} else {
 			c = new Combattre(this, defenseur, new Integer(nbSbiresEnvoyes),
 					this);
 			session.save(c);
-			defenseur.setNbTues(-1);
-			this.setNbMorts(1);
+			defenseur.setNbMorts(1);
+			this.recompenserJoueur(50, 10000);
+			this.setNbTues(1);
 		}
 
 		tx.commit();
@@ -452,7 +455,7 @@ public class Joueur {
 
 		for (Entrainer e : this.getMesSbires()) {
 			if (e.getTypeSbire().getLibelleTypeSbire() == "Homme de main") {
-				e.setNbSbire(new Integer(nbSbiresEnvoyes * -1));
+				e.setNbSbire(new Integer(nbSbiresEnvoyes * (-1)));
 			}
 		}
 		return c;
