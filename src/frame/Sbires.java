@@ -16,6 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import model.AppFactory;
+import model.Construire;
 import model.Entrainer;
 import model.Joueur;
 import model.SessionJoueur;
@@ -61,30 +62,25 @@ public class Sbires extends JFrame {
 
 		final Joueur j = SessionJoueur.getInstance().getJoueur();
 		for (TypeSbire typeSbire : TypeSbire.getTypesSbires()) {
-			if (typeSbire.getLibelleTypeSbire()
-					.equals("Homme de main")) {
+			if (typeSbire.getLibelleTypeSbire().equals("Homme de main")) {
 				coutHDM = typeSbire.getCout();
-			} else if (typeSbire.getLibelleTypeSbire()
-					.equals("Trafiquant")) {
-				//nbT = sbire.getNbSbire();
+			} else if (typeSbire.getLibelleTypeSbire().equals("Trafiquant")) {
+				// nbT = sbire.getNbSbire();
 				coutT = typeSbire.getCout();
-			} else if (typeSbire.getLibelleTypeSbire()
-					.equals("Hacker")) {
-				//nbH = sbire.getNbSbire();
+			} else if (typeSbire.getLibelleTypeSbire().equals("Hacker")) {
+				// nbH = sbire.getNbSbire();
 				coutH = typeSbire.getCout();
 			}
 		}
-		for(Entrainer sbire : j.getMesSbires()){
-			if(sbire.getTypeSbire().getLibelleTypeSbire()
-					.equals("Homme de main")){
+		for (Entrainer sbire : j.getMesSbires()) {
+			if (sbire.getTypeSbire().getLibelleTypeSbire()
+					.equals("Homme de main")) {
 				nbHDM = sbire.getNbSbire();
 			}
-			if(sbire.getTypeSbire().getLibelleTypeSbire()
-					.equals("Trafiquant")){
+			if (sbire.getTypeSbire().getLibelleTypeSbire().equals("Trafiquant")) {
 				nbT = sbire.getNbSbire();
 			}
-			if(sbire.getTypeSbire().getLibelleTypeSbire()
-					.equals("Hacker")){
+			if (sbire.getTypeSbire().getLibelleTypeSbire().equals("Hacker")) {
 				nbH = sbire.getNbSbire();
 			}
 		}
@@ -133,10 +129,16 @@ public class Sbires extends JFrame {
 		btnRecruter.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				for (TypeSbire typeSbire : TypeSbire.getTypesSbires()) {
-					if (typeSbire.getLibelleTypeSbire().equals("Homme de main")
-							&& typeSbire.getCout() <= j.getArgent()) {
-						j.recruterTypeSbire(typeSbire);
+				for (Construire batiment : j.getMesBatiments()) {
+					if (batiment.getTypeBatiment().getTypeSbire()
+							.getLibelleTypeSbire().equals("Homme de main")) {
+						for (TypeSbire typeSbire : TypeSbire.getTypesSbires()) {
+							if (typeSbire.getLibelleTypeSbire().equals(
+									"Homme de main")
+									&& typeSbire.getCout() <= j.getArgent()) {
+								j.recruterTypeSbire(typeSbire);
+							}
+						}
 					}
 				}
 				Sbires.main(new String[0]);
@@ -150,10 +152,16 @@ public class Sbires extends JFrame {
 		btnRecruter_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				for (TypeSbire typeSbire : TypeSbire.getTypesSbires()) {
-					if (typeSbire.getLibelleTypeSbire().equals("Trafiquant")
-							&& typeSbire.getCout() <= j.getArgent()) {
-						j.recruterTypeSbire(typeSbire);
+				for (Construire batiment : j.getMesBatiments()) {
+					if (batiment.getTypeBatiment().getTypeSbire()
+							.getLibelleTypeSbire().equals("Trafiquant")) {
+						for (TypeSbire typeSbire : TypeSbire.getTypesSbires()) {
+							if (typeSbire.getLibelleTypeSbire().equals(
+									"Trafiquant")
+									&& typeSbire.getCout() <= j.getArgent()) {
+								j.recruterTypeSbire(typeSbire);
+							}
+						}
 					}
 				}
 				Sbires.main(new String[0]);
@@ -167,10 +175,16 @@ public class Sbires extends JFrame {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				for (TypeSbire typeSbire : TypeSbire.getTypesSbires()) {
-					if (typeSbire.getLibelleTypeSbire().equals("Hacker")
-							&& typeSbire.getCout() <= j.getArgent()) {
-						j.recruterTypeSbire(typeSbire);
+				for (Construire batiment : j.getMesBatiments()) {
+					if (batiment.getTypeBatiment().getTypeSbire()
+							.getLibelleTypeSbire().equals("Homme de main")) {
+						for (TypeSbire typeSbire : TypeSbire.getTypesSbires()) {
+							if (typeSbire.getLibelleTypeSbire()
+									.equals("Hacker")
+									&& typeSbire.getCout() <= j.getArgent()) {
+								j.recruterTypeSbire(typeSbire);
+							}
+						}
 					}
 				}
 				Sbires.main(new String[0]);
@@ -198,7 +212,8 @@ public class Sbires extends JFrame {
 		mnDconnexion.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				SessionJoueur.getInstance().getJoueur().setJoueurConnecte(false);
+				SessionJoueur.getInstance().getJoueur()
+						.setJoueurConnecte(false);
 				Session session = AppFactory.getSessionFactory().openSession();
 				Transaction tx = session.beginTransaction();
 				session.update(SessionJoueur.getInstance().getJoueur());
