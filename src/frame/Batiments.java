@@ -77,7 +77,7 @@ public class Batiments extends JFrame {
 		
 		
 		final JLabel lblCapital = new JLabel("Capital : $"+ argent);
-		lblCapital.setBounds(335, 30, 109, 16);
+		lblCapital.setBounds(20, 33, 109, 16);
 		contentPane.add(lblCapital);
 		
 		JLabel lblQuartierGeneral = new JLabel("Quartier Général");
@@ -121,7 +121,7 @@ public class Batiments extends JFrame {
 				dispose();
 			}
 		});
-		btnConstruireQG.setBounds(327, 71, 117, 29);
+		btnConstruireQG.setBounds(309, 70, 117, 29);
 		contentPane.add(btnConstruireQG);
 		
 		JLabel lblCasino = new JLabel("Casino");
@@ -179,7 +179,7 @@ public class Batiments extends JFrame {
 				dispose();
 			}
 		});
-		btnConstruireCa.setBounds(327, 119, 117, 29);
+		btnConstruireCa.setBounds(309, 118, 117, 29);
 		contentPane.add(btnConstruireCa);
 		
 		JButton btnConstruireU = new JButton("Construire");
@@ -213,7 +213,7 @@ public class Batiments extends JFrame {
 				dispose();
 			}
 		});
-		btnConstruireU.setBounds(327, 168, 117, 29);
+		btnConstruireU.setBounds(309, 167, 117, 29);
 		contentPane.add(btnConstruireU);
 		
 		JButton btnConstruireCy = new JButton("Construire");

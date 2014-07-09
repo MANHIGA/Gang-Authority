@@ -41,6 +41,28 @@ public class Mission {
 	@Column(name="nbMiniSbiresRequis")
 	private Integer nbMiniSbiresRequis;
 	
+	@Column(name="libelleMission")
+	private String libelleMission;
+	
+	@Column(name="descriptionMission")
+	private String descriptionMission;
+	
+	public String getLibelleMission() {
+		return libelleMission;
+	}
+
+	public void setLibelleMission(String libelleMission) {
+		this.libelleMission = libelleMission;
+	}
+
+	public String getDescriptionMission() {
+		return descriptionMission;
+	}
+
+	public void setDescriptionMission(String descriptionMission) {
+		this.descriptionMission = descriptionMission;
+	}
+
 	@OneToOne
 	@JoinColumn(name = "Mission_idTypeSbire")
 	private TypeSbire missionTypeSbire;

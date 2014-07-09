@@ -16,6 +16,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import org.hibernate.Session;
@@ -131,14 +132,16 @@ public class Missions extends JFrame {
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 Component renderer = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 if (renderer instanceof JLabel && value instanceof Mission) {
-                    ((JLabel) renderer).setText(((Mission) value).getDifficulte() + " " + ((Mission)value).getMissionTypeSbire().getLibelleTypeSbire() + " " + ((Mission) value).getDureeMission());
+                    ((JLabel) renderer).setText(((Mission) value).getDifficulte() + " " + ((Mission) value).getLibelleMission() + " " + ((Mission)value).getMissionTypeSbire().getLibelleTypeSbire() + " " + ((Mission) value).getDescriptionMission());
                 }
                 return renderer;
             }
         });
 		lblMissions.setLabelFor(listMissions);
 		listMissions.setBounds(21, 58, 179, 146);
-		contentPane.add(listMissions);
+		JScrollPane scrollPane = new JScrollPane(listMissions);
+		scrollPane.setBounds(21, 58, 179, 146);
+		contentPane.add(scrollPane);
 		
 		JButton btnMoins = new JButton("-");
 		btnMoins.addMouseListener(new MouseAdapter() {
@@ -230,7 +233,7 @@ public class Missions extends JFrame {
 		menuBar.add(mnDconnexion);
 		
 		JLabel lblPoints = new JLabel("Points : "+recompensePts);
-		lblPoints.setBounds(36, 236, 46, 14);
+		lblPoints.setBounds(36, 236, 80, 14);
 		contentPane.add(lblPoints);
 	}
 }
