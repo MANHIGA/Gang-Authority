@@ -182,10 +182,4 @@ public class JoueurTest {
 		
 	}
 	
-	@Test
-	public void testEstBanni(){
-		
-		System.out.println(j.estBanni());
-		
-	}
 }
