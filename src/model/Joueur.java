@@ -381,7 +381,7 @@ public class Joueur {
 			for (Entrainer e : this.getMesSbires()) {
 				if (e.getTypeSbire().getLibelleTypeSbire().equals(m
 						.getMissionTypeSbire().getLibelleTypeSbire())) {
-					e.setNbSbire(new Integer(nbSbiresEnvoyes * -1));
+					e.setNbSbire(new Integer(nbSbiresEnvoyes * (-1)));
 				}
 			}
 	}
