@@ -379,8 +379,8 @@ public class Joueur {
 			this.setPointAutorite(m.getRecompensePointsAutorites());
 
 			for (Entrainer e : this.getMesSbires()) {
-				if (e.getTypeSbire().getLibelleTypeSbire() == m
-						.getMissionTypeSbire().getLibelleTypeSbire()) {
+				if (e.getTypeSbire().getLibelleTypeSbire().equals(m
+						.getMissionTypeSbire().getLibelleTypeSbire())) {
 					e.setNbSbire(new Integer(nbSbiresEnvoyes * -1));
 				}
 			}

@@ -70,7 +70,7 @@ public class Batiments extends JFrame {
 				lvlCas = batiment.getNiveau();
 			} else if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Usine")) {
 				lvlUs = batiment.getNiveau();
-			} else if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Cybercafé")) {
+			} else if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Cybercafe")) {
 				lvlCyb = batiment.getNiveau();
 			}
 		}
@@ -222,7 +222,7 @@ public class Batiments extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				boolean trouve = false;
 				for(Construire batiment : batiments){
-					if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Cybercafé")){
+					if(batiment.getTypeBatiment().getLibelleTypeBatiment().equals("Cybercafe")){
 						trouve = true;
 						joueur.ameliorerBatiment(batiment);
 					}
@@ -231,7 +231,7 @@ public class Batiments extends JFrame {
 					List<TypeBatiment> listTypeBatiment = TypeBatiment.getTypesBatiments();
 					int i = 0;
 					while(i < listTypeBatiment.size() && trouve == false){
-						if(listTypeBatiment.get(i).getLibelleTypeBatiment().equals("Cybercafé")){
+						if(listTypeBatiment.get(i).getLibelleTypeBatiment().equals("Cybercafe")){
 							trouve = true;
 							joueur.creerBatiment(listTypeBatiment.get(i));
 							lvlCyb = 1;
