@@ -181,4 +181,11 @@ public class JoueurTest {
 		assertEquals(1,nbCombats);
 		
 	}
+	
+	@Test
+	public void testEstBanni(){
+		
+		System.out.println(j.estBanni());
+		
+	}
 }

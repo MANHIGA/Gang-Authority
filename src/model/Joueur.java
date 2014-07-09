@@ -454,7 +454,7 @@ public class Joueur {
 		session.close();
 
 		for (Entrainer e : this.getMesSbires()) {
-			if (e.getTypeSbire().getLibelleTypeSbire() == "Homme de main") {
+			if (e.getTypeSbire().getLibelleTypeSbire().equals("Homme de main")) {
 				e.setNbSbire(new Integer(nbSbiresEnvoyes * (-1)));
 			}
 		}
@@ -482,6 +482,23 @@ public class Joueur {
 		}
 
 		return mesCombats;
+	}
+	
+	public boolean estBanni(){
+		
+		Session s = AppFactory.getSessionFactory().openSession();
+		Query q = s.createQuery("from Bannir where Bannir_idCompte = " + this.getIdCompte() + " order by dateBanissement desc");
+		
+		List<Bannir> mesBannissements = (List<Bannir>) q.list();
+		
+		for (Bannir b : mesBannissements) {
+			
+			
+			
+			
+		}
+		
+		return false;
 	}
 
 }
