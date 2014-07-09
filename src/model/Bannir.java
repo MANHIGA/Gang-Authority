@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,10 +13,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Bannir")
-public class Bannir {
+public class Bannir implements Serializable{
 	
 	@Id
-	@JoinColumn(name="Bannir_idAdmin")
+	@Column(name="Bannir_idAdmin")
     private Integer idAdmin;
 	
 	@Id

@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -487,14 +488,21 @@ public class Joueur {
 	public boolean estBanni(){
 		
 		Session s = AppFactory.getSessionFactory().openSession();
-		Query q = s.createQuery("from Bannir where Bannir_idCompte = " + this.getIdCompte() + " order by dateBanissement desc");
+		Query q = s.createQuery("from Bannir where Bannir_idCompte = " + this.getIdCompte() + " order by dateBannissement desc");
 		
 		List<Bannir> mesBannissements = (List<Bannir>) q.list();
 		
+		
 		for (Bannir b : mesBannissements) {
 			
+			Calendar c = Calendar.getInstance(); 
+			c.setTime(b.getDateBannissement());
+			c.add(Calendar.DATE, b.getDureeBannissement());
+			b.setDateBannissement(c.getTime());
 			
-			
+			if(b.getDateBannissement().after(new Date())){
+				return true;
+			}
 			
 		}
 		
