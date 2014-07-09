@@ -71,13 +71,19 @@ public class Patrimoine extends JFrame {
 				popQG = c.getPopulationMax();
 			} else if(c.getTypeBatiment().getLibelleTypeBatiment().equals("Casino")){
 				lvlCas = c.getNiveau();
-				popCas = joueur.getTypeSbireEntrainer(c.getTypeBatiment().getTypeSbire()).getNbSbire();
+				if(joueur.getTypeSbireEntrainer(c.getTypeBatiment().getTypeSbire()) != null) {
+					popCas = joueur.getTypeSbireEntrainer(c.getTypeBatiment().getTypeSbire()).getNbSbire();
+				}
 			} else if(c.getTypeBatiment().getLibelleTypeBatiment().equals("Cybercafe")){
 				lvlCyb = c.getNiveau();
-				popCyb = joueur.getTypeSbireEntrainer(c.getTypeBatiment().getTypeSbire()).getNbSbire();
+				if(joueur.getTypeSbireEntrainer(c.getTypeBatiment().getTypeSbire()) != null) {
+					popCyb = joueur.getTypeSbireEntrainer(c.getTypeBatiment().getTypeSbire()).getNbSbire();
+				}
 			} else if(c.getTypeBatiment().getLibelleTypeBatiment().equals("Usine")){
 				lvlUs = c.getNiveau();
-				popUs = joueur.getTypeSbireEntrainer(c.getTypeBatiment().getTypeSbire()).getNbSbire();
+				if(joueur.getTypeSbireEntrainer(c.getTypeBatiment().getTypeSbire()) != null) {
+					popUs = joueur.getTypeSbireEntrainer(c.getTypeBatiment().getTypeSbire()).getNbSbire();
+				}
 			}
 		}
 		
