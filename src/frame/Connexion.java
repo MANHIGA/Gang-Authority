@@ -60,12 +60,12 @@ public class Connexion extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		final JLabel lblErreur = new JLabel();
 		lblErreur.setForeground(Color.RED);
 		lblErreur.setBounds(106, 25, 287, 16);
 		contentPane.add(lblErreur);
-		
+
 		JLabel lblPseudo = new JLabel("Pseudo");
 		lblPseudo.setBounds(88, 53, 61, 16);
 		contentPane.add(lblPseudo);
@@ -80,45 +80,58 @@ public class Connexion extends JFrame {
 		contentPane.add(txtPseudo);
 		txtPseudo.setColumns(10);
 
-		try{
+		try {
 			Class.forName("model.Admin");
 			Class.forName("frame.Administration");
-			final JCheckBox chckbxAdministrateur = new JCheckBox("Administrateur");
+			final JCheckBox chckbxAdministrateur = new JCheckBox(
+					"Administrateur");
 			chckbxAdministrateur.setBounds(149, 155, 128, 23);
 			contentPane.add(chckbxAdministrateur);
-			
+
 			JButton btnValider = new JButton("Valider");
 			btnValider.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					if (!txtPseudo.getText().equals("") && !txtMotDePasse.getText().equals("")) {
-						if(chckbxAdministrateur.getSelectedObjects() == null){
+					if (!txtPseudo.getText().equals("")
+							&& !txtMotDePasse.getText().equals("")) {
+						if (chckbxAdministrateur.getSelectedObjects() == null) {
 							Joueur joueur = Joueur.getJoueurByPseudoMdp(
-									txtPseudo.getText(), txtMotDePasse.getText());
+									txtPseudo.getText(),
+									txtMotDePasse.getText());
 							if (joueur != null) {
-								Session s = AppFactory.getSessionFactory().openSession();
-								Transaction tx = s.beginTransaction();
-								joueur.setJoueurConnecte(true);
-								s.update(joueur);
-								tx.commit();
-								s.close();
-								
-								SessionJoueur sessionJoueur = SessionJoueur
-										.getInstance();
-								sessionJoueur.setJoueur(joueur);
-								Menu.main(new String[0]);
-								dispose();
-							}else{
-								lblErreur.setText("Identifiant ou mot de passe incorrect");
+								if (joueur.estBanni() == false) {
+									Session s = AppFactory.getSessionFactory()
+											.openSession();
+									Transaction tx = s.beginTransaction();
+									joueur.setJoueurConnecte(true);
+									s.update(joueur);
+									tx.commit();
+									s.close();
+
+									SessionJoueur sessionJoueur = SessionJoueur
+											.getInstance();
+									sessionJoueur.setJoueur(joueur);
+									Menu.main(new String[0]);
+									dispose();
+								} else {
+									lblErreur
+											.setText("Vous êtes actuellement banni.");
+								}
+							} else {
+								lblErreur
+										.setText("Identifiant ou mot de passe incorrect");
 							}
-						}else{
-							Integer adminId = model.Admin.getAdminId(txtPseudo.getText(), txtMotDePasse.getText());
-							if(adminId != null){
-								String str[] = {adminId.toString()};
+						} else {
+							Integer adminId = model.Admin.getAdminId(
+									txtPseudo.getText(),
+									txtMotDePasse.getText());
+							if (adminId != null) {
+								String str[] = { adminId.toString() };
 								frame.Administration.main(str);
 								dispose();
-							}else{
-								lblErreur.setText("Identifiant ou mot de passe incorrect");
+							} else {
+								lblErreur
+										.setText("Identifiant ou mot de passe incorrect");
 							}
 						}
 					}
@@ -126,29 +139,37 @@ public class Connexion extends JFrame {
 			});
 			btnValider.setBounds(149, 199, 117, 29);
 			contentPane.add(btnValider);
-		}catch(Exception e){
+		} catch (Exception e) {
 			JButton btnValider = new JButton("Valider");
 			btnValider.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					if (!txtPseudo.getText().equals("") && !txtMotDePasse.getText().equals("")) {
+					if (!txtPseudo.getText().equals("")
+							&& !txtMotDePasse.getText().equals("")) {
 						Joueur joueur = Joueur.getJoueurByPseudoMdp(
 								txtPseudo.getText(), txtMotDePasse.getText());
 						if (joueur != null) {
-							Session s = AppFactory.getSessionFactory().openSession();
-							Transaction tx = s.beginTransaction();
-							joueur.setJoueurConnecte(true);
-							s.update(joueur);
-							tx.commit();
-							s.close();
-							
-							SessionJoueur sessionJoueur = SessionJoueur
-									.getInstance();
-							sessionJoueur.setJoueur(joueur);
-							Menu.main(new String[0]);
-							dispose();
-						}else{
-							lblErreur.setText("Identifiant ou mot de passe incorrect");
+							if (joueur.estBanni() == false) {
+								Session s = AppFactory.getSessionFactory()
+										.openSession();
+								Transaction tx = s.beginTransaction();
+								joueur.setJoueurConnecte(true);
+								s.update(joueur);
+								tx.commit();
+								s.close();
+
+								SessionJoueur sessionJoueur = SessionJoueur
+										.getInstance();
+								sessionJoueur.setJoueur(joueur);
+								Menu.main(new String[0]);
+								dispose();
+							} else {
+								lblErreur
+										.setText("Vous êtes actuellement banni.");
+							}
+						} else {
+							lblErreur
+									.setText("Identifiant ou mot de passe incorrect");
 						}
 					}
 				}
@@ -167,8 +188,9 @@ public class Connexion extends JFrame {
 					if (Desktop.isDesktopSupported()) {
 						// A remplacer par l'adresse menant à la création de
 						// compte
-						Desktop.getDesktop().browse(
-								new URI("http://localhost/www.gangauthority.com/web/app.php/signup"));
+						Desktop.getDesktop()
+								.browse(new URI(
+										"http://localhost/www.gangauthority.com/web/app.php/signup"));
 					}
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -191,8 +213,9 @@ public class Connexion extends JFrame {
 					if (Desktop.isDesktopSupported()) {
 						// A remplacer par l'adresse menant au mot de passe
 						// oublié
-						Desktop.getDesktop().browse(
-								new URI("http://localhost/www.gangauthority.com/web/app.php/oublimdp"));
+						Desktop.getDesktop()
+								.browse(new URI(
+										"http://localhost/www.gangauthority.com/web/app.php/oublimdp"));
 					}
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -205,10 +228,10 @@ public class Connexion extends JFrame {
 		});
 		lblOubliMotDePasse.setBounds(238, 243, 155, 16);
 		contentPane.add(lblOubliMotDePasse);
-		
+
 		txtMotDePasse = new JPasswordField();
 		txtMotDePasse.setBounds(225, 105, 134, 28);
 		contentPane.add(txtMotDePasse);
-		
+
 	}
 }
