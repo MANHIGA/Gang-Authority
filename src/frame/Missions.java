@@ -105,6 +105,10 @@ public class Missions extends JFrame {
 		error.setBounds(225, 184, 199, 14);
 		contentPane.add(error);
 		
+		final JLabel lblPoints = new JLabel("Points : "+recompensePts);
+		lblPoints.setBounds(36, 236, 80, 14);
+		contentPane.add(lblPoints);
+		
 		final JList<Mission> listMissions = new JList(dlm);
 		listMissions.addMouseListener(new MouseAdapter() {
 			@Override
@@ -122,6 +126,7 @@ public class Missions extends JFrame {
 				dureeMission = listMissions.getSelectedValue().getDureeMission();
 				lblRecompense.setText("Récompense : $"+recompenseArg);
 				nbHDM = 0;
+				lblPoints.setText("Points : "+recompensePts);
 				lblCountSbires.setText(""+nbHDM);
 				lblAttaque.setText("Puissance d'attaque : "+nbHDM*ata);
 				lblDefense.setText("Puissance défensive : "+nbHDM*defs);
@@ -231,9 +236,5 @@ public class Missions extends JFrame {
 			}
 		});
 		menuBar.add(mnDconnexion);
-		
-		JLabel lblPoints = new JLabel("Points : "+recompensePts);
-		lblPoints.setBounds(36, 236, 80, 14);
-		contentPane.add(lblPoints);
 	}
 }
