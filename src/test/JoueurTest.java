@@ -152,7 +152,7 @@ public class JoueurTest {
 		
 		int nbJoueursConnectes = j.getJoueursConnectes().size();
 		
-		Joueur adversaire = Joueur.getJoueurByPseudoMdp("Shiwoon", "gaju");
+		Joueur adversaire = Joueur.getJoueurByPseudoMdp("joueurtest2", "joueurtest2");
 		adversaire.setJoueurConnecte(true);
 		
 		assertNotSame(nbJoueursConnectes,j.getJoueursConnectes().size());
@@ -161,7 +161,7 @@ public class JoueurTest {
 	@Test
 	public void testCombattreJoueur(){
 		
-		Joueur adversaire = Joueur.getJoueurByPseudoMdp("Shiwoon", "gaju");
+		Joueur adversaire = Joueur.getJoueurByPseudoMdp("joueurtest2", "joueurtest2");
 		j.combattreJoueur(adversaire, 5);
 		
 		Session session = AppFactory.getSessionFactory().openSession();
@@ -173,7 +173,7 @@ public class JoueurTest {
 	@Test
 	public void testGetMesCombats(){
 		
-		Joueur adversaire = Joueur.getJoueurByPseudoMdp("Shiwoon", "gaju");
+		Joueur adversaire = Joueur.getJoueurByPseudoMdp("joueurtest2", "joueurtest2");
 		j.combattreJoueur(adversaire, 5);
 		
 		int nbCombats = j.getMesCombats().size();
