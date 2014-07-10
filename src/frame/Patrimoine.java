@@ -24,13 +24,9 @@ public class Patrimoine extends JFrame {
 
 	private JPanel contentPane;
 	private Integer lvlQG = 0;
-	private Integer popQG = 0;
 	private Integer lvlCas = 0;
-	private Integer popCas = 0;
 	private Integer lvlUs = 0;
-	private Integer popUs = 0;
 	private Integer lvlCyb = 0;
-	private Integer popCyb = 0;
 	
 	/**
 	 * Launch the application.
@@ -68,22 +64,12 @@ public class Patrimoine extends JFrame {
 		for(Construire c : batiments){
 			if(c.getTypeBatiment().getLibelleTypeBatiment().equals("Quartier Général")){
 				lvlQG = c.getNiveau();
-				popQG = c.getPopulationMax();
 			} else if(c.getTypeBatiment().getLibelleTypeBatiment().equals("Casino")){
 				lvlCas = c.getNiveau();
-				if(joueur.getTypeSbireEntrainer(c.getTypeBatiment().getTypeSbire()) != null) {
-					popCas = joueur.getTypeSbireEntrainer(c.getTypeBatiment().getTypeSbire()).getNbSbire();
-				}
 			} else if(c.getTypeBatiment().getLibelleTypeBatiment().equals("Cybercafe")){
 				lvlCyb = c.getNiveau();
-				if(joueur.getTypeSbireEntrainer(c.getTypeBatiment().getTypeSbire()) != null) {
-					popCyb = joueur.getTypeSbireEntrainer(c.getTypeBatiment().getTypeSbire()).getNbSbire();
-				}
 			} else if(c.getTypeBatiment().getLibelleTypeBatiment().equals("Usine")){
 				lvlUs = c.getNiveau();
-				if(joueur.getTypeSbireEntrainer(c.getTypeBatiment().getTypeSbire()) != null) {
-					popUs = joueur.getTypeSbireEntrainer(c.getTypeBatiment().getTypeSbire()).getNbSbire();
-				}
 			}
 		}
 		
@@ -95,10 +81,6 @@ public class Patrimoine extends JFrame {
 		lblNiveauQG.setBounds(176, 34, 97, 16);
 		contentPane.add(lblNiveauQG);
 		
-		JLabel lblPopulationQG = new JLabel("Population totale : "+popQG);
-		lblPopulationQG.setBounds(285, 34, 159, 16);
-		contentPane.add(lblPopulationQG);
-		
 		JLabel lblCa = new JLabel("Casino");
 		lblCa.setBounds(25, 77, 61, 16);
 		contentPane.add(lblCa);
@@ -107,9 +89,6 @@ public class Patrimoine extends JFrame {
 		lblNiveauCa.setBounds(176, 77, 85, 16);
 		contentPane.add(lblNiveauCa);
 		
-		JLabel lblPopulationHDM = new JLabel("Hommes de main : "+popCas);
-		lblPopulationHDM.setBounds(285, 77, 159, 16);
-		contentPane.add(lblPopulationHDM);
 		
 		JLabel lblCy = new JLabel("Cybercafe");
 		lblCy.setBounds(25, 125, 107, 16);
@@ -119,10 +98,6 @@ public class Patrimoine extends JFrame {
 		lblNiveauCy.setBounds(176, 125, 97, 16);
 		contentPane.add(lblNiveauCy);
 		
-		JLabel lblPopulationH = new JLabel("Hackers : "+popCyb);
-		lblPopulationH.setBounds(285, 125, 159, 16);
-		contentPane.add(lblPopulationH);
-		
 		JLabel lblU = new JLabel("Usine");
 		lblU.setBounds(25, 174, 61, 16);
 		contentPane.add(lblU);
@@ -130,10 +105,6 @@ public class Patrimoine extends JFrame {
 		JLabel lblNiveauU = new JLabel("Niveau : "+lvlUs);
 		lblNiveauU.setBounds(176, 174, 97, 16);
 		contentPane.add(lblNiveauU);
-		
-		JLabel lblPopulationT = new JLabel("Trafiquants : "+popUs);
-		lblPopulationT.setBounds(285, 174, 159, 16);
-		contentPane.add(lblPopulationT);
 		
 		JLabel lblCapital = new JLabel("Capital : $"+argent);
 		lblCapital.setBounds(61, 238, 139, 16);

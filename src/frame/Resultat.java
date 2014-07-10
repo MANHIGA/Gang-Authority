@@ -59,7 +59,7 @@ public class Resultat extends JFrame {
 		
 		final Joueur ennemi = combat.getDefenseur();
 		
-		JLabel lblCombatContreJoueur = new JLabel("Combat contre"+ennemi.getPseudo());
+		JLabel lblCombatContreJoueur = new JLabel("Combat contre "+ennemi.getPseudo());
 		lblCombatContreJoueur.setBounds(37, 49, 200, 16);
 		contentPane.add(lblCombatContreJoueur);
 		
