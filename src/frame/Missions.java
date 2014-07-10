@@ -137,7 +137,7 @@ public class Missions extends JFrame {
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 Component renderer = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 if (renderer instanceof JLabel && value instanceof Mission) {
-                    ((JLabel) renderer).setText(((Mission) value).getDifficulte() + " " + ((Mission) value).getLibelleMission() + " " + ((Mission)value).getMissionTypeSbire().getLibelleTypeSbire() + " " + ((Mission) value).getDescriptionMission());
+                    ((JLabel) renderer).setText(((Mission) value).getDifficulte() + " " + ((Mission)value).getMissionTypeSbire().getLibelleTypeSbire());
                 }
                 return renderer;
             }
