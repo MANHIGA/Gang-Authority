@@ -130,13 +130,16 @@ public class Sbires extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				for (Construire batiment : j.getMesBatiments()) {
-					if (batiment.getTypeBatiment().getTypeSbire()
-							.getLibelleTypeSbire().equals("Homme de main")) {
-						for (TypeSbire typeSbire : TypeSbire.getTypesSbires()) {
-							if (typeSbire.getLibelleTypeSbire().equals(
-									"Homme de main")
-									&& typeSbire.getCout() <= j.getArgent()) {
-								j.recruterTypeSbire(typeSbire);
+					if (batiment.getTypeBatiment().getTypeSbire() != null) {
+						if (batiment.getTypeBatiment().getTypeSbire()
+								.getLibelleTypeSbire().equals("Homme de main")) {
+							for (TypeSbire typeSbire : TypeSbire
+									.getTypesSbires()) {
+								if (typeSbire.getLibelleTypeSbire().equals(
+										"Homme de main")
+										&& typeSbire.getCout() <= j.getArgent()) {
+									j.recruterTypeSbire(typeSbire);
+								}
 							}
 						}
 					}
@@ -153,13 +156,16 @@ public class Sbires extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				for (Construire batiment : j.getMesBatiments()) {
-					if (batiment.getTypeBatiment().getTypeSbire()
-							.getLibelleTypeSbire().equals("Trafiquant")) {
-						for (TypeSbire typeSbire : TypeSbire.getTypesSbires()) {
-							if (typeSbire.getLibelleTypeSbire().equals(
-									"Trafiquant")
-									&& typeSbire.getCout() <= j.getArgent()) {
-								j.recruterTypeSbire(typeSbire);
+					if (batiment.getTypeBatiment().getTypeSbire() != null) {
+						if (batiment.getTypeBatiment().getTypeSbire()
+								.getLibelleTypeSbire().equals("Trafiquant")) {
+							for (TypeSbire typeSbire : TypeSbire
+									.getTypesSbires()) {
+								if (typeSbire.getLibelleTypeSbire().equals(
+										"Trafiquant")
+										&& typeSbire.getCout() <= j.getArgent()) {
+									j.recruterTypeSbire(typeSbire);
+								}
 							}
 						}
 					}
@@ -176,13 +182,16 @@ public class Sbires extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				for (Construire batiment : j.getMesBatiments()) {
-					if (batiment.getTypeBatiment().getTypeSbire()
-							.getLibelleTypeSbire().equals("Homme de main")) {
-						for (TypeSbire typeSbire : TypeSbire.getTypesSbires()) {
-							if (typeSbire.getLibelleTypeSbire()
-									.equals("Hacker")
-									&& typeSbire.getCout() <= j.getArgent()) {
-								j.recruterTypeSbire(typeSbire);
+					if (batiment.getTypeBatiment().getTypeSbire() != null) {
+						if (batiment.getTypeBatiment().getTypeSbire()
+								.getLibelleTypeSbire().equals("Hacker")) {
+							for (TypeSbire typeSbire : TypeSbire
+									.getTypesSbires()) {
+								if (typeSbire.getLibelleTypeSbire().equals(
+										"Hacker")
+										&& typeSbire.getCout() <= j.getArgent()) {
+									j.recruterTypeSbire(typeSbire);
+								}
 							}
 						}
 					}
