@@ -163,8 +163,8 @@ public class Batiments extends JFrame {
 				for (Construire batiment : batiments) {
 					if (batiment.getTypeBatiment().getLibelleTypeBatiment()
 							.equals("Casino")) {
+						trouve = true;
 						if (batiment.getNiveau() < lvlQG) {
-							trouve = true;
 							joueur.ameliorerBatiment(batiment);
 						}
 					}
@@ -176,8 +176,8 @@ public class Batiments extends JFrame {
 					while (i < listTypeBatiment.size() && trouve == false) {
 						if (listTypeBatiment.get(i).getLibelleTypeBatiment()
 								.equals("Casino")) {
+							trouve = true;
 							if (lvlQG > 0) {
-								trouve = true;
 								joueur.creerBatiment(listTypeBatiment.get(i));
 								lvlCas = 1;
 							}
@@ -204,8 +204,8 @@ public class Batiments extends JFrame {
 				for (Construire batiment : batiments) {
 					if (batiment.getTypeBatiment().getLibelleTypeBatiment()
 							.equals("Usine")) {
+						trouve = true;
 						if (batiment.getNiveau() < lvlQG) {
-							trouve = true;
 							joueur.ameliorerBatiment(batiment);
 						}
 					}
@@ -217,8 +217,8 @@ public class Batiments extends JFrame {
 					while (i < listTypeBatiment.size() && trouve == false) {
 						if (listTypeBatiment.get(i).getLibelleTypeBatiment()
 								.equals("Usine")) {
+							trouve = true;
 							if (lvlQG > 0) {
-								trouve = true;
 								joueur.creerBatiment(listTypeBatiment.get(i));
 								lvlUs = 1;
 							}
@@ -245,8 +245,8 @@ public class Batiments extends JFrame {
 				for (Construire batiment : batiments) {
 					if (batiment.getTypeBatiment().getLibelleTypeBatiment()
 							.equals("Cybercafe")) {
+						trouve = true;
 						if (batiment.getNiveau() < lvlQG) {
-							trouve = true;
 							joueur.ameliorerBatiment(batiment);
 						}
 					}
@@ -258,8 +258,8 @@ public class Batiments extends JFrame {
 					while (i < listTypeBatiment.size() && trouve == false) {
 						if (listTypeBatiment.get(i).getLibelleTypeBatiment()
 								.equals("Cybercafe")) {
+							trouve = true;
 							if (lvlQG > 0) {
-								trouve = true;
 								joueur.creerBatiment(listTypeBatiment.get(i));
 								lvlCyb = 1;
 							}
