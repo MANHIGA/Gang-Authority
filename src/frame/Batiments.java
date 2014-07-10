@@ -139,7 +139,7 @@ public class Batiments extends JFrame {
 		lblUsine.setBounds(20, 173, 109, 16);
 		contentPane.add(lblUsine);
 
-		JLabel lblCybercaf = new JLabel("Cybercafé");
+		JLabel lblCybercaf = new JLabel("Cybercafe");
 		lblCybercaf.setBounds(20, 222, 109, 16);
 		contentPane.add(lblCybercaf);
 

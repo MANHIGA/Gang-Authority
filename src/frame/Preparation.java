@@ -115,7 +115,7 @@ public class Preparation extends JFrame {
 				}
 			}
 		});
-		btnPlusHDM.setBounds(24, 82, 40, 30);
+		btnPlusHDM.setBounds(24, 82, 44, 30);
 		contentPane.add(btnPlusHDM);
 
 		JButton btnMoinsHDM = new JButton("-");
